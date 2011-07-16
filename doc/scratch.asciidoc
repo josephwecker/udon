@@ -1,0 +1,228 @@
+UDON universal document object notation
+
+document
+data
+structural
+markup
+language
+general
+declarative
+
+eXtensible
+object
+notation
+attribute
+hierarchical
+
+
+dgon
+
+
+sans - structured attribute notation syntax
+DISMAL DeclaratIve Structure MArkup Language 
+DEAN DEclarative Attribute Notation
+SANO / SOLA / STAN / SONO - Structured attribute/object notation
+
+
+sml   - NO - 84m - Standard ML and many others
+dml   - no - 15m - data manipulation language, ML extensions, dimensional markup l.
+d2ml  -    - 3m  - daily 2 min learning | data & document markup language
+msd   -    - 30m - (no tech related) | markup for structured documents
+gdl   - no - 16m - Gnu Data Language | general declarative language
+dasl  - NO - 1m  - Lots of proprietary | document attribute and structure language
+edm   - no -     - electronic document management, .. data modeling | extensible document markup
+xdn extensible document notation
+sdn structured document notation
+
+* Domain-specific-template document
+* Template document
+* Finalized document
+* Wire document
+
+
+  :html encoding:utf-8
+  some stuff
+  some more stuff
+
+* no children to parse, but attributes
+
+
+  :html
+    with parsed children
+
+* children parsed and passed to it
+
+  :if $blah > something || something_else()
+    this text
+  :else
+    that text
+
+* children parsed and passed to it - it modifies its sibling in this case
+
+
+* normal tags combine the online-child with children by default?
+
+|======================================================================
+|<meta-type><type>[<name/id>] <attr-key>:<attr-val> <online-child>
+|  <children>
+|======================================================================
+
+* Automatic text children combining?
+
+===========
+
+
+  * xson_addon_fetcher
+  * xson2xml
+  * xson2json
+  * xml2xson
+  * json2xson
+  * html2xson
+  * c parser
+  * ruby parser
+
+Planned future support:
+  * C++
+  * Objective-C
+  * Go
+  * D
+  * Erlang
+  * Java
+
+* Directives - implemented via language agnostic callbacks
+* Specials (including controls)
+  - defined via addons - specified by github location (muahaha) and cached
+  - implemented via language agnostic callbacks
+  - given the option to parse anything they'd like
+
+
+
+- directives
+- helpers (basic callbacks that return unparsed xson)
+- xson-children specials (including control elements)
+  - parsed children/attributes get passed _in_ to the callback in case it wants
+    to use them. It can pass them right back unchanged, etc.
+  - include:
+    * if/elsif/else
+    * switch/case
+    * list-comprehension/iterator
+- special filters (given raw children as text, although they're allowed to call
+  the parser themselves if desired)
+  - examples:
+    * :html
+    * :table
+
+
+
+* What would a document-centric example look like (like a blog entry)?
+
+
+
+== Machine/Human dual-use documents
+ * Programming
+   - General programming languages
+   - Grammars
+   - Declarative languages / Declarative DSLs
+ * 
+
+
+=== General Purpose Markup Languages
+  - ASN.1 - NOT really a general purpose markup language
+  - GML
+  - SGML
+  - XML
+
+  - LaTex
+  - HTML
+
+
+ 1. Binary 
+
+ 1. Languages that declaratively describe data / document structure
+    - ASN.1
+    - Protocol Buffer's Proto Definition files
+    - XML Schemas
+
+
+  - Human+Computer readable (Embedded formatting & typesetting commands) [RUNOFF and descendants, 1964]
+  - Generic markup that's descriptive of structure [GenCode, 1970]
+  - Generic markup that describes attributes of a type of document [GML, 1973]
+  - Formalized descriptive markup, focused on attributes and structure. Schemas to say what's allowed. [SGML, 1974]
+  - Declarative styles separate from content & structure [Scribe, 1978]
+  - Overlapping elements / non-hierarchical structures [SGML's CONCUR, and later MECS etc., 1992]
+
+  - Namespaces, overlapping document-types
+
+
+  * Generalized | vs | Concrete  (discuss mostly generlized)
+  * 
+
+
+  * <--> Complex Declarative <--> Embedded procedural <--> Homoiconic
+
+"The reason for this is that the less powerful the language, the more you can do with the data stored in that language."
+http://en.wikipedia.org/wiki/Rule_of_Least_Power[Tim Berners-Lee]
+
+.GML
+ * The principle of separating document description from application function
+   makes it possible to describe the attributes common to all documents of the
+   same type. ... [The] availability of such 'type descriptions' could add new
+   function to the text processing system. Programs could supply markup for an
+   incomplete document, or interactively prompt a user in the entry of a
+   document by displaying the markup. A generalized markup language then, would
+   permit full information about a document to be preserved, regardless of the
+   way the document is used or represented. (http://www.sgmlsource.com/history/roots.htm)
+
+.SGML
+ * Markup should describe a document's structure and other attributes, rather
+   than specify the processing to be performed on it, as descriptive markup
+   needs to be done only once, and will suffice for future processing.
+ * Markup should be rigorous so that the techniques available for processing
+   rigorously-defined objects like programs and databases can be used for
+   processing documents as well.
+
+
+.Comparison
+[options="header"]
+|=================================================================================================================================
+| Name                 | Adhoc Text   |Text-centric | Structure-centric | Data-centric | Transport-centric | Executable | Meta   |
+| ASN.1                |              |             |                   |              |                   | '**'       | '****' |
+| BSON                 |              |             |                   |              |                   |
+| Apache Thrift        |              |             |                   | '***'        | '***'             |
+| Protocol Buffers     |              
+| MessagePack          |
+| JSON                 |
+| SML                  |
+| XML                  | 
+|
+| Human readability    | <<<-----------------------------------------------------------------
+| Extensibility        | ----------------------------------------------------------------->>> ? not true for vocabulary
+| Speed                | ----------------------------------------------------------------->>>
+| Structure            | ----------------------------------------------------------------->>>
+| Language ambivalence | ------------------------------- Same -------------------------------
+
+(only ostensibly generic ones)
+
+ASN.1::
+  Summary:       Language for defining and executing a binary protocol
+  Commonly Used: Communication protocols
+  Innovation:    Language defining the binary protocol
+  See Also:      
+    * http://en.wikipedia.org/wiki/Augmented_Backus-Naur_form[ABNF]
+    * 
+
+
+Bencode::
+  Innovation: For each possible (complex) value, there is only a single valid bencoding (useful for comparison without parsing)
+
+
+
+
+
+
+* structural element
+* attributes
+* content
+* separatly applied styles
+
+
