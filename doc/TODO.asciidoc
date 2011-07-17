@@ -1,0 +1,15 @@
+|===========================================================================
+|  | bare minimum static site
+|  | site deploying to heroku correctly http://mwhuss.com/2009/12/13/static-sites-on-heroku-in-two-lines
+|  | dns entry
+|  | finalize syntax
+|  | simple regex parser via strscan and possibly statemachine
+|  | syntax highlighter
+|  | main introduction on static site including status
+|  | historical blog entry
+|  | LAUNCH
+|  | bare-bones ruby-gem
+|  | ragel-based parser
+|  | udon2xml + xml2udon
+|  | udon2json + json2udon
+|===========================================================================
