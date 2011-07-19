@@ -1,0 +1,14 @@
+# Comment
+  Text
+  [element-metatype-delim] [element-type] [element-id] [tags] [attributes] [children]
+  |element         # generic tag
+  !element         # directive (position independent)
+  :meta-element    # for templating
+  |'...'|          # multiline indent-insensitive string
+  |filter-name>
+
+Some normal text
+
+:tag
+|something ekblkaj feiwj 
+|another 

@@ -1,0 +1,39 @@
+
+[fdkj]
+!html 4.0
+|html [asdf] 
+  |head  #jfeiw o
+    |content-type utf-8
+    |stylesheet [http://ycombinator.com/news.css]
+    |link rel:shortcut icon href:http://ycombinator.com/favicon.ico
+    |script'
+      function byId(id) {
+        return document.getElementById(id);
+      }
+
+      function vote(node) {
+        var v = node.id.split(/_/);   // {'up', '123'}
+        var item = v[1]; 
+
+        // hide arrows
+        byId('up_'   + item).style.visibility = 'hidden';
+        byId('down_' + item).style.visibility = 'hidden';
+
+        // ping server
+        var ping = new Image();
+        ping.src = node.href;
+
+        return false; // cancel browser nav
+        }'|
+    |title Hacker News
+  |body
+    |center
+      |table
+        border:      0
+        cellpadding: 0
+        cellspacing: 0
+        width:       85%
+        bgcolor:     #f6f6ef
+  |td 
+
+    
