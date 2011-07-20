@@ -1,0 +1,12 @@
+
+
+
+== wishlist
+
+ * Can be data-centric or freetext-centric
+ * Easily relational instead of just hierarchical
+ * Libraries (defined where? environment? sender? receiver?)
+
+ * Good compression, binary representation for transport
+ * Schema
+ * Easy transformations
