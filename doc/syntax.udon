@@ -8,6 +8,9 @@
 
   |filter-name>
 
+  {'...'}
+
+
 {1 {2} } 
 
 Some normal text
@@ -17,6 +20,7 @@ Some normal text
 |element {hey there}
   |[name or id]  # Child anon or id for element???
   |.anon .another\ one
+  |$value_held_here
 |asd ".c > body.main"
 
 
@@ -27,4 +31,101 @@ Some normal text
 
 {jfewio
   {feji fekjw ijfoeiw}
-{feji }  }
+{feji}  }
+
+
+|if a > 5
+  something
+|else
+  something else
+
+|with 
+
+|name{   }
+
+
+|type 
+
+|'...'|       # ==
+|<txt> ... # ==
+...           # ==
+{<txt> ...}  
+
+
+<element> ::= {label <children>}
+<children ::= <element>
+            | <id>
+            | <tag>
+            | <attribute>
+            | plain text
+
+
+|=== Header
+
+|--- [My Section]
+  Seems like blah blah blah....
+
+
+function type(id, attributes, mono-attributes, 
+
+#
+ * beautiful
+ * id
+ * attribute pairs
+ * mono-attributes (tags)
+ * data vs. generator vs. pure-code+directives (vs. built-in pure+directives?)
+ * indent-structure vs. inline
+ * comments + ml-comments
+ * namespace
+
+ * marketing
+ * universality / utility
+
+ ** data + reference
+ ** declarative generator
+ ** document declarative statement (not in-structure)
+ ** imperative generator
+ ** imperative
+
+ *** in-structure |vs| place-independent
+ *** declarative  |vs| imperative
+ *** generator    |vs| no-output
+
+ data:
+   - namespace  [can be considered part of type]
+   - type
+   - id         [designated attribute] # unique-in-type?[dbs] or in-whole-document? [html]
+   - tags       [attribute shortcut]
+   - attribute-pairs
+   - (children)
+   -----
+   - type(sometimes w/ namespace)
+   - attributes
+   - children
+
+ generator:
+   - namespace
+   - function/statement
+   - arguments or statement body
+   - children
+   [- related generator (e.g., else for an if)]
+
+ clean from:
+ * extension developer perspective
+ * author
+
+
+ --- Declarative DSL that can be created very easily and easily embedded in
+ documents.
+
+ Unexplored:
+  - code (a different lang.) marked up with udon? [needs directive to be able
+    to change delimiters]
+  - udon version of, say, a complex but pure erlang module
+  - using it as a light markup language - markdown-like
+  - viewed in different modes
+    - expanded references
+    - "like-types" - language homogonous views
+    - automatic MVC separation and combination
+  - semantic extensions / definitions (processors/compilers)
+  - syntactic extensions / definitions (schema)
