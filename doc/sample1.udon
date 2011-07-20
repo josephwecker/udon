@@ -1,9 +1,9 @@
 
-[fdkj]
 !html 4.0
+
 |html [asdf] 
   |head  #jfeiw o
-    |content-type utf-8
+    encoding: utf-8
     |stylesheet [http://ycombinator.com/news.css]
     |link rel:shortcut icon href:http://ycombinator.com/favicon.ico
     |script'
@@ -29,11 +29,15 @@
   |body
     |center
       |table
-        border:      0
-        cellpadding: 0
-        cellspacing: 0
-        width:       85%
+        border:      -0.982  -3877492 000111 
+        cellpadding: -0.7Z
+        cellspacing: 0Zpt
+        width:       -85.7%   2389Z 38.9Z 
         bgcolor:     #f6f6ef
   |td 
 
-    
+
+{html [asdf] {head encoding:utf-8 {stylesheet [blah]} 
+
+
+

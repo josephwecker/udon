@@ -5,10 +5,26 @@
   !element         # directive (position independent)
   :meta-element    # for templating
   |'...'|          # multiline indent-insensitive string
+
   |filter-name>
+
+{1 {2} } 
 
 Some normal text
 
-:tag
-|something ekblkaj feiwj 
-|another 
+
+|element ekblkaj feiwj: -32.7pt  #f33
+|element {hey there}
+  |[name or id]  # Child anon or id for element???
+  |.anon .another\ one
+|asd ".c > body.main"
+
+
+|[id-{$i}]
+
+{@@element}
+{@id}
+
+{jfewio
+  {feji fekjw ijfoeiw}
+{feji }  }
