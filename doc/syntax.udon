@@ -66,7 +66,28 @@ Some normal text
   Seems like blah blah blah....
 
 
+|struct
+  :if blah < blah
+    |child
+  :else {other-child}
+
 function type(id, attributes, mono-attributes, 
+
+
+normal
+conforming-specials
+raw-specials (filters/gates)
+conditionals
+iteration
+extraction  -  '.' and '[]'
+assignment? destructuring-binding?
+
+
+pre-process + post-process hooks for 
+
+
+ideally all data for iterations and extraction are already in udon form, so the
+syntax for extraction etc. can be more generally usable
 
 #
  * beautiful
@@ -115,10 +136,17 @@ function type(id, attributes, mono-attributes,
  * author
 
 
+ problematic:
+  - statements in generator (conditionals)
+  - sibling-aware generator (if/else)
+
  --- Declarative DSL that can be created very easily and easily embedded in
  documents.
 
  Unexplored:
+  - semantic extensions / definitions (processors/compilers)
+  - syntactic extensions / definitions (schema)
+
   - code (a different lang.) marked up with udon? [needs directive to be able
     to change delimiters]
   - udon version of, say, a complex but pure erlang module
@@ -127,5 +155,3 @@ function type(id, attributes, mono-attributes,
     - expanded references
     - "like-types" - language homogonous views
     - automatic MVC separation and combination
-  - semantic extensions / definitions (processors/compilers)
-  - syntactic extensions / definitions (schema)
