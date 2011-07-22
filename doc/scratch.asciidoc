@@ -203,6 +203,23 @@ http://en.wikipedia.org/wiki/Rule_of_Least_Power[Tim Berners-Lee]
 
 (only ostensibly generic ones)
 
+
+Actually it's a continuum between how much semantic information it has, with
+the goal that there's something in the middle where the semantics can be
+processed by other machines _almost_ as easy as the 
+
+ Narrative Text
+ Structured Text
+ Structured adhoc-data
+ Heirarchical & Relational data with some interpretable semantics
+ Data-structure Serialization - semantics well-understood - data structures
+   common to almost all languages.
+ Specialized data serialization - semantics concretely defined at the
+   machine/algorithmic level.
+
+
+(pragmatics - how context contributes to meaning)
+
 ASN.1::
   Summary:       Language for defining and executing a binary protocol
   Commonly Used: Communication protocols

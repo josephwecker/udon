@@ -86,10 +86,35 @@ assignment? destructuring-binding?
 pre-process + post-process hooks for 
 
 
+
+special:
+ define:
+   - pre-process children?
+ given:
+   - 
+ returned:
+
+
+
+ * if/elsif/else
+ * with/iteration
+ * assignment/restructuring
+ * extraction
+ * !html (affects all children)
+ * partials
+ * nesting/layouts/multiple-entrypoints
+ * 
+
+:if x < abc: oh yeah
+:elsif x < 8: another
+:else: hmm
+
+|(if x < abc)|
+
 ideally all data for iterations and extraction are already in udon form, so the
 syntax for extraction etc. can be more generally usable
 
-#
+
  * beautiful
  * id
  * attribute pairs
@@ -155,3 +180,70 @@ syntax for extraction etc. can be more generally usable
     - expanded references
     - "like-types" - language homogonous views
     - automatic MVC separation and combination
+
+Difference between semantic-type and data-type
+
+
+
+meta-attributes - define things like it's need to be ordered?
+nah, order is preserved for children, not for attributes
+
+
+|macro [expanded]
+  |more-stuff
+    ${children[0].blah}
+    and more stuff here as well, muahaha
+
+|expanded
+  |hi there
+
+
+
+
+|stuff
+  some-key:       value
+  some-other-key: another-value
+  some-third-key:
+    |first-value Blah
+    |second-value dude
+    Third value
+    Fourth value
+
+
+
+
+*** Text automatically treated as child per line unless contained
+
+
+*** namespace == authoritative interpreter of object's semantics
+
+
+Integer (Bignum)
+Float/Real
+Date/time
+Time interval
+Char/String (unicode utf-8)
+Binary (encoded)
+Null
+
+Array [ordered children - allow duplicates]
+Hash  [attributes - unordered k/v pairs - no duplicate keys]
+
+ID (URN)
+Reference/URI
+
+
+
+
+Anything on originating line is a child of the initial element.
+
+|asdf |jklm(:blah 29)   <- to whom does the 29 belong??
+
+
+|asdf
+  |jkml :blah 29 :transparency off :url http://www.nytimes.com
+  |jfewio :fjioow 9901
+
+
+
+

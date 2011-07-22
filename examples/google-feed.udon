@@ -1,0 +1,14 @@
+|xml :version 1.0 :encoding UTF-8
+  |feed :xmlns            http://www.w3.org/2005/Atom
+        :xmlns:openSearch http://a9.com/-/spec/opensearchrss/1.0/
+        :xmlns:gd         http://schemas.google.com/g/2005
+        :xmlns:gCal       http://schemas.google.com/gCal/2005
+    |id ...
+    |updated 2006-11-12T21:25:30.000Z
+    |title :type text Google Developer Events
+    |subtitle :type text The calendar contains information about upcoming
+      developer conferences at which Google will be speaking, along with other
+      developer-related events.
+    |link :fjeiwo
+
+    
