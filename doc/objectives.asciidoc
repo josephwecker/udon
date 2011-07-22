@@ -1,0 +1,63 @@
+== Objectives / Main Concerns
+
+[options="header"]
+|===============================================================
+| High-level feature               | Concern-level | Execution
+|----------------------------------|---------------|------------
+| [Beauty] (visual & conceptual)   | Highest       |
+|----------------------------------|---------------|------------
+| Human readability                | 10            |
+| Learnability                     | 10            |
+| Self-description-ability         | 10            |
+|                                  |               |
+| Syntactic simplicity             | 8             |
+| Conciseness                      | 6             |
+| Homoiconicity                    | 5             |
+| Algorithmic declaration          | 3             |
+| Turing completeness              | 0             |
+|----------------------------------|---------------|------------
+| [Performance]                    | Very High     |
+|----------------------------------|---------------|------------
+| Execution speed (throughput)     | 10            |
+| Stability                        | 10            |
+| Parsing/generating speed         | 9             |
+|                                  |               |
+| Document size                    | 7             |
+| Transportation speed             | 5             |
+|----------------------------------|---------------|------------
+| [Utility]                        | Very High     |
+|----------------------------------|---------------|------------
+| Semantic declarative data        | 10            |
+| Hierarchical structures          | 10            |
+| Document mixing (include/layout) | 9             |
+| Universal Templating constructs  | 9             |
+| Language mixing (scripts...)     | 9             |
+|                                  |               |
+| Extensibility                    | 8             |
+| Standard API                     | 8             |
+| In-document API usage            | 8             |
+| In-doc schema definition         | 7             |
+| Global data serialization        | 7             |
+| Standard Schema definition       | 7             |
+| Relational data                  | 7             |
+| On-line processing               | 6             |
+| Narrative texts                  | 5             |
+| Specialized data serialization   | 5             |
+| Document universality            | 5             |
+| Document Type mixing (namesp...) | 4             |
+|----------------------------------|---------------|------------
+| [Support]                        | High          |
+|----------------------------------|---------------|------------
+| License liberality/accessibility | 10            |
+| Documentation                    | 10            |
+| Editor integration               | 9             |
+|                                  |               |
+| Language integration             | 8             |
+| Chic                             | 8             |
+| Portability (ease)               | 8             |
+| Framework integration            | 7             |
+| Software integration             | 7             |
+| Community                        | 5             |
+| Standardization                  | 3             |
+| Commercial support               | 2             |
+|===============================================================
