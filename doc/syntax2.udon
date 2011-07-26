@@ -1,0 +1,99 @@
+
+|===== Three special beginning-of-line designations:
+
+!___    # Directive
+|___    # Element (ordered, can have duplicates)
+:___    # Attribute (unordered, no dups. last one takes precedence)
+___     # Uninterpreted but indent-sensitive
+|'___'| # Gated - indent-insensitive
+
+|===== Indent delimiting
+|something
+  |something2    # Child of something
+    |something3  # Child of something2
+   |something4   # _Also_ child of something2 (didn't dedent all the way)
+
+That way you can do something like:
+
+|awesome :color red
+         :size  yes
+  |child-of-awesome
+
+
+|===== Explicit delimiting
+
+|{___}
+:{___}
+!{___}
+|{ }'___'| # Named fence, indent-insensitive
+
+|{something |{something2 |{something3} |{something4}}}
+
+Which makes it easier to mix things |{emphasis in documents}
+
+|===== Elements
+
+|=== Oneliners
+
+
+  |namespace:type [id-or-name] .flag .other-flag :mental-state crazy| It's true!
+  # Namespace:  namespace
+  # Type:       type
+  # Attributes: [ID=>id-or-name,flag=>true, other-flag=>true, mental-state=>crazy]
+  # Children:   ["It's true!"]
+
+  |namespace:type [id-or-name] .flag .other-flag :mental-state crazy| So true
+  |namespace:type[id-or-name].flag.other-flag :mental-state crazy| So true
+  |namespace:type.flag.other-flag[id-or-name] :mental-state crazy| So true
+  # Namespace:  namespace
+  # Type:       type
+  # Attributes: [ID=>id-or-name,flag=>true, other-flag=>true, george=>crazy]
+  # Children:   ["So true"]
+
+  |something.else[57]
+  # Namespace:  -
+  # Type:       something
+  # Attributes: [ID=>57,else=>true]
+  # Children:   []
+
+  |.awesome[32] :color #456678 :size nice| Thing to do
+  # Namespace:  -
+  # Type:       -
+  # Attributes: [ID=>32, color=>#456678, size=>nice]
+  # Children:   []
+
+  |[good-one]
+  # Namespace:  -
+  # Type:       -
+  # Attributes: [ID=>good-one]
+  # Children:   []
+
+  |hi there
+  # Namespace:  -
+  # Type:       hi
+  # Attributes: []
+  # Children:   ['there']
+
+...
+
+|=== Multi-line
+
+* You can have children elements on the same line, but they can't have children
+  extending to the next line:
+|first-element :blah true |second |third
+                             |fourth    # Child of first-element
+   |fifth # Also child of first-element
+
+|===== Attributes
+
+Attributes on their own line can have whitespace in the value without quotes
+containing the value.
+
+
+|Element :attribute one
+  :another attribute oh yeah
+  And here is a child
+
+
+
+

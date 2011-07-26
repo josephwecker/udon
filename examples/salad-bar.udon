@@ -1,0 +1,57 @@
+
+
+# CSS
+|#pageHeader
+  :padding-top 20px
+  |h2
+    :background transparent url(h2.gif) no-repeat top left
+    :margin-top 58px
+    :margin-bottom 40px
+    :width 200px
+    :height 18px
+    :float right
+    |span :display none
+  |'h3 > i' :background-color red
+
+
+# HTML
+
+|html5 :encoding utf-8
+       :lang en
+  |head
+    |title A simple HTML5 page layout
+    |if-ie
+      |script :src http://html5shiv.googlecode.com/svn/trunk/html5.js
+    |style 
+      |css 
+        |body :margin 100%
+        |'article, aside, figure, footer, hgroup, menu, nav, section' :display block
+  |body
+    |nav |a :href simple-html5-document.html home1
+         |a :href simple-html5-document.html home2
+    |header |h1 A simple HTML5 document
+    |article
+      |hgroup  |h1 Article 1 heading
+               |h2 Article 1 sub-heading
+      |section |h3 Section 1 heading
+    |footer |p This is the footer
+
+
+|table
+  |tr |td :colspan 2 Blah
+
+# XML
+
+
+
+# Lightweight-markup
+
+
+
+# JSON
+
+
+
+# YAML
+
+
