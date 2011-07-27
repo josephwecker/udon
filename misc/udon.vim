@@ -18,9 +18,11 @@ syn match   udonComment     /#.*$/
 syn region  udonMLComment   start="^\z(\s*\)#" end="^\%(\z1 \| *$\)\@!" skipempty
 
 
-syn match   udonType        /\({\||\)[^ \t\["{}]*/ contained contains=udonDelimiter,udonConditionals,udonIterator
+syn match   udonType        /\({\||\)[^ \t\["{}]*/ contained contains=udonDelimiter
+syn match   udonType        /\![^ \t\["{}]*/ contained contains=udonConditionals,udonIterator,udonDef,udonPreProc
 syn keyword udonConditionals if elsif else contained
 syn keyword udonIterator    for contained
+syn keyword udonDef         def contained
 
 syn match   udonAttrPair    /\(\s\+\|^\):\S*\s\+\S*/ contained contains=udonAttrLabel
 syn match   udonAttrLabel   /\(\s\+\|^\)\zs:\S*/ contained contains=udonDelimiter
@@ -42,19 +44,22 @@ syn cluster udonValueTypes  contains=udonColor,udonFloat,udonMiscVal,udonInt
 
 syn cluster udonBlockParts  contains=udonType,udonID,@udonValueTypes,udonAttrPair,udonComment,udonMLComment
 syn region  udonBoundBlock  start="{" end="}" contains=@udonBlockParts,@udonBlock,udonDelimeter
-syn region  udonStructBlock start="^\z(\s*\)|" end="^\%(\z1 \| *$\)\@!" contains=@udonBlockParts,@udonBlock
+syn region  udonStructBlock start="^\z(\s*\)[|!]" end="^\%(\z1 \| *$\)\@!" contains=@udonBlockParts,@udonBlock
 syn cluster udonBlock       contains=udonBoundBlock,udonStructBlock
 
 
 "syn match   udonMLElement   /^\s*|"\([^"\\]\|\\.\)*"/ contains=udonDelimiter
 
 syn match   udonDelimiter   /[:\[\]|{}]/ contained
+syn match   udonPreProc     /!/ contained
 
 hi def link udonConditionals Conditional
 hi def link udonIterator    Repeat
 "hi def link udonBoundBlock  Special
 "hi def link udonStructBlock Special
 hi def link udonType        Type
+hi def link udonDef         Macro
+hi def link udonPreProc     PreProc
 hi def link udonMLElement   Type
 hi def link udonID          Identifier
 hi def link udonColor       SpecialChar

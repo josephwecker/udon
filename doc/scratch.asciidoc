@@ -242,4 +242,13 @@ Bencode::
 * content
 * separatly applied styles
 
+===============
+
+If it evolves into a full-featured xquery-like functional language, it might
+make sense still to distinguish between "view" templates vs models vs
+controllers - possibly explicitly.
+
+Adopt xpath-datamodel-30 - single item and sequence with one item are
+equivalent / interchangeable ?
+
 

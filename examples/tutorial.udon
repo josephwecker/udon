@@ -1,0 +1,53 @@
+
+
+
+!if 
+
+!def [html5]
+  
+(let loop ((n 1))
+  (if (<= n 10)
+    (begin
+      (display n)(newline)
+      (loop (+ n 1)))))
+
+!def[loop] $n 1
+  !if $n <= 10
+    |display $n
+    !loop :n ${n+1}
+
+
+--------------------
+!blah=
+  |wow :hi 1
+
+|blah :blah !blah
+--------------------
+Is equivalent to
+--------------------
+|blah
+  :blah
+    |wow :hi 1
+--------------------
+
+
+
+blah[:blah][0][:hi] == 1
+
+!blah=
+  !fn
+
+
+function signatures are the same - some number of attributes (like named
+parameters/arguments), and children (like 'rest' args, ...)
+
+
+!//blah[:*] as attr
+  |$attr
+^^^  Automatic iterations ?
+
+(like xpath with differences)
+ - axis
+ - filter
+ - multiple variable binding in-path (?)
+
