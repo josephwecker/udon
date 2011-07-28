@@ -14,6 +14,8 @@
           :href ...
     |link :rel self
           :type application/atom+xml
+          |info
+            Seems pretty good
     |author
       |name Google Developer Calendar
       |email developer-calendar@google.com

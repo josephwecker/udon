@@ -51,3 +51,73 @@ parameters/arguments), and children (like 'rest' args, ...)
  - filter
  - multiple variable binding in-path (?)
 
+
+
+-------------------------------
+path returns an anonymous block with
+  - attributes
+  - children
+
+ - axis
+ - type (name or type)
+ - selector
+ - binding
+
+|Axis
+  child                      >    | /
+  descendant              (space) | //
+  attribute               [a=..]  | [@a=..]
+  self (?)
+  descendent-or-self (?)
+  following-sibling          +    | following-sibling:
+  following
+  namespace (?)
+
+  parent
+  ancestor 
+  preceding-sibling
+  preceding
+  ancestor-or-self (?)
+
+|Selector
+  
+
+path+bindings 'where' (qualifiers)
+
+/child::book/child::chapter[fn:position() = 5]/child::section[fn:position() = 2]
+/book/chapter[5]/section[2]
+/$a=book/$b=chapter/section where $3.pos==2 and $b.pos==5
+
+/_/_/$c = /book/chapter[5]/section[2]
+
+feed/link/info
+id
+class (predicate-attributes)
+has-attribute
+attribute-w-value
+has-child-w-value
+
+
+
+XPath:    ./kind::name[predicate]*
+Want to add:
+  - id
+  - mono-attribute (class)
+  - binding
+  - simplifications for kinds
+  - more clear predicates (?)
+  - Attribute abbreviation to :name to match up with definition syntax
+
+./book
+/chapter[5] as $chapter
+/section[2]
+
+
+
+!html5=
+  !unless //html
+    !// <-
+      |html
+        !$d
+
+
