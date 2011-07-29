@@ -1,0 +1,83 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'libxml'
+
+
+class UdonChild
+  attr_accessor :child_type
+end
+
+class UdonElement
+  attr_accessor :name, :id, :unaries, :attributes, :children
+  def initialize(args={})
+    @name = args.delete(:name)
+    @id = args.delete(:id)
+    @unaries = args.delete(:unaries)
+    @attributes = args.delete(:attributes)
+    @children = args.delete(:children)
+  end
+end
+
+
+
+class Xml2Udon
+  include LibXML
+
+  misc = {
+    XML::Reader::LOADDTD => :loaddtd,
+    XML::Reader::DEFAULTATTRS => :defaultattrs,
+    XML::Reader::VALIDATE => :validate,
+    XML::Reader::SUBST_ENTITIES => :subst_entities,
+    XML::Reader::SEVERITY_VALIDITY_WARNING => :severity_validity_warning,
+    XML::Reader::SEVERITY_VALIDITY_ERROR => :severity_validity_error,
+    XML::Reader::SEVERITY_WARNING => :severity_warning,
+    XML::Reader::SEVERITY_ERROR => :severity_error}
+
+  types = {
+    XML::Reader::TYPE_NONE => :none,
+    XML::Reader::TYPE_ELEMENT => :element,
+    XML::Reader::TYPE_ATTRIBUTE => :attribute,
+    XML::Reader::TYPE_TEXT => :text,
+    XML::Reader::TYPE_CDATA => :cdata,
+    XML::Reader::TYPE_ENTITY_REFERENCE => :entity_reference,
+    XML::Reader::TYPE_ENTITY => :entity,
+    XML::Reader::TYPE_PROCESSING_INSTRUCTION => :processing_instruction,
+    XML::Reader::TYPE_COMMENT => :comment,
+    XML::Reader::TYPE_DOCUMENT => :document,
+    XML::Reader::TYPE_DOCUMENT_TYPE => :document_type,
+    XML::Reader::TYPE_DOCUMENT_FRAGMENT => :document_fragment,
+    XML::Reader::TYPE_NOTATION => :notation,
+    XML::Reader::TYPE_WHITESPACE => :whitespace,
+    XML::Reader::TYPE_SIGNIFICANT_WHITESPACE => :significant_whitespace,
+    XML::Reader::TYPE_END_ELEMENT => :end_element,
+    XML::Reader::TYPE_END_ENTITY => :end_entity,
+    XML::Reader::TYPE_XML_DECLARATION => :xml_declaration}
+
+  modes = {
+    XML::Reader::MODE_INITIAL => :mode_initial,
+    XML::Reader::MODE_INTERACTIVE => :mode_interactive,
+    XML::Reader::MODE_ERROR => :mode_error,
+    XML::Reader::MODE_EOF => :mode_eof,
+    XML::Reader::MODE_CLOSED => :mode_closed,
+    XML::Reader::MODE_READING => :mode_reading }
+
+  def io(stream)
+    xml = XML::Reader.io(stream)
+    while xml.read
+      case xml.node_type
+      when XML::Reader::TYPE_ELEMENT
+
+        print "\n#{'  '*xml.depth}|#{xml.name}"
+        attrs = (0..xml.attribute_count-1).inject({}) do |hash,v|
+          xml.move_to_next_attribute
+          hash[xml.name] = xml.value
+          hash
+        end
+      end
+      print " [#{types[xml.node_type]}]"
+    end
+  end
+end
+
+x = Xml2Udon.new
+x.io(ARGF)

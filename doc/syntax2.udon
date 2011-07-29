@@ -8,7 +8,7 @@ ___              # _Scalar_        (text or basic types but indent-sensitive)
 |___ or |{___}   # _Element_       (ordered, can have duplicates)
 :___ or :{___}   # _Attribute_     (unordered, no dups. last one takes precedence)
 
-/___ or /{___}   # _Interpolation_ (Variables/tree/path possibly as loop)
+-/___ or -/{___}   # _Interpolation_ (Variables/tree/path possibly as loop)
 !___ or !{___}   # _Expression_    (directive or interpolated)
 
 
@@ -136,19 +136,9 @@ The following are equivalent:
   # Attributes: []
   # Children:   []
 
-|=== Multi-line
-
 * You can have children elements on the same line, but they can't have children
   extending to the next line:
 |first-element :blah true |second |third
                              |fourth    # Child of first-element
    |fifth # Also child of first-element
-
-|===== Attributes
-
-Attributes on their own line can have whitespace in the value without quotes
-containing the value.
-
-
-
 
