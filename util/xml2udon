@@ -7,23 +7,142 @@ class UdonChild
   attr_accessor :child_type
 end
 
-class UdonElement
+class UdonElement < UdonChild
   attr_accessor :name, :id, :unaries, :attributes, :children
   def initialize(args={})
-    @name = args.delete(:name)
-    @id = args.delete(:id)
-    @unaries = args.delete(:unaries)
+    @child_type = :element
+    @name =       args.delete(:name)
+    @id =         args.delete(:id)
+    @unaries =    args.delete(:unaries)
     @attributes = args.delete(:attributes)
-    @children = args.delete(:children)
+    @children =   args.delete(:children)
   end
 end
 
+# Node starts
+#   (for now, skip if not normal)
+#   increment depth
+#   
+include LibXML
 
+class UdonConstructor
+  attr_accessor :children
+  def initialize
+    @children = []
+    @cstack = []
+  end
+
+  # Called for a CDATA block event.
+  def on_cdata_block(cdata)
+    STDOUT << "on_cdata_block" << "\n" <<
+              "  cdata " << cdata << "\n"
+    STDOUT.flush
+  end
+
+  # Called for a characters event.
+  def on_characters(chars)
+    STDOUT << "on_characters" << "\n" <<
+              "  chars " << chars << "\n" 
+    STDOUT.flush
+  end
+
+  # Called for a comment event.
+  def on_comment(comment)
+    STDOUT << "on_comment" << "\n" <<
+              "  comment: " << comment << "\n"
+    STDOUT.flush
+  end
+
+  # Called for a end document event.
+  def on_end_document
+    STDOUT << "on_end_document\n"
+    STDOUT.flush
+  end
+
+  # Called for a end element event.
+  def on_end_element_ns(name, prefix, uri)
+    STDOUT << "on_end_element_ns" << "\n" <<
+              "  name: " << name << "\n" <<
+              "  prefix: " << prefix << "\n" <<
+              "  uri: " << uri << "\n"
+    STDOUT.flush
+  end
+
+  # Called for parser errors.
+  def on_error(error)
+    STDOUT << "on_error" << "\n"
+              "  error " << error << "\n"
+    STDOUT.flush
+  end
+
+  # Called for an external subset event.
+  def on_external_subset(name, external_id, system_id) end
+
+  # Called for an external subset notification event.
+  def on_has_external_subset
+    STDOUT << "on_has_internal_subset\n"
+    STDOUT.flush
+  end
+
+  # Called for an internal subset notification event.
+  def on_has_internal_subset
+    STDOUT << "on_has_internal_subset\n"
+    STDOUT.flush
+  end
+
+  # Called for an internal subset event.
+  def on_internal_subset(name, external_id, system_id) end
+
+  # Called for 'is standalone' event.
+  def on_is_standalone
+    STDOUT << "on_is_standalone\n"
+    STDOUT.flush
+  end
+
+  # Called for an processing instruction event.
+  def on_processing_instruction(target, data)
+    STDOUT << "on_characters" << "\n"
+              "  target: " << target << "\n" <<
+              "  data:   " << data << "\n"
+    STDOUT.flush
+  end
+
+  # Called for a reference event.
+  def on_reference(name)
+    STDOUT << "on_reference:" << "\n" <<
+              "  name:" << name << "\n"
+    STDOUT.flush
+  end
+
+  # Called for a start document event.
+  def on_start_document
+    STDOUT << "on_start_document\n"
+    STDOUT.flush
+  end
+
+  # Called for a start element event.
+  def on_start_element_ns(name, attributes, prefix, uri, namespaces)
+    fullname = (prefix=='' ? '' : prefix+':')+name
+    if (namespaces || Hash.new).count > 0
+      namespaces.each do |k,v|
+        if k.nil? then attributes['xmlns'] = v
+        else attributes['xmlns:'+k] = v end
+      end
+    end
+    @cstack << UdonElement.new(:name=>fullname,:attributes=>attributes)
+    STDOUT << "on_start_element_ns" << "\n" <<
+              "  name: " << name << "\n" <<
+              "  attr: " << (attributes || Hash.new).inspect << "\n" <<
+              "  prefix: " << prefix << "\n" <<
+              "  uri: " << uri << "\n" <<
+              "  ns_defs: " << (namespaces || Hash.new).inspect << "\n"
+    STDOUT.flush
+  end
+end
 
 class Xml2Udon
-  include LibXML
 
-  misc = {
+  MISC = {
     XML::Reader::LOADDTD => :loaddtd,
     XML::Reader::DEFAULTATTRS => :defaultattrs,
     XML::Reader::VALIDATE => :validate,
@@ -33,7 +152,7 @@ class Xml2Udon
     XML::Reader::SEVERITY_WARNING => :severity_warning,
     XML::Reader::SEVERITY_ERROR => :severity_error}
 
-  types = {
+  TYPES = {
     XML::Reader::TYPE_NONE => :none,
     XML::Reader::TYPE_ELEMENT => :element,
     XML::Reader::TYPE_ATTRIBUTE => :attribute,
@@ -53,7 +172,7 @@ class Xml2Udon
     XML::Reader::TYPE_END_ENTITY => :end_entity,
     XML::Reader::TYPE_XML_DECLARATION => :xml_declaration}
 
-  modes = {
+  MODES = {
     XML::Reader::MODE_INITIAL => :mode_initial,
     XML::Reader::MODE_INTERACTIVE => :mode_interactive,
     XML::Reader::MODE_ERROR => :mode_error,
@@ -74,10 +193,16 @@ class Xml2Udon
           hash
         end
       end
-      print " [#{types[xml.node_type]}]"
+      print " [#{TYPES[xml.node_type]}]"
     end
+  end
+
+  def saxio(stream)
+    xml = XML::SaxParser.io(stream)
+    xml.callbacks = UdonConstructor.new
+    xml.parse
   end
 end
 
 x = Xml2Udon.new
-x.io(ARGF)
+x.saxio(ARGF)
