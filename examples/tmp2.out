@@ -1,0 +1,5347 @@
+|article :xmlns:xlink http://www.w3.org/1999/xlink
+         :xmlns:ns    http://docbook.org/ns/docbook
+         :version     5.0
+         :xmlns:ns3   http://www.w3.org/1999/xhtml
+         :lang        en
+         :xmlns:ns4   http://www.w3.org/1998/Math/MathML
+         :xmlns:ns5   http://www.w3.org/2000/svg
+         :status      Committee Draft
+         :xmlns       http://docbook.org/ns/docbook
+  |info
+    |releaseinfo :role cvs| $Id: publishers.xml 8215 2009-05-05 18:46:13Z shudson310 $
+    |productname publishers
+    |productnumber 1.0
+    |releaseinfo :role stage| cd
+    |biblioid.pubsnumber 01
+    |releaseinfo :role location| http://docs.oasis-open.org/docbook/specs
+    |title The DocBook Publishers Schema
+    |org
+      |orgname OASIS
+      |orgdiv :href http://www.oasis-open.org/committees/workgroup.php?wg_abbrev=docbook| OASIS DocBook Technical Committee
+    |othercredit.other :otherclass chair
+      |personname
+        |firstname  Scott
+        |surname    Hudson
+      |affiliation
+        |shortaffil Flatirons
+        |orgname    Flatirons Solutions Corporation
+        |address
+          |email    scott.hudson@flatironssolutions.com
+    |authorgroup
+      |editor
+        |personname
+          |firstname Scott
+          |surname Hudson
+        |affiliation
+          |shortaffil Flatirons
+          |orgname Flatirons Solutions Corporation
+          |address
+            |email scott.hudson@flatironssolutions.com
+    |pubdate 2009-05-05
+    |bibliomisc :role namespace| http://docbook.org/ns/docbook
+    |copyright
+      |year 2009
+      |holder The Organization for the Advancement of Structured Information
+        Standards [OASIS]. All Rights Reserved.
+    |abstract
+      |para
+        For more than a decade, DocBook has provided a structured markup
+        vocabulary for hardware and software documentation. DocBook is now
+        widely used in both commercial and Open Source environments. DocBook
+        has a very broad element set, and applies to much more than just
+        technical documentation. The DocBook TC is engaged in evolving the
+        suite of DocBook specifications. The community benefits from having a
+        standard, open, interchangeable vocabulary in which to write structured
+        content. DocBook has been, and will continue to be, designed to satisfy
+        this requirement.
+      |para
+        The OASIS DocBook SubCommittee for Publishers is chartered to develop
+        and maintain official variants of DocBook in support of the publishing
+        industry. Specifically, the subcommittee will focus on schema and
+        stylesheet customizations to support: periodicals as regularly
+        published technical notes or journals, book publishing (such as
+        business, legal, medical, and other non-technical domains), educational
+        textbooks and other document types as appropriate for this industry.
+      |para
+        The DocBook Publishers Schema is based on DocBook 5.0, and
+        delivered in the normative RelaxNG Schema format.
+    |legalnotice :role status
+      |para
+        |link :href http://lists.oasis-open.org/archives/docbook-tc/200901/msg00014.html| approved
+      |para
+        |{email docbook-publishers@lists.oasis-open.org}| list. To subscribe, please use the |{link :href http://lists.oasis-open.org/ob/adm.pl OASIS Subscription Manager}|.
+      |para
+        The errata page for this specification is at |{link :href http://docs.oasis-open.org/docbook/specs/publishers-errata.html}.
+    |legalnotice :role notices
+      |para
+        Copyright
+        © OASIS® 2009. All Rights Reserved.
+      |para All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be found at the OASIS website.
+      |para This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy, must be followed) or as required to translate it into languages other than English.
+      |para The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.
+      |para This document and the information contained herein is provided on an "AS IS" basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+      |para OASIS requests that any OASIS Party or any other party that believes it has patent claims that would necessarily be infringed by implementations of this OASIS Committee Specification or OASIS Standard, to notify OASIS TC Administrator and provide an indication of its willingness to grant patent licenses to such patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that produced this specification.
+      |para OASIS invites any party to contact the OASIS TC Administrator if it is aware of a claim of ownership of any patent claims that would necessarily be infringed by implementations of this specification by a patent holder that is not willing to provide a license to such patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that produced this specification. OASIS may include such claims on its website, but disclaims any obligation to do so.
+      |para OASIS takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights. Information on OASIS' procedures with respect to rights in any document or deliverable produced by an OASIS Technical Committee can be found on the OASIS website. Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this OASIS Committee Specification or OASIS Standard, can be obtained from the OASIS TC Administrator. OASIS makes no representation that any information or list of intellectual property rights will at any time be complete, or that any claims in such list are, in fact, Essential Claims.
+      |para
+        |{link :href http://www.oasis-open.org/who/trademark.php} for above guidance.
+  |toc
+  |section[s.intro]
+    |title Introduction
+    |para For more than a decade, DocBook has provided a structured markup vocabulary for hardware and software documentation. DocBook is now widely used in both commercial and Open Source environments. DocBook has a very broad element set, and applies to much more than just technical documentation. The DocBook TC is engaged in evolving the suite of DocBook specifications. The community benefits from having a standard, open, interchangeable vocabulary in which to write structured content. DocBook has been, and will continue to be, designed to satisfy this requirement.
+    |para
+      The OASIS DocBook SubCommittee for Publishers is chartered to develop and maintain official variants of DocBook in support of the publishing industry. Specifically, the subcommittee will focus on schema and stylesheet customizations to support: periodicals as regularly published technical notes or journals, book publishing (such as business, legal, medical, and other
+      non-technical domains), educational textbooks and other document types as appropriate for this industry.
+    |para
+      The |{link :href mailto:docbook-publishers@lists.oasis-open.org DocBook Publishers subcommittee} maintains the DocBook Publishers schema. Based on DocBook V5.0, the DocBook Publishers schema is normatively available as a |{xref :linkend relaxng} Schema (with some additional Schematron assertions).
+    |para
+      The DocBook Technical Committee welcomes bug reports and requests for enhancement (RFEs) from the user community. The current list of outstanding requests is available through the |{link :href http://sourceforge.net/ SourceForge}|{link :href http://sourceforge.net/tracker/?atid=1037852&group_id=21935&func=browse tracker} interface. This is also the preferred mechanism for submitting new requests.
+    |para Of the 361 total elements in the full DocBook standard, the Publishers schema has been simplified to exclude 149 elements from full DocBook. Modifications have been made to 11 patterns from the DocBook schema. Additions to the schema include: the Dublin Core metadata elements (54) and 6 new elements.
+    |section[s.terminology]
+      |title Terminology
+      |para
+        The key words |{glossterm must}, |{glossterm must not}|{glossterm required}, |{glossterm shall}, |{glossterm shall not}, |{glossterm should}, |{glossterm should not}, |{glossterm recommended}, |{glossterm may}|{glossterm optional} in this Committee Draft are to be interpreted as described in |{xref :linkend rfc2119}. Note that for reasons of style, these words are not capitalized in this document.
+    |section[normative.refs]
+      |title Normative References
+      |bibliolist
+        |bibliomixed[relaxng]
+        |bibliomixed[xml-rec]
+        |bibliomixed[xlink11]
+        |bibliomixed[rfc2119]
+        |bibliomixed[rfc3023]
+        |bibliomixed[bib.docbooktdg5]
+        |bibliomixed[dcterms]
+    |section[non-normative.refs]
+      |title Non-Normative References
+      |bibliolist
+        |bibliomixed[iso8879]
+        |bibliomixed[xmlschema-1]
+        |bibliomixed[xmlschema-2]
+        |bibliomixed[schematron2000]
+  |section[s.docbook]
+    |title The DocBook Publishers RELAX NG Schema
+    |para
+      The DocBook Publishers |{link :href http://docs.oasis-open.org/docbook/rng/ RELAX NG Schema} is distributed from the |{link :href http://www.oasis-open.org/docbook/ DocBook site} at |{link :href http://www.oasis-open.org/ OASIS}. DocBook is also available from the mirror on |{link :href http://docbook.org/}.
+    |para
+      This subcommittee will submit additional enhancements back to the full DocBook standard as appropriate. The scope of this DocBook Publishers schema is publishing industry content. Broadly, this includes books, journals and other related publications. The DocBook Publishers schema has been written as a native RELAX NG grammar, based on DocBook V5.0. This effort delivers o
+      n the following goals:
+    |orderedlist
+      |listitem
+        |para Build official DocBook variant, based against the DocBook v5.0 schemas.
+      |listitem
+        |para Address issues and enhancement requests that have arisen from experience with real-world DocBook implementations.
+      |listitem
+        |para Add support for features specific to the publishing industry.
+  |section[additions]
+    |title Additions to Core DocBook
+    |para The DocBook Publishers schema includes the following elements above and beyond those currently provided by the core DocBook standard. These are considered "official customizations".
+    |para
+    |section
+      |title Explicit support for Dublin Core metadata
+      |para
+        While DocBook already includes many of the elements that are defined by the Dublin Core, it is not inherently interoperable with DC metadata. The Publisher's SC has decided to formally adopt Dublin Core metadata (issued 2008-01-14) as a formal metadata model for info elements. The Publishers schema will continue to support the base DocBook info metadata, but will allow Dublin Core elements as an alternative for capturing metadata in this widely adopted schema. In |{tag info}, authors will be allowed to use |{emphasis either}|{emphasis or} Dublin Core elements, and |{tag info} may not contain a mix of the two element sets.
+      |para As the Dublin Core standard does not provide a RelaxNG or RelaxNG Compact version of their schema, the Publishers SC has endeavored to create Dublin Core in RNC format. The Publishers SC plans to contribute the dcterms.rnc, and dcmitypes.rnc back to the Dublin Core standard.
+      |para
+        The following Dublin Core elements from the |{uri :type namespace http://purl.org/dc/terms/} namespace have been defined and included in the Publishers schema:
+      |variablelist
+        |varlistentry
+          |term title
+          |listitem
+            |para A name given to the resource.
+        |varlistentry
+          |term creator
+          |listitem
+            |para An entity primarily responsible for making the resource. Examples of a Creator include a person, an organization, or a service. Typically, the name of a Creator should be used to indicate the entity.
+        |varlistentry
+          |term subject
+          |listitem
+            |para The topic of the resource. Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary. To describe the spatial or temporal topic of the resource, use the Coverage element.
+        |varlistentry
+          |term description
+          |listitem
+            |para An account of the resource. Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource.
+        |varlistentry
+          |term publisher
+          |listitem
+            |para An entity responsible for making the resource available. Examples of a Publisher include a person, an organization, or a service. Typically, the name of a Publisher should be used to indicate the entity.
+        |varlistentry
+          |term contributor
+          |listitem
+            |para An entity responsible for making contributions to the resource. Examples of a Contributor include a person, an organization, or a service. Typically, the name of a Contributor should be used to indicate the entity.
+        |varlistentry
+          |term date
+          |listitem
+            |para A point or period of time associated with an event in the lifecycle of the resource. Date may be used to express temporal information at any level of granularity. Recommended best practice is to use an encoding scheme, such as the W3CDTF profile of ISO 8601 [W3CDTF].
+        |varlistentry
+          |term type
+          |listitem
+            |para The nature or genre of the resource. Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary [DCMITYPE]. To describe the file format, physical medium, or dimensions of the resource, use the Format element.
+        |varlistentry
+          |term format
+          |listitem
+            |para The file format, physical medium, or dimensions of the resource. Examples of dimensions include size and duration. Recommended best practice is to use a controlled vocabulary such as the list of Internet Media Types [MIME].
+        |varlistentry
+          |term identifier
+          |listitem
+            |para An unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string conforming to a formal identification system. 
+        |varlistentry
+          |term source
+          |listitem
+            |para A related resource from which the described resource is derived. The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system.
+        |varlistentry
+          |term language
+          |listitem
+            |para A language of the resource. Recommended best practice is to use a controlled vocabulary such as RFC 4646 [RFC4646].
+        |varlistentry
+          |term relation
+          |listitem
+            |para A related resource. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system. 
+        |varlistentry
+          |term coverage
+          |listitem
+            |para The spatial or temporal topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant. Spatial topic and spatial applicability may be a named place or a location specified by its geographic coordinates. Temporal topic may be a named period, date, or date range. A jurisdiction may be a named administrative entity or a geographic place to which the resource applies. Recommended best practice is to use a controlled vocabulary such as the Thesaurus of Geographic Names [TGN]. Where appropriate, named places or time periods can be used in preference to numeric identifiers such as sets of coordinates or date ranges.
+        |varlistentry
+          |term rights
+          |listitem
+            |para Information about rights held in and over the resource. Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights.
+        |varlistentry
+          |term alternative
+          |listitem
+            |para An alternative name for the resource. The distinction between titles and alternative titles is application-specific.
+        |varlistentry
+          |term tableOfContents
+          |listitem
+            |para A list of subunits of the resource.
+        |varlistentry
+          |term abstract
+          |listitem
+            |para A summary of the resource.
+        |varlistentry
+          |term created
+          |listitem
+            |para Date of creation of the resource.
+        |varlistentry
+          |term valid
+          |listitem
+            |para Date (often a range) of validity of a resource.
+        |varlistentry
+          |term available
+          |listitem
+            |para Date (often a range) that the resource became or will become available.
+        |varlistentry
+          |term issued
+          |listitem
+            |para Date of formal issuance (e.g., publication) of the resource.
+        |varlistentry
+          |term modified
+          |listitem
+            |para Date on which the resource was changed.
+        |varlistentry
+          |term dateAccepted
+          |listitem
+            |para Date of acceptance of the resource. Examples of resources to which a Date Accepted may be relevant are a thesis (accepted by a university department) or an article (accepted by a journal).
+        |varlistentry
+          |term dateCopyrighted
+          |listitem
+            |para Date of copyright.
+        |varlistentry
+          |term dateSubmitted
+          |listitem
+            |para Date of submission of the resource. Examples of resources to which a Date Submitted may be relevant are a thesis (submitted to a university department) or an article (submitted to a journal).
+        |varlistentry
+          |term extent
+          |listitem
+            |para The size or duration of the resource.
+        |varlistentry
+          |term medium
+          |listitem
+            |para The material or physical carrier of the resource.
+        |varlistentry
+          |term isVersionOf
+          |listitem
+            |para A related resource of which the described resource is a version, edition, or adaptation. Changes in version imply substantive changes in content rather than differences in format.
+        |varlistentry
+          |term hasVersion
+          |listitem
+            |para A related resource that is a version, edition, or adaptation of the described resource.
+        |varlistentry
+          |term isReplacedBy
+          |listitem
+            |para A related resource that supplants, displaces, or supersedes the described resource.
+        |varlistentry
+          |term replaces
+          |listitem
+            |para A related resource that is supplanted, displaced, or superseded by the described resource.
+        |varlistentry
+          |term isRequiredBy
+          |listitem
+            |para A related resource that requires the described resource to support its function, delivery, or coherence.
+        |varlistentry
+          |term requires
+          |listitem
+            |para A related resource that is required by the described resource to support its function, delivery, or coherence.
+        |varlistentry
+          |term isPartOf
+          |listitem
+            |para A related resource in which the described resource is physically or logically included.
+        |varlistentry
+          |term hasPart
+          |listitem
+            |para A related resource that is included either physically or logically in the described resource.
+        |varlistentry
+          |term isReferencedBy
+          |listitem
+            |para A related resource that references, cites, or otherwise points to the described resource.
+        |varlistentry
+          |term references
+          |listitem
+            |para A related resource that is referenced, cited, or otherwise pointed to by the described resource.
+        |varlistentry
+          |term isFormatOf
+          |listitem
+            |para A related resource that is substantially the same as the described resource, but in another format.
+        |varlistentry
+          |term hasFormat
+          |listitem
+            |para A related resource that is substantially the same as the pre-existing described resource, but in another format.
+        |varlistentry
+          |term conformsTo
+          |listitem
+            |para An established standard to which the described resource conforms.
+        |varlistentry
+          |term spatial
+          |listitem
+            |para Spatial characteristics of the resource.
+        |varlistentry
+          |term temporal
+          |listitem
+            |para Temporal characteristics of the resource.
+        |varlistentry
+          |term audience
+          |listitem
+            |para A class of entity for whom the resource is intended or useful.
+        |varlistentry
+          |term accrualMethod
+          |listitem
+            |para The method by which items are added to a collection.
+        |varlistentry
+          |term accrualPeriodicity
+          |listitem
+            |para The frequency with which items are added to a collection.
+        |varlistentry
+          |term accrualPolicy
+          |listitem
+            |para The policy governing the addition of items to a collection.
+        |varlistentry
+          |term instructionalMethod
+          |listitem
+            |para A process, used to engender knowledge, attitudes and skills, that the described resource is designed to support. Instructional Method will typically include ways of presenting instructional materials or conducting instructional activities, patterns of learner-to-learner and learner-to-instructor interactions, and mechanisms by which group and individual levels of learning are measured. Instructional methods include all aspects of the instruction and learning processes from planning and implementation through evaluation and feedback.
+        |varlistentry
+          |term provenance
+          |listitem
+            |para  A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation. The statement may include a description of any changes successive custodians made to the resource.
+        |varlistentry
+          |term rightsHolder
+          |listitem
+            |para A person or organization owning or managing rights over the resource.
+        |varlistentry
+          |term mediator
+          |listitem
+            |para An entity that mediates access to the resource and for whom the resource is intended or useful. In an educational context, a mediator might be a parent, teacher, teaching assistant, or care-giver.
+        |varlistentry
+          |term educationLevel
+          |listitem
+            |para A class of entity, defined in terms of progression through an educational or training context, for which the described resource is intended.
+        |varlistentry
+          |term accessRights
+          |listitem
+            |para Information about who can access the resource or an indication of its security status. Access Rights may include information regarding access or restrictions based on privacy, security, or other policies.
+        |varlistentry
+          |term license
+          |listitem
+            |para A legal document giving official permission to do something with the resource.
+        |varlistentry
+          |term bibliographicCitation
+          |listitem
+            |para A bibliographic reference for the resource. Recommended practice is to include sufficient bibliographic detail to identify the resource as unambiguously as possible.
+      |para
+        |{tag role} attributes or other logic may be required to determine the best mapping for core DocBook elements.
+      |table :frame all
+        |title Comparison of Dublin Core and core DocBook metadata elements
+        |tgroup :cols 2
+          |colspec :colname c1 :colnum 1
+          |colspec :colname c2 :colnum 2
+          |thead
+            |row
+              |entry Dublin Core element
+              |entry Core DocBook element
+          |tbody
+            |row
+              |entry
+                |tag title
+              |entry
+                |tag title
+            |row
+              |entry
+                |tag creator
+              |entry
+                |{tag author},|{tag editor},|{tag othercredit}|{footnote |{para Best practice would be to only use author for creator. Use contributor for other roles.}}
+            |row
+              |entry
+                |tag subject
+              |entry
+                |{tag keywordset},|{tag subjectset}
+            |row
+              |entry
+                |tag description
+              |entry
+                |tag abstract
+            |row
+              |entry
+                |tag publisher
+              |entry
+                |{tag publisher},|{tag publishername}
+            |row
+              |entry
+                |tag contributor
+              |entry
+                |{tag author},|{tag editor},|{tag othercredit},|{tag collab}
+            |row
+              |entry
+                |tag date
+              |entry
+                |{tag date},|{tag pubdate}
+            |row
+              |entry
+                |tag type
+              |entry
+                Derived from document element and |{tag status}
+            |row
+              |entry
+                |tag format
+              |entry
+                |tag bibliomisc role="format"
+            |row
+              |entry
+                |tag identifier
+              |entry
+                |tag biblioid
+            |row
+              |entry
+                |tag source
+              |entry
+                |tag bibliosource
+            |row
+              |entry
+                |tag language
+              |entry
+                |{tag lang} or |{tag xml:lang} attribute
+            |row
+              |entry
+                |tag relation
+              |entry
+                |tag bibliorelation
+            |row
+              |entry
+                |tag coverage
+              |entry
+                |tag bibliocoverage
+            |row
+              |entry
+                |tag rights
+              |entry
+                |{tag copyright},|{tag legalnotice}
+            |row
+              |entry
+                |tag alternative
+              |entry
+                |tag titleabbrev
+            |row
+              |entry
+                |tag tableOfContents
+              |entry
+                |tag bibliomisc role="toc"
+            |row
+              |entry
+                |tag abstract
+              |entry
+                |tag abstract
+            |row
+              |entry
+                |tag created
+              |entry
+                |tag date role="created"
+            |row
+              |entry
+                |tag valid
+              |entry
+                |tag date role="valid"
+            |row
+              |entry
+                |tag available
+              |entry
+                |tag date role="available"
+            |row
+              |entry
+                |tag issued
+              |entry
+                |tag pubdate
+            |row
+              |entry
+                |tag modified
+              |entry
+                |{tag date role="modified"},|{tag revhistory}/|{tag revision}
+            |row
+              |entry
+                |tag dateAccepted
+              |entry
+                |tag date role="accepted"
+            |row
+              |entry
+                |tag dateCopyrighted
+              |entry
+                |{tag copyright}/|{tag year}
+            |row
+              |entry
+                |tag dateSubmitted
+              |entry
+                |tag date role="submitted"
+            |row
+              |entry
+                |tag extent
+              |entry
+                |tag releaseinfo
+            |row
+              |entry
+                |tag medium
+              |entry
+                |tag bibliomisc role="medium"
+            |row
+              |entry
+                |tag isVersionOf
+              |entry
+                |tag bibliorelation type="isversionof"
+            |row
+              |entry
+                |tag hasVersion
+              |entry
+                |tag bibliorelation type="hasversion"
+            |row
+              |entry
+                |tag isReplacedBy
+              |entry
+                |tag bibliorelation type="isreplacedby"
+            |row
+              |entry
+                |tag replaces
+              |entry
+                |tag bibliorelation type="replaces"
+            |row
+              |entry
+                |tag isRequriedBy
+              |entry
+                |tag bibliorelation type="isrequiredby"
+            |row
+              |entry
+                |tag requires
+              |entry
+                |tag bibliorelation type="requires"
+            |row
+              |entry
+                |tag isPartOf
+              |entry
+                |tag bibliorelation type="ispartof"
+            |row
+              |entry
+                |tag hasPart
+              |entry
+                |tag bibliorelation type="haspart"
+            |row
+              |entry
+                |tag isReferencedBy
+              |entry
+                |tag bibliorelation type="isreferencedby"
+            |row
+              |entry
+                |tag references
+              |entry
+                |tag bibliorelation type="references"
+            |row
+              |entry
+                |tag isFormatOf
+              |entry
+                |tag bibliorelation type="isformatof"
+            |row
+              |entry
+                |tag hasFormat
+              |entry
+                |tag bibliorelation type="hasformat"
+            |row
+              |entry
+                |tag conformsTo
+              |entry
+                |{tag version} attribute
+            |row
+              |entry
+                |tag spatial
+              |entry
+                |tag bibliocoverage spatial=""
+            |row
+              |entry
+                |tag temporal
+              |entry
+                |tag bibliocoverage temporal=""
+            |row
+              |entry
+                |tag audience
+              |entry
+                |tag bibliomisc role="audience"
+            |row
+              |entry
+                |tag accrualMethod
+              |entry
+                |tag bibliomisc role="accrualMethod"
+            |row
+              |entry
+                |tag accrualPeriodicity
+              |entry
+                |tag bibliomisc role="accrualPeriodicity"
+            |row
+              |entry
+                |tag instructionalMethod
+              |entry
+                |tag bibliomisc role="instructionalMethod"
+            |row
+              |entry
+                |tag provenance
+              |entry
+                |{tag copyright}/|{tag holder},|{tag publisher}/|{tag publishername}
+            |row
+              |entry
+                |tag rightsHolder
+              |entry
+                |{tag copyright}/|{tag holder}
+            |row
+              |entry
+                |tag mediator
+              |entry
+                |tag bibliomisc role="mediator"
+            |row
+              |entry
+                |tag educationLevel
+              |entry
+                |tag bibliomisc role="educationLevel"
+            |row
+              |entry
+                |tag accessRights
+              |entry
+                |tag legalnotice
+            |row
+              |entry
+                |tag license
+              |entry
+                |tag legalnotice
+            |row
+              |entry
+                |tag bibliographicCitation
+              |entry
+                |{tag bibliomset},|{tag bibliomixed}
+    |section
+      |title New Element Definitions
+      |para The following elements have been added to support the needs of publishers:
+      |variablelist
+        |varlistentry
+          |term speaker
+          |listitem
+            |para Designates a person who is giving a speech or lecture.
+        |varlistentry
+          |term line
+          |listitem
+            |para A line of dialogue or other form of communication.
+        |varlistentry
+          |term linegroup
+          |listitem
+            |para A grouping of lines in dialogue or other form of communication.
+        |varlistentry
+          |term poetry
+          |listitem
+            |para A container for poetry.
+        |varlistentry
+          |term dialogue
+          |listitem
+            |para A container for speeches and other forms of communication involving dialogue.
+        |varlistentry
+          |term drama
+          |listitem
+            |para A container for plays and other forms of dramatic presentation.
+      |example
+        |title Example Drama
+        |para The following provides an example usage of the newly added elements:
+        |literallayout.monospaced
+          <
+          drama
+          >
+          <
+          linegroup
+          >
+          <
+          speaker
+          >
+          HAMLET
+          <
+          /speaker
+          >
+          <
+          line
+          >
+          To be, or not to be: that is the question:
+          <
+          /line
+          >
+          <
+          line
+          >
+          Whether 'tis nobler in the mind to suffer
+          <
+          /line
+          >
+          <
+          line
+          >
+          The slings and arrows of outrageous fortune,
+          <
+          /line
+          >
+          <
+          line
+          >
+          Or to take arms against a sea of troubles,
+          <
+          /line
+          >
+          <
+          line
+          >
+          <
+          /line
+          >
+          <
+          /linegroup
+          >
+          <
+          /drama
+          >
+      |example
+        |title Example Dialogue
+        |para The following provides an example usage of the newly added elements:
+        |literallayout.monospaced
+          <
+          dialogue
+          >
+          <
+          linegroup
+          >
+          <
+          speaker
+          >
+          President John F. Kennedy
+          <
+          /speaker
+          >
+          <
+          line
+          >
+          And so, my fellow Americans, ask not what your country can do for you; ask what you can do for your country.
+          <
+          <
+          line
+          >
+          My fellow citizens of the world, ask not what America will do for you, but what together we can do for the freedom of man.
+          <
+          /line
+          >
+          <
+          line
+          >
+          Finally, whether you are citizens of America or citizens of the world, ask of us here the same high standards of strength and sacrifice which we ask of you. With a good conscience our only sure reward, with history the final judge of our deeds, let us go forth to lead the land we love, asking His blessing and His help, but knowing that here on earth God's work
+          must truly be our own.
+          <
+          /line
+          >
+          <
+          /linegroup
+          >
+          <
+          /dialogue
+          >
+      |example
+        |title Example Poetry
+        |para The following provides an example usage of the newly added elements:
+        |literallayout.monospaced
+          <
+          poetry
+          >
+          <
+          title
+          >
+          Auld Lang Syne
+          <
+          /title
+          >
+          <
+          info
+          >
+          <
+          creator xmlns="http://purl.org/dc/terms/"
+          >
+          Robert Burns
+          <
+          /creator
+          >
+          <
+          /info
+          >
+          <
+          linegroup
+          >
+          <
+          line
+          >
+          Should auld acquaintance be forgot,
+          <
+          /line
+          >
+          <
+          line
+          >
+          And never brought to mind?
+          <
+          /line
+          >
+          <
+          line
+          >
+          Should auld acquaintance be forgot,
+          <
+          /line
+          >
+          <
+          line
+          >
+          And auld lang syne?
+          <
+          /line
+          >
+          <
+          /linegroup
+          >
+          <
+          linegroup
+          >
+          <
+          line
+          >
+          For auld lang syne, my dear,
+          <
+          /line
+          >
+          <
+          line
+          >
+          For auld lang syne,
+          <
+          /line
+          >
+          <
+          line
+          >
+          We'll tak a cup o' kindness yet,
+          <
+          /line
+          >
+          <
+          line
+          >
+          For auld lang syne.
+          <
+          /line
+          >
+          <
+          /linegroup
+          >
+          <
+          /poetry
+          >
+    |section
+      |title Redefined DocBook Content Models
+      |para The following content models from core DocBook have been customized to better support the needs of Publishers:
+      |variablelist
+        |varlistentry
+          |term
+            |tag sidebar
+          |listitem
+            |para
+              Several publishers demonstrated a need to have nested sections within a |{tag sidebar}. As a result, the |{tag sidebar} model was modified to allow recursive |{tag section} elements.
+            |para
+              Sidebar was also modified to allow |{tag subtitle}|{tag title}.
+        |varlistentry
+          |term
+            |tag person
+          |listitem
+            |para
+              |{tag person} element. As a result, the |{tag person} model was modified to include |{tag mediaobject}.
+        |varlistentry
+          |term
+            |tag org
+          |listitem
+            |para
+              |{tag org} element. The |{tag org} element was modified to include |{tag mediaobject}.
+        |varlistentry
+          |term
+            |tag info
+          |listitem
+            |para
+              The various patterns defining |{tag info} have been modified to allow either DocBook metadata OR Dublin Core metadata elements.
+        |varlistentry
+          |term block-level patterns
+          |listitem
+            |para
+              The block-level patterns in the schema have been modified to allow the newly created elements: |{tag dialogue}, |{tag poetry}|{tag drama}.
+  |section
+    |title Exclusions from core DocBook
+    |para
+      The DocBook Publishers Subcommittee identified 149 elements from core DocBook that, while appropriate for technical documentation, were not necessary for the broader Publishing industry. These elements are listed in |{xref :linkend excluded}.
+  |section[s.conformance]
+    |title Conformance
+    |para The DocBook Publishers schema is a valid DocBook v5.0 customization. Publications or documents will be considered conformant to this specification if they validate against the DocBook Publishers schema (publishers.rnc or publishers.rng).
+    |para Extensions allow implementers to include features that are in demand by their customers. Also, extensions, often times, define new features that may migrate into future versions of this specification. However, the use of extensions can have a severe negative impact on interoperability.
+    |para
+      Any extenstions to this schema SHALL follow the principles and guidelines of the DocBook v5.0 and this Publishers specification; that is, the specifications SHALL be extended in a standard manner as described in |{link :href http://docbook.org/tdg5/en/html/ch05.html http://docbook.org/tdg5/en/html/ch05.html}.
+    |para For implementations and/or applications that contain extensions, extensions SHALL be clearly described in supporting documentation, and the extensions SHALL be marked as such within the implementation/application.
+    |para
+      This document
+      ’s normative language is English. Translation into other languages is permitted.
+  |appendix[a.committee] :role non-normative
+    |title Acknowledgements
+    |para The following individuals have participated in the creation of this specification and are gratefully acknowledged:
+    |itemizedlist :spacing compact
+      |title Participants
+      |listitem
+        |para Jim Earley, Flatirons Solutions
+      |listitem
+        |para Dick Hamilton, Individual
+      |listitem
+        |para John Hanratty, Reed Elsevier
+      |listitem
+        |para Gary Hoffman, Individual
+      |listitem
+        |para Dave Pawson, Royal National Institute of the Blind (RNIB)
+      |listitem
+        |para
+          John Pederson, John Wiley
+          &
+          Sons, Inc.
+      |listitem
+        |para Norman Walsh, Mark Logic Corporation
+      |listitem
+        |para Keith Fahlgren, O'Reilly Media (Secretary)
+      |listitem
+        |para Scott Hudson, Flatirons Solutions (Chair, Editor)
+  |appendix
+    |title Content Model Definitions
+    |para The following sections describe the content model changes for this schema in detail.
+    |section
+      |title New Element Definitions
+      |para The following elements have been added to support the needs of publishers:
+      |table :frame all
+        |title New Publishers Elements
+        |tgroup :cols 3
+          |colspec :colname c1 :colnum 1
+          |colspec :colname c2 :colnum 2
+          |colspec :colname newCol3 :colnum 3
+          |thead
+            |row
+              |entry Element
+              |entry Defined In
+              |entry Content Model
+          |tbody
+            |row
+              |entry speaker
+              |entry db.speaker
+              |entry db.speaker.attlist, ( db.person | text)*
+            |row
+              |entry line
+              |entry db.line
+              |entry db.line.attlist, (db.all.inlines | text)+
+            |row
+              |entry linegroup
+              |entry db.linegroup
+              |entry db.linegroup.attlist, db.speaker*, (db.line|db.all.blocks)+
+            |row
+              |entry poetry
+              |entry db.poetry
+              |entry db.poetry.attlist, db.poetry.info?, (db.mediaobject|db.linegroup|db.line|db.all.blocks)+
+            |row
+              |entry dialogue
+              |entry db.dialogue
+              |entry db.dialogue.attlist, db.dialogue.info?, (db.mediaobject|db.linegroup|db.line|db.all.blocks)+
+            |row
+              |entry drama
+              |entry db.drama
+              |entry db.drama.attlist, db.drama.info?, (db.mediaobject|db.linegroup|db.line|db.all.blocks)+
+    |section[s.attrdefs]
+      |title New Attribute Definitions
+      |para
+        Each attribute list in DocBook V5.0 is defined by its own pattern. To change the list of attributes available on an element, only that pattern need be redefined. To remove all the attributes, that pattern can be redefined as |{quote |{literal empty}}.
+      |para The following attribute definitions have been added to the Publishers schema:
+      |table :frame all
+        |title Publishers Attribute Pattern Definitions
+        |tgroup :cols 2
+          |colspec :colname c1 :colnum 1
+          |colspec :colname c2 :colnum 2
+          |thead
+            |row
+              |entry Attribute pattern name
+              |entry Attribute pattern definition
+          |tbody
+            |row
+              |entry db.speaker.role.attribute
+              |entry attribute role { text }
+            |row
+              |entry db.speaker.attlist
+              |entry
+                db.speaker.role.attribute?
+                &
+                db.common.attributes
+                &
+            |row
+              |entry db.line.role.attribute
+              |entry attribute role { text }
+            |row
+              |entry db.line.attlist
+              |entry
+                db.line.role.attribute?
+                &
+                db.common.attributes
+                &
+            |row
+              |entry db.linegroup.role.attribute
+              |entry attribute role { text }
+            |row
+              |entry db.linegroup.attlist
+              |entry
+                db.linegroup.role.attribute?
+                &
+                db.common.attributes
+                &
+            |row
+              |entry db.drama.role.attribute
+              |entry attribute role { text }
+            |row
+              |entry db.drama.attlist
+              |entry
+                db.drama.role.attribute?
+                &
+                db.common.attributes
+                &
+            |row
+              |entry db.drama.role.attribute
+              |entry attribute role { text }
+            |row
+              |entry db.dialogue.attlist
+              |entry
+                db.dialogue.role.attribute?
+                &
+                db.common.attributes
+                &
+            |row
+              |entry db.poetry.role.attribute
+              |entry attribute role { text }
+            |row
+              |entry db.poetry.attlist
+              |entry
+                db.poetry.role.attribute?
+                &
+                db.common.attributes
+                &
+    |section
+      |title Dublin Core metadata elements
+      |para The following Dublin Core elements have been defined and included in the Publishers schema:
+      |literallayout
+    |section
+      |title Re-Defined DocBook Content Models
+      |para The following patterns have been re-defined in the Publishers schema:
+      |table :frame all
+        |title
+        |tgroup :cols 3
+          |colspec :colname c1 :colwidth 2* :colnum 1
+          |colspec :colname c2 :colwidth 4* :colnum 2
+          |colspec :colname c3 :colwidth 4* :colnum 3
+          |thead
+            |row
+              |entry Pattern Name
+              |entry Original Definition
+              |entry Revised Definition
+          |tbody
+            |row
+              |entry db.sidebar
+              |entry db.sidebar.attlist, db.sidebar.info, db.all.blocks+
+              |entry db.sidebar.attlist, db._title, db.sidebar.info, db.all.blocks+, db.recursive.sections*
+            |row
+              |entry db.person
+              |entry db.person.attlist, db.personname, ( db.address | db.affiliation | db.email | db.uri |
+              |entry db.person.attlist, db.personname, (db.address|db.affiliation|db.email|db.uri|db.personblurb|db.mediaobject)*
+            |row
+              |entry db.org
+              |entry db.org.attlist, db.orgname, ( db.address | db.affiliation | db.email | db.uri | db.orgdiv )*
+              |entry db.org.attlist, db.orgname, (db.address|db.affiliation|db.email|db.uri|db.orgdiv|db.mediaobject)*
+            |row
+              |entry db.info
+              |entry ( db._title, db.titleforbidden.info? ) | db.info?
+              |entry
+                db.info.attlist, ( db._title
+                &
+            |row
+              |entry db.titleforbidden.info
+              |entry db.titleforbidden.info.attlist, db.info.elements*
+              |entry db.titleforbidden.info.attlist, (db.info.elements*|db.dublincore.elements*)
+            |row
+              |entry db.titleonly.info
+              |entry
+                db.titleonly.info.attlist, ( db._title.only
+                &
+              |entry
+                db.titleonly.info.attlist, ( db._title.only
+                &
+            |row
+              |entry db.titleonlyreq.info
+              |entry
+                db.titleonlyreq.info.attlist, ( db._title.onlyreq
+                &
+              |entry
+                db.titleonlyreq.info.attlist, ( db._title.onlyreq
+                &
+            |row
+              |entry db.titlereq.info
+              |entry
+                db.titlereq.info.attlist, ( db._title.req
+                &
+                db.info.elements* )
+              |entry
+                db.titlereq.info.attlist, ( db._title.req
+                &
+            |row
+              |entry db.bibliographic.elements
+              |entry db.info.elements | db.publishing.inlines | db.citerefentry | db.citetitle | db.citebiblioid | db.person | db.personblurb | db.personname | db.subtitle | db.title | db.titleabbrev
+              |entry (db.info.elements*|db.dublincore.elements*) | db.publishing.inlines | db.citerefentry | db.citetitle | db.citebiblioid | db.person | db.personblurb | db.personname | db.subtitle | db.title | db.titleabbrev
+            |row
+              |entry db.extension.blocks
+              |entry
+              |entry db.dialogue | db.poetry
+    |section[s.elemdefs]
+      |title Included DocBook Element Definitions
+      |para
+        Each element in DocBook V5.0 is defined by its own pattern. To change the content model of an element, only that pattern need be redefined. To remove an element from DocBook, that pattern can be redefined as |{quote |{literal notAllowed}}.
+      |para The following 212 elements from full DocBook have been included:
+      |table
+        |title Included DocBook elements
+        |tgroup :cols 5
+          |colspec :colname xxx1
+          |colspec :colname xxx2
+          |colspec :colname xxx3
+          |colspec :colname xxx4
+          |colspec :colname xxx5
+          |tbody
+            |row
+              |entry
+                |para
+                  |emphasis :role strong Element Name
+              |entry
+                |para
+                  |emphasis :role strong Definition
+              |entry
+                |para
+                  |emphasis :role strong Group
+              |entry
+                |para
+                  |emphasis :role strong Module
+              |entry
+                |para
+                  |emphasis :role strong Description
+            |row
+              |entry
+                |para abbrev 
+              |entry
+                |para db.abbrev 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para An abbreviation, especially one followed by a period 
+            |row
+              |entry
+                |para abstract 
+              |entry
+                |para db.abstract 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A summary 
+            |row
+              |entry
+                |para acknowledgements 
+              |entry
+                |para db.acknowledgements 
+              |entry
+                |para db.components 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para Acknowledgements of a book or other component 
+            |row
+              |entry
+                |para acronym 
+              |entry
+                |para db.acronym 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para An often pronounceable word made from the initial (or selected) letters of a name or phrase 
+            |row
+              |entry
+                |para address 
+              |entry
+                |para db.address 
+              |entry
+                |para db.publishing.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A real-world address, generally a postal address 
+            |row
+              |entry
+                |para affiliation 
+              |entry
+                |para db.affiliation 
+              |entry
+                |para db.person.author.contentmodel 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The institutional affiliation of an individual 
+            |row
+              |entry
+                |para alt 
+              |entry
+                |para db.alt 
+              |entry
+                |para db.ubiq.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A text-only annotation, often used for accessibility 
+            |row
+              |entry
+                |para anchor 
+              |entry
+                |para db.anchor 
+              |entry
+                |para db.link.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A spot in the document 
+            |row
+              |entry
+                |para answer 
+              |entry
+                |para db.answer 
+              |entry
+                |para db.qandaentry 
+              |entry
+                |para qandaset.rnc 
+              |entry
+                |para An answer to a question posed in a QandASet 
+            |row
+              |entry
+                |para appendix 
+              |entry
+                |para db.appendix 
+              |entry
+                |para db.components 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para An appendix in a Book or Article 
+            |row
+              |entry
+                |para area 
+              |entry
+                |para db.area 
+              |entry
+                |para db.areaspec 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para area 
+              |entry
+                |para db.area.inareaset 
+              |entry
+                |para db.areaset 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para areaset 
+              |entry
+                |para db.areaset 
+              |entry
+                |para db.areaspec 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para A set of related areas in a graphic or code example 
+            |row
+              |entry
+                |para areaspec 
+              |entry
+                |para db.areaspec 
+              |entry
+                |para db.programlistingco 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para A collection of regions in a graphic or code example 
+            |row
+              |entry
+                |para article 
+              |entry
+                |para db.article 
+              |entry
+                |para db.components 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para An article 
+            |row
+              |entry
+                |para artpagenums 
+              |entry
+                |para db.artpagenums 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The page numbers of an article as published 
+            |row
+              |entry
+                |para attribution 
+              |entry
+                |para db.attribution 
+              |entry
+                |para db.blockquote 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The source of a block quote or epigraph 
+            |row
+              |entry
+                |para audiodata 
+              |entry
+                |para db.audiodata 
+              |entry
+                |para db.audioobject 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Pointer to external audio data 
+            |row
+              |entry
+                |para audioobject 
+              |entry
+                |para db.audioobject 
+              |entry
+                |para db.mediaobject.content 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para author 
+              |entry
+                |para db.author 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The name of an individual author 
+            |row
+              |entry
+                |para authorgroup 
+              |entry
+                |para db.authorgroup 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Wrapper for author information when a document has multiple authors or collabarators 
+            |row
+              |entry
+                |para authorinitials 
+              |entry
+                |para db.authorinitials 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The initials or other short identifier for an author 
+            |row
+              |entry
+                |para bibliocoverage 
+              |entry
+                |para db.bibliocoverage 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The spatial or temporal coverage of a document 
+            |row
+              |entry
+                |para bibliodiv 
+              |entry
+                |para db.bibliodiv 
+              |entry
+                |para db.bibliography 
+              |entry
+                |para bibliography.rnc 
+              |entry
+                |para A section of a Bibliography 
+            |row
+              |entry
+                |para biblioentry 
+              |entry
+                |para db.biblioentry 
+              |entry
+                |para db.bibliography 
+              |entry
+                |para bibliography.rnc 
+              |entry
+                |para An entry in a Bibliography 
+            |row
+              |entry
+                |para bibliography 
+              |entry
+                |para db.bibliography 
+              |entry
+                |para db.navigation.components 
+              |entry
+                |para bibliography.rnc 
+              |entry
+                |para A bibliography 
+            |row
+              |entry
+                |para biblioid 
+              |entry
+                |para db.biblioid 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para An identifier for a document 
+            |row
+              |entry
+                |para bibliolist 
+              |entry
+                |para db.bibliolist 
+              |entry
+                |para db.list.blocks 
+              |entry
+                |para bibliography.rnc 
+              |entry
+                |para A wrapper for a list of bibliography entries 
+            |row
+              |entry
+                |para bibliomisc 
+              |entry
+                |para db.bibliomisc 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para bibliography.rnc 
+              |entry
+                |para Untyped bibliographic information 
+            |row
+              |entry
+                |para bibliomixed 
+              |entry
+                |para db.bibliomixed 
+              |entry
+                |para db.bibliography 
+              |entry
+                |para bibliography.rnc 
+              |entry
+                |para An entry in a Bibliography 
+            |row
+              |entry
+                |para bibliomset 
+              |entry
+                |para db.bibliomset 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para bibliography.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para biblioref 
+              |entry
+                |para db.biblioref 
+              |entry
+                |para db.link.inlines 
+              |entry
+                |para bibliography.rnc 
+              |entry
+                |para A cross-reference to a bibliographic entry 
+            |row
+              |entry
+                |para bibliorelation 
+              |entry
+                |para db.bibliorelation 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The relationship of a document to another 
+            |row
+              |entry
+                |para biblioset 
+              |entry
+                |para db.biblioset 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para bibliography.rnc 
+              |entry
+                |para A raw container for related bibliographic information 
+            |row
+              |entry
+                |para bibliosource 
+              |entry
+                |para db.bibliosource 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The source of a document 
+            |row
+              |entry
+                |para blockquote 
+              |entry
+                |para db.blockquote 
+              |entry
+                |para db.publishing.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A quotation set off from the main text 
+            |row
+              |entry
+                |para book 
+              |entry
+                |para db.book 
+              |entry
+                |para db.set.components 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para A book 
+            |row
+              |entry
+                |para bridgehead 
+              |entry
+                |para db.bridgehead 
+              |entry
+                |para db.nopara.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A free-floating heading 
+            |row
+              |entry
+                |para callout 
+              |entry
+                |para db.callout 
+              |entry
+                |para db.calloutlist 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para A called out description of a marked Area 
+            |row
+              |entry
+                |para calloutlist 
+              |entry
+                |para db.calloutlist 
+              |entry
+                |para db.list.blocks 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para A list of callouts 
+            |row
+              |entry
+                |para caption 
+              |entry
+                |para db.caption 
+              |entry
+                |para db.example 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A caption 
+            |row
+              |entry
+                |para caption 
+              |entry
+                |para db.html.caption 
+              |entry
+                |para db.html.table.model 
+              |entry
+                |para htmltbl.rnc 
+              |entry
+                |para An HTML table caption 
+            |row
+              |entry
+                |para chapter 
+              |entry
+                |para db.chapter 
+              |entry
+                |para db.components 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para A chapter, as of a book 
+            |row
+              |entry
+                |para citation 
+              |entry
+                |para db.citation 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para citebiblioid 
+              |entry
+                |para db.citebiblioid 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A citation of a bibliographic identifier 
+            |row
+              |entry
+                |para citetitle 
+              |entry
+                |para db.citetitle 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The title of a cited work 
+            |row
+              |entry
+                |para city 
+              |entry
+                |para db.city 
+              |entry
+                |para db.address 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The name of a city in an address 
+            |row
+              |entry
+                |para co 
+              |entry
+                |para db.co 
+              |entry
+                |para db.verbatim.inlines 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para The location of a callout embedded in text 
+            |row
+              |entry
+                |para collab 
+              |entry
+                |para db.collab 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Identifies a collaborator 
+            |row
+              |entry
+                |para colophon 
+              |entry
+                |para db.colophon 
+              |entry
+                |para db.components 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para Text at the back of a book describing facts about its production 
+            |row
+              |entry
+                |para colspec 
+              |entry
+                |para db.colspec 
+              |entry
+                |para db.tgroup 
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para Specifications for a column in a table 
+            |row
+              |entry
+                |para confdates 
+              |entry
+                |para db.confdates 
+              |entry
+                |para db.confgroup 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para confgroup 
+              |entry
+                |para db.confgroup 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para confnum 
+              |entry
+                |para db.confnum 
+              |entry
+                |para db.confgroup 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para An identifier, frequently numerical, associated with a conference for which a document was written 
+            |row
+              |entry
+                |para confsponsor 
+              |entry
+                |para db.confsponsor 
+              |entry
+                |para db.confgroup 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para conftitle 
+              |entry
+                |para db.conftitle 
+              |entry
+                |para db.confgroup 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para contractnum 
+              |entry
+                |para db.contractnum 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The contract number of a document 
+            |row
+              |entry
+                |para contractsponsor 
+              |entry
+                |para db.contractsponsor 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The sponsor of a contract 
+            |row
+              |entry
+                |para contrib 
+              |entry
+                |para db.contrib 
+              |entry
+                |para db.person.author.contentmodel 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A summary of the contributions made to a document by a credited source 
+            |row
+              |entry
+                |para copyright 
+              |entry
+                |para db.copyright 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Copyright information about a document 
+            |row
+              |entry
+                |para coref 
+              |entry
+                |para db.coref 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para A cross reference to a co 
+            |row
+              |entry
+                |para country 
+              |entry
+                |para db.country 
+              |entry
+                |para db.address 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The name of a country 
+            |row
+              |entry
+                |para cover 
+              |entry
+                |para db.cover 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Additional content for the cover of a publication 
+            |row
+              |entry
+                |para date 
+              |entry
+                |para db.date 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The date of publication or revision of a document 
+            |row
+              |entry
+                |para dedication 
+              |entry
+                |para db.dedication 
+              |entry
+                |para db.components 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para The dedication of a book or other component 
+            |row
+              |entry
+                |para edition 
+              |entry
+                |para db.edition 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The name or number of an edition of a document 
+            |row
+              |entry
+                |para editor 
+              |entry
+                |para db.editor 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The name of the editor of a document 
+            |row
+              |entry
+                |para email 
+              |entry
+                |para db.email 
+              |entry
+                |para db.markup.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para An email address 
+            |row
+              |entry
+                |para emphasis 
+              |entry
+                |para db._emphasis 
+              |entry
+                |para db._emphasis 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A limited span of emphasized text 
+            |row
+              |entry
+                |para emphasis 
+              |entry
+                |para db.emphasis 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Emphasized text 
+            |row
+              |entry
+                |para entry 
+              |entry
+                |para db.entry 
+              |entry
+                |para db.row 
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para A cell in a table 
+            |row
+              |entry
+                |para entrytbl 
+              |entry
+                |para db.entrytbl 
+              |entry
+                |para db.row 
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para A subtable appearing in place of an Entry in a table 
+            |row
+              |entry
+                |para epigraph 
+              |entry
+                |para db.epigraph 
+              |entry
+                |para db.publishing.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A short inscription at the beginning of a document or component 
+            |row
+              |entry
+                |para equation 
+              |entry
+                |para db.equation 
+              |entry
+                |para db.formal.blocks 
+              |entry
+                |para math.rnc 
+              |entry
+                |para A displayed mathematical equation 
+            |row
+              |entry
+                |para example 
+              |entry
+                |para db.example 
+              |entry
+                |para db.formal.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A formal example, with a title 
+            |row
+              |entry
+                |para fax 
+              |entry
+                |para db.fax 
+              |entry
+                |para db.address 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A fax number 
+            |row
+              |entry
+                |para figure 
+              |entry
+                |para db.figure 
+              |entry
+                |para db.formal.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para firstname 
+              |entry
+                |para db.firstname 
+              |entry
+                |para db.personname 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The first name of a person 
+            |row
+              |entry
+                |para firstterm 
+              |entry
+                |para db.firstterm 
+              |entry
+                |para db.glossary.inlines 
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para The first occurrence of a term 
+            |row
+              |entry
+                |para footnote 
+              |entry
+                |para db.footnote 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A footnote 
+            |row
+              |entry
+                |para footnoteref 
+              |entry
+                |para db.footnoteref 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A cross reference to a footnote (a footnote mark) 
+            |row
+              |entry
+                |para foreignphrase 
+              |entry
+                |para db.foreignphrase 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A word or phrase in a language other than the primary language of the document 
+            |row
+              |entry
+                |para formalpara 
+              |entry
+                |para db.formalpara 
+              |entry
+                |para db.para.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A paragraph with a title 
+            |row
+              |entry
+                |para glossary 
+              |entry
+                |para db.glossary 
+              |entry
+                |para db.navigation.components 
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para A glossary 
+            |row
+              |entry
+                |para glossdef 
+              |entry
+                |para db.glossdef 
+              |entry
+                |para db.glossentry 
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para A definition in a GlossEntry 
+            |row
+              |entry
+                |para glossdiv 
+              |entry
+                |para db.glossdiv 
+              |entry
+                |para db.glossary 
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para A division in a Glossary 
+            |row
+              |entry
+                |para glossentry 
+              |entry
+                |para db.glossentry 
+              |entry
+                |para db.glosslist 
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para An entry in a Glossary or GlossList 
+            |row
+              |entry
+                |para glosslist 
+              |entry
+                |para db.glosslist 
+              |entry
+                |para db.list.blocks 
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para A wrapper for a list of glossary entries 
+            |row
+              |entry
+                |para glosssee 
+              |entry
+                |para db.glosssee 
+              |entry
+                |para db.glossentry 
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para A cross-reference from one glossentry to another 
+            |row
+              |entry
+                |para glossseealso 
+              |entry
+                |para db.glossseealso 
+              |entry
+                |para db.glossdef 
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para A cross-reference from one GlossEntry to another 
+            |row
+              |entry
+                |para glossterm 
+              |entry
+                |para db.glossterm 
+              |entry
+                |para db.glossary.inlines 
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para A glossary term 
+            |row
+              |entry
+                |para holder 
+              |entry
+                |para db.holder 
+              |entry
+                |para db.copyright 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The name of the individual or organization that holds a copyright 
+            |row
+              |entry
+                |para honorific 
+              |entry
+                |para db.honorific 
+              |entry
+                |para db.personname 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The title of a person 
+            |row
+              |entry
+                |para imagedata 
+              |entry
+                |para db.imagedata 
+              |entry
+                |para db.imageobject.content 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Pointer to external image data 
+            |row
+              |entry
+                |para imagedata 
+              |entry
+                |para db.imagedata.svg 
+              |entry
+                |para db.imageobject.content 
+              |entry
+                |para svg.rnc 
+              |entry
+                |para An SVG drawing in a media object 
+            |row
+              |entry
+                |para imagedata 
+              |entry
+                |para db.imagedata.mathml 
+              |entry
+                |para db.imageobject.content 
+              |entry
+                |para mathml.rnc 
+              |entry
+                |para A MathML expression in a media object 
+            |row
+              |entry
+                |para imageobject 
+              |entry
+                |para db.imageobject 
+              |entry
+                |para db.mediaobject.content 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para imageobjectco 
+              |entry
+                |para db.imageobjectco 
+              |entry
+                |para db.mediaobject.content 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para A wrapper for an image object with callouts 
+            |row
+              |entry
+                |para index 
+              |entry
+                |para db.index 
+              |entry
+                |para db.navigation.components 
+              |entry
+                |para index.rnc 
+              |entry
+                |para An index to a book or part of a book 
+            |row
+              |entry
+                |para indexterm 
+              |entry
+                |para db.indexterm.endofrange 
+              |entry
+                |para db.indexterm 
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para indexterm 
+              |entry
+                |para db.indexterm.startofrange 
+              |entry
+                |para db.indexterm 
+              |entry
+                |para index.rnc 
+              |entry
+                |para A wrapper for an indexed term that covers a range 
+            |row
+              |entry
+                |para indexterm 
+              |entry
+                |para db.indexterm.singular 
+              |entry
+                |para db.itermset 
+              |entry
+                |para index.rnc 
+              |entry
+                |para A wrapper for an indexed term 
+            |row
+              |entry
+                |para info 
+              |entry
+                |para db.titleonly.info 
+              |entry
+                |para db._info.title.only 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A wrapper for information about a component or other block with only a title 
+            |row
+              |entry
+                |para info 
+              |entry
+                |para db.info 
+              |entry
+                |para db._info 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para info 
+              |entry
+                |para db.titlereq.info 
+              |entry
+                |para db._info.title.req 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A wrapper for information about a component or other block with a required title 
+            |row
+              |entry
+                |para info 
+              |entry
+                |para db.titleforbidden.info 
+              |entry
+                |para db._info 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A wrapper for information about a component or other block without a title 
+            |row
+              |entry
+                |para info 
+              |entry
+                |para db.titleonlyreq.info 
+              |entry
+                |para db._info.title.onlyreq 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A wrapper for information about a component or other block with only a required title 
+            |row
+              |entry
+                |para informalequation 
+              |entry
+                |para db.informalequation 
+              |entry
+                |para db.informal.blocks 
+              |entry
+                |para math.rnc 
+              |entry
+                |para A displayed mathematical equation without a title 
+            |row
+              |entry
+                |para informalexample 
+              |entry
+                |para db.informalexample 
+              |entry
+                |para db.informal.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A displayed example without a title 
+            |row
+              |entry
+                |para informalfigure 
+              |entry
+                |para db.informalfigure 
+              |entry
+                |para db.informal.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A untitled figure 
+            |row
+              |entry
+                |para informaltable 
+              |entry
+                |para db.cals.informaltable 
+              |entry
+                |para db.informaltable.choice 
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para A table without a title 
+            |row
+              |entry
+                |para inlineequation 
+              |entry
+                |para db.inlineequation 
+              |entry
+                |para db.math.inlines 
+              |entry
+                |para math.rnc 
+              |entry
+                |para A mathematical equation or expression occurring inline 
+            |row
+              |entry
+                |para inlinemediaobject 
+              |entry
+                |para db.inlinemediaobject 
+              |entry
+                |para db.ubiq.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para issuenum 
+              |entry
+                |para db.issuenum 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The number of an issue of a journal 
+            |row
+              |entry
+                |para itemizedlist 
+              |entry
+                |para db.itemizedlist 
+              |entry
+                |para db.list.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A list in which each entry is marked with a bullet or other dingbat 
+            |row
+              |entry
+                |para itermset 
+              |entry
+                |para db.itermset 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para jobtitle 
+              |entry
+                |para db.jobtitle 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The title of an individual in an organization 
+            |row
+              |entry
+                |para keyword 
+              |entry
+                |para db.keyword 
+              |entry
+                |para db.keywordset 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para keywordset 
+              |entry
+                |para db.keywordset 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A set of keywords describing the content of a document 
+            |row
+              |entry
+                |para label 
+              |entry
+                |para db.label 
+              |entry
+                |para db.question 
+              |entry
+                |para qandaset.rnc 
+              |entry
+                |para A label on a Question or Answer 
+            |row
+              |entry
+                |para legalnotice 
+              |entry
+                |para db.legalnotice 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A statement of legal obligations or requirements 
+            |row
+              |entry
+                |para lineage 
+              |entry
+                |para db.lineage 
+              |entry
+                |para db.personname 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The portion of a person's name indicating a relationship to ancestors 
+            |row
+              |entry
+                |para link 
+              |entry
+                |para db.link 
+              |entry
+                |para db.link.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A hypertext link 
+            |row
+              |entry
+                |para listitem 
+              |entry
+                |para db.listitem 
+              |entry
+                |para db.itemizedlist 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A wrapper for the elements of a list item 
+            |row
+              |entry
+                |para literal 
+              |entry
+                |para db.literal 
+              |entry
+                |para db.markup.inlines 
+              |entry
+                |para markup.rnc 
+              |entry
+                |para Inline text that is some literal value 
+            |row
+              |entry
+                |para literallayout 
+              |entry
+                |para db.literallayout 
+              |entry
+                |para db.verbatim.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A block of text in which line breaks and white space are to be reproduced faithfully 
+            |row
+              |entry
+                |para mathphrase 
+              |entry
+                |para db.mathphrase 
+              |entry
+                |para db.equation.content 
+              |entry
+                |para math.rnc 
+              |entry
+                |para A mathematical phrase, an expression that can be represented with ordinary text and a small amount of markup 
+            |row
+              |entry
+                |para mediaobject 
+              |entry
+                |para db.mediaobject 
+              |entry
+                |para db.graphic.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A displayed media object (video, audio, image, etc.) 
+            |row
+              |entry
+                |para member 
+              |entry
+                |para db.member 
+              |entry
+                |para db.simplelist 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para An element of a simple list 
+            |row
+              |entry
+                |para note 
+              |entry
+                |para db.note 
+              |entry
+                |para db.admonition.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A message set off from the text 
+            |row
+              |entry
+                |para olink 
+              |entry
+                |para db.olink 
+              |entry
+                |para db.link.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A link that addresses its target indirectly 
+            |row
+              |entry
+                |para optional 
+              |entry
+                |para db.optional 
+              |entry
+                |para db.technical.inlines 
+              |entry
+                |para technical.rnc 
+              |entry
+                |para Optional information 
+            |row
+              |entry
+                |para orderedlist 
+              |entry
+                |para db.orderedlist 
+              |entry
+                |para db.list.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A list in which each entry is marked with a sequentially incremented label 
+            |row
+              |entry
+                |para org 
+              |entry
+                |para db.org 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para An organization and associated metadata 
+            |row
+              |entry
+                |para orgdiv 
+              |entry
+                |para db.orgdiv 
+              |entry
+                |para db.affiliation 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A division of an organization 
+            |row
+              |entry
+                |para orgname 
+              |entry
+                |para db.orgname 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The name of an organization other than a corporation 
+            |row
+              |entry
+                |para otheraddr 
+              |entry
+                |para db.otheraddr 
+              |entry
+                |para db.address 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Uncategorized information in address 
+            |row
+              |entry
+                |para othercredit 
+              |entry
+                |para db.othercredit 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A person or entity, other than an author or editor, credited in a document 
+            |row
+              |entry
+                |para othername 
+              |entry
+                |para db.othername 
+              |entry
+                |para db.personname 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A component of a persons name that is not a first name, surname, or lineage 
+            |row
+              |entry
+                |para pagenums 
+              |entry
+                |para db.pagenums 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The numbers of the pages in a book, for use in a bibliographic entry 
+            |row
+              |entry
+                |para para 
+              |entry
+                |para db.para 
+              |entry
+                |para db.para.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A paragraph 
+            |row
+              |entry
+                |para part 
+              |entry
+                |para db.part 
+              |entry
+                |para db.divisions 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para A division in a book 
+            |row
+              |entry
+                |para partintro 
+              |entry
+                |para db.partintro 
+              |entry
+                |para db.part 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para An introduction to the contents of a part 
+            |row
+              |entry
+                |para person 
+              |entry
+                |para db.person 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A person and associated metadata 
+            |row
+              |entry
+                |para personblurb 
+              |entry
+                |para db.personblurb 
+              |entry
+                |para db.person.author.contentmodel 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A short description or note about a person 
+            |row
+              |entry
+                |para personname 
+              |entry
+                |para db.personname 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The personal name of an individual 
+            |row
+              |entry
+                |para phone 
+              |entry
+                |para db.phone 
+              |entry
+                |para db.address 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A telephone number 
+            |row
+              |entry
+                |para phrase 
+              |entry
+                |para db.phrase 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A span of text 
+            |row
+              |entry
+                |para phrase 
+              |entry
+                |para db._phrase 
+              |entry
+                |para db._text 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A limited span of text 
+            |row
+              |entry
+                |para pob 
+              |entry
+                |para db.pob 
+              |entry
+                |para db.address 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A post office box in an address 
+            |row
+              |entry
+                |para postcode 
+              |entry
+                |para db.postcode 
+              |entry
+                |para db.address 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A postal code in an address 
+            |row
+              |entry
+                |para preface 
+              |entry
+                |para db.preface 
+              |entry
+                |para db.components 
+              |entry
+                |para hier.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para primary 
+              |entry
+                |para db.primary 
+              |entry
+                |para db.indexterm.contentmodel 
+              |entry
+                |para index.rnc 
+              |entry
+                |para The primary word or phrase under which an index term should be sorted 
+            |row
+              |entry
+                |para printhistory 
+              |entry
+                |para db.printhistory 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The printing history of a document 
+            |row
+              |entry
+                |para procedure 
+              |entry
+                |para db.procedure 
+              |entry
+                |para db.technical.blocks 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A list of operations to be performed in a well-defined sequence 
+            |row
+              |entry
+                |para productname 
+              |entry
+                |para db.productname 
+              |entry
+                |para db.product.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The formal name of a product 
+            |row
+              |entry
+                |para productnumber 
+              |entry
+                |para db.productnumber 
+              |entry
+                |para db.product.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A number assigned to a product 
+            |row
+              |entry
+                |para pubdate 
+              |entry
+                |para db.pubdate 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The date of publication of a document 
+            |row
+              |entry
+                |para publisher 
+              |entry
+                |para db.publisher 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The publisher of a document 
+            |row
+              |entry
+                |para publishername 
+              |entry
+                |para db.publishername 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The name of the publisher of a document 
+            |row
+              |entry
+                |para qandadiv 
+              |entry
+                |para db.qandadiv 
+              |entry
+                |para db.qandaset 
+              |entry
+                |para qandaset.rnc 
+              |entry
+                |para A titled division in a QandASet 
+            |row
+              |entry
+                |para qandaentry 
+              |entry
+                |para db.qandaentry 
+              |entry
+                |para db.qandaset 
+              |entry
+                |para qandaset.rnc 
+              |entry
+                |para A question/answer set within a QandASet 
+            |row
+              |entry
+                |para qandaset 
+              |entry
+                |para db.qandaset 
+              |entry
+                |para db.list.blocks 
+              |entry
+                |para qandaset.rnc 
+              |entry
+                |para A question-and-answer set 
+            |row
+              |entry
+                |para question 
+              |entry
+                |para db.question 
+              |entry
+                |para db.qandaentry 
+              |entry
+                |para qandaset.rnc 
+              |entry
+                |para A question in a QandASet 
+            |row
+              |entry
+                |para quote 
+              |entry
+                |para db.quote 
+              |entry
+                |para db.publishing.inlines 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para An inline quotation 
+            |row
+              |entry
+                |para releaseinfo 
+              |entry
+                |para db.releaseinfo 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para remark 
+              |entry
+                |para remark 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A remark (or comment) intended for presentation in a draft manuscript 
+            |row
+              |entry
+                |para revdescription 
+              |entry
+                |para revdescription 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para revhistory 
+              |entry
+                |para revhistory 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para revision 
+              |entry
+                |para revision 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para revnumber 
+              |entry
+                |para revnumber 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para revremark 
+              |entry
+                |para revremark 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para row 
+              |entry
+                |para row 
+              |entry
+                |para
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para secondary 
+              |entry
+                |para secondary 
+              |entry
+                |para
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para secondaryie 
+              |entry
+                |para secondaryie 
+              |entry
+                |para
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para section 
+              |entry
+                |para db.section 
+              |entry
+                |para
+              |entry
+                |para hier.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para see 
+              |entry
+                |para see 
+              |entry
+                |para
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para seealso 
+              |entry
+                |para seealso 
+              |entry
+                |para
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para seriesvolnums 
+              |entry
+                |para seriesvolnums 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para set 
+              |entry
+                |para set 
+              |entry
+                |para
+              |entry
+                |para hier.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para setindex 
+              |entry
+                |para setindex 
+              |entry
+                |para
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para shortaffil 
+              |entry
+                |para shortaffil 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para sidebar 
+              |entry
+                |para sidebar 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A portion of a document that is isolated from the main narrative flow 
+            |row
+              |entry
+                |para simpara 
+              |entry
+                |para simpara 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A paragraph that contains only text and inline markup, no block elements 
+            |row
+              |entry
+                |para simplelist 
+              |entry
+                |para simplelist 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para An undecorated list of single words or short phrases 
+            |row
+              |entry
+                |para simplesect 
+              |entry
+                |para simplesect 
+              |entry
+                |para
+              |entry
+                |para hier.rnc 
+              |entry
+                |para A section of a document with no subdivisions 
+            |row
+              |entry
+                |para spanspec 
+              |entry
+                |para spanspec 
+              |entry
+                |para
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para state 
+              |entry
+                |para state 
+              |entry
+                |para
+              |entry
+                |para
+              |entry
+                |para
+            |row
+              |entry
+                |para step 
+              |entry
+                |para step 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A unit of action in a procedure 
+            |row
+              |entry
+                |para stepalternatives 
+              |entry
+                |para stepalternatives 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Alternative steps in a procedure 
+            |row
+              |entry
+                |para street 
+              |entry
+                |para street 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para subject 
+              |entry
+                |para subject 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para One of a group of terms describing the subject matter of a document 
+            |row
+              |entry
+                |para subjectset 
+              |entry
+                |para subjectset 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para subjectterm 
+              |entry
+                |para subjectterm 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A term in a group of terms describing the subject matter of a document 
+            |row
+              |entry
+                |para subscript 
+              |entry
+                |para subscript 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para substeps 
+              |entry
+                |para substeps 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para subtitle 
+              |entry
+                |para subtitle 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The subtitle of a document 
+            |row
+              |entry
+                |para superscript 
+              |entry
+                |para superscript 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para surname 
+              |entry
+                |para surname 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para table 
+              |entry
+                |para table 
+              |entry
+                |para
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para task 
+              |entry
+                |para task 
+              |entry
+                |para
+              |entry
+                |para tasks.rnc 
+              |entry
+                |para A task to be completed 
+            |row
+              |entry
+                |para taskprerequisites 
+              |entry
+                |para taskprerequisites 
+              |entry
+                |para
+              |entry
+                |para tasks.rnc 
+              |entry
+                |para The prerequisites for a task 
+            |row
+              |entry
+                |para taskrelated 
+              |entry
+                |para taskrelated 
+              |entry
+                |para
+              |entry
+                |para tasks.rnc 
+              |entry
+                |para Information related to a task 
+            |row
+              |entry
+                |para tasksummary 
+              |entry
+                |para tasksummary 
+              |entry
+                |para
+              |entry
+                |para tasks.rnc 
+              |entry
+                |para A summary of a task 
+            |row
+              |entry
+                |para tbody 
+              |entry
+                |para tbody 
+              |entry
+                |para
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para term 
+              |entry
+                |para term 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The word or phrase being defined or described in a variable list 
+            |row
+              |entry
+                |para termdef 
+              |entry
+                |para db.termdef 
+              |entry
+                |para
+              |entry
+                |para glossary.rnc 
+              |entry
+                |para An inline definition of a term 
+            |row
+              |entry
+                |para tertiary 
+              |entry
+                |para tertiary 
+              |entry
+                |para
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para textdata 
+              |entry
+                |para textdata 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Pointer to external text data 
+            |row
+              |entry
+                |para textobject 
+              |entry
+                |para textobject 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A wrapper for a text description of an object and its associated meta-information 
+            |row
+              |entry
+                |para tfoot 
+              |entry
+                |para tfoot 
+              |entry
+                |para
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para tgroup 
+              |entry
+                |para tgroup 
+              |entry
+                |para
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para thead 
+              |entry
+                |para thead 
+              |entry
+                |para
+              |entry
+                |para calstbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para title 
+              |entry
+                |para title 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The text of the title of a section of a document or of a formal block-level element 
+            |row
+              |entry
+                |para titleabbrev 
+              |entry
+                |para titleabbrev 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para The abbreviation of a title 
+            |row
+              |entry
+                |para toc 
+              |entry
+                |para toc 
+              |entry
+                |para
+              |entry
+                |para toc.rnc 
+              |entry
+                |para A table of contents 
+            |row
+              |entry
+                |para trademark 
+              |entry
+                |para trademark 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para uri 
+              |entry
+                |para uri 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para variablelist 
+              |entry
+                |para variablelist 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A list in which each entry is composed of a set of one or more terms and an associated description 
+            |row
+              |entry
+                |para varlistentry 
+              |entry
+                |para varlistentry 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para A wrapper for a set of terms and the associated description in a variable list 
+            |row
+              |entry
+                |para videodata 
+              |entry
+                |para videodata 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Pointer to external video data 
+            |row
+              |entry
+                |para videoobject 
+              |entry
+                |para videoobject 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para volumenum 
+              |entry
+                |para volumenum 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para wordasword 
+              |entry
+                |para db.wordasword 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para xref 
+              |entry
+                |para xref 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para year 
+              |entry
+                |para year 
+              |entry
+                |para
+              |entry
+                |para pool.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para *.* 
+              |entry
+                |para db._any 
+              |entry
+                |para db._any 
+              |entry
+                |para pool.rnc 
+              |entry
+                |para Any element from almost any namespace 
+    |section[excluded]
+      |title Excluded DocBook Element Definitions
+      |para In the interest of providing a schema that meets the needs of the Publishing industry, the following considerations were made with regard to the modular approach to the schema and the exclusion of certain core DocBook elements:
+      |variablelist
+        |varlistentry
+          |term Simplified markup
+          |listitem
+            |para The focus should be on the structural, presentational and semantic markup that meets the needs of Publishers.
+        |varlistentry
+          |term No technical elements
+          |listitem
+            |para The vast majority of Publishers will not need the technical elements from core DocBook. For those titles that require technical markup, the inlines can easily be added as a module to the Publishers schema.
+        |varlistentry
+          |term Generated text
+          |listitem
+            |para With the robust DocBook toolchain, most Publishers will want to automate the creation of a Table of Contents and Index.
+      |para The following 149 elements from full DocBook have been excluded from the Publishers schema:
+      |note
+        |para Because the Publishers schema is written in RelaxNG Compact syntax, it is very easy to add elements back into a customization of the Publishers schema. For example, if the elements in the programming module were needed, it is very simple to use an include statement for the programming.rnc file from the source DocBook distribution.
+        |para in favor of generated text, removed tech writing specific, simplify the markup burden
+      |table
+        |title Excluded DocBook elements
+        |tgroup :cols 5
+          |colspec :colname xxx1
+          |colspec :colname xxx2
+          |colspec :colname xxx3
+          |colspec :colname xxx4
+          |colspec :colname xxx5
+          |tbody
+            |row
+              |entry
+                |para
+                  |emphasis :role strong Element Name
+              |entry
+                |para
+                  |emphasis :role strong Definition
+              |entry
+                |para
+                  |emphasis :role strong Group
+              |entry
+                |para
+                  |emphasis :role strong Module
+              |entry
+                |para
+                  |emphasis :role strong Description
+            |row
+              |entry
+                |para accel 
+              |entry
+                |para db.accel 
+              |entry
+                |para db.keyboard.inlines 
+              |entry
+                |para keyboard.rnc 
+              |entry
+                |para A graphical user interface (GUI) keyboard shortcut 
+            |row
+              |entry
+                |para annotation 
+              |entry
+                |para db.annotation 
+              |entry
+                |para db.ubiq.inlines 
+              |entry
+                |para annotations.rnc 
+              |entry
+                |para An annotation 
+            |row
+              |entry
+                |para application 
+              |entry
+                |para db.application 
+              |entry
+                |para db.product.inlines 
+              |entry
+                |para product.rnc 
+              |entry
+                |para The name of a software program 
+            |row
+              |entry
+                |para arc 
+              |entry
+                |para db.arc 
+              |entry
+                |para db.extendedlink 
+              |entry
+                |para xlink.rnc 
+              |entry
+                |para An XLink arc in an extendedlink 
+            |row
+              |entry
+                |para arg 
+              |entry
+                |para db.arg 
+              |entry
+                |para db.cmdsynopsis 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para An argument in a CmdSynopsis 
+            |row
+              |entry
+                |para caution 
+              |entry
+                |para db.caution 
+              |entry
+                |para db.admonition.blocks 
+              |entry
+                |para admonitions.rnc 
+              |entry
+                |para A note of caution 
+            |row
+              |entry
+                |para citerefentry 
+              |entry
+                |para db.citerefentry 
+              |entry
+                |para db.bibliography.inlines 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para A citation to a reference page 
+            |row
+              |entry
+                |para classname 
+              |entry
+                |para db.classname 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para classsynopsis 
+              |entry
+                |para db.classsynopsis 
+              |entry
+                |para db.synopsis.blocks 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para The syntax summary for a class definition 
+            |row
+              |entry
+                |para classsynopsisinfo 
+              |entry
+                |para db.classsynopsisinfo 
+              |entry
+                |para db.classsynopsis 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para cmdsynopsis 
+              |entry
+                |para db.cmdsynopsis 
+              |entry
+                |para db.synopsis.blocks 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A syntax summary for a software command 
+            |row
+              |entry
+                |para code 
+              |entry
+                |para db.code 
+              |entry
+                |para db.markup.inlines 
+              |entry
+                |para markup.rnc 
+              |entry
+                |para An inline code fragment 
+            |row
+              |entry
+                |para col 
+              |entry
+                |para db.html.col 
+              |entry
+                |para db.html.table.model 
+              |entry
+                |para htmltbl.rnc 
+              |entry
+                |para Specifications for a column in an HTML table 
+            |row
+              |entry
+                |para colgroup 
+              |entry
+                |para db.html.colgroup 
+              |entry
+                |para db.html.table.model 
+              |entry
+                |para htmltbl.rnc 
+              |entry
+                |para A group of columns in an HTML table 
+            |row
+              |entry
+                |para command 
+              |entry
+                |para db.command 
+              |entry
+                |para db.os.inlines 
+              |entry
+                |para os.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para computeroutput 
+              |entry
+                |para db.computeroutput 
+              |entry
+                |para db.os.inlines 
+              |entry
+                |para os.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para constant 
+              |entry
+                |para db.constant 
+              |entry
+                |para db.markup.inlines 
+              |entry
+                |para markup.rnc 
+              |entry
+                |para A programming or system constant 
+            |row
+              |entry
+                |para constraint 
+              |entry
+                |para db.constraint 
+              |entry
+                |para db.production 
+              |entry
+                |para ebnf.rnc 
+              |entry
+                |para A constraint in an EBNF production 
+            |row
+              |entry
+                |para constraintdef 
+              |entry
+                |para db.constraintdef 
+              |entry
+                |para db.technical.blocks 
+              |entry
+                |para ebnf.rnc 
+              |entry
+                |para The definition of a constraint in an EBNF production 
+            |row
+              |entry
+                |para constructorsynopsis 
+              |entry
+                |para db.constructorsynopsis 
+              |entry
+                |para db.synopsis.blocks 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A syntax summary for a constructor 
+            |row
+              |entry
+                |para database 
+              |entry
+                |para db.database 
+              |entry
+                |para db.product.inlines 
+              |entry
+                |para product.rnc 
+              |entry
+                |para The name of a database, or part of a database 
+            |row
+              |entry
+                |para destructorsynopsis 
+              |entry
+                |para db.destructorsynopsis 
+              |entry
+                |para db.synopsis.blocks 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A syntax summary for a destructor 
+            |row
+              |entry
+                |para envar 
+              |entry
+                |para db.envar 
+              |entry
+                |para db.os.inlines 
+              |entry
+                |para os.rnc 
+              |entry
+                |para A software environment variable 
+            |row
+              |entry
+                |para errorcode 
+              |entry
+                |para db.errorcode 
+              |entry
+                |para db.error.inlines 
+              |entry
+                |para error.rnc 
+              |entry
+                |para An error code 
+            |row
+              |entry
+                |para errorname 
+              |entry
+                |para db.errorname 
+              |entry
+                |para db.error.inlines 
+              |entry
+                |para error.rnc 
+              |entry
+                |para An error name 
+            |row
+              |entry
+                |para errortext 
+              |entry
+                |para db.errortext 
+              |entry
+                |para db.error.inlines 
+              |entry
+                |para error.rnc 
+              |entry
+                |para An error message. 
+            |row
+              |entry
+                |para errortype 
+              |entry
+                |para db.errortype 
+              |entry
+                |para db.error.inlines 
+              |entry
+                |para error.rnc 
+              |entry
+                |para The classification of an error message 
+            |row
+              |entry
+                |para exceptionname 
+              |entry
+                |para db.exceptionname 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para The name of an exception 
+            |row
+              |entry
+                |para extendedlink 
+              |entry
+                |para db.extendedlink 
+              |entry
+                |para db.info.elements 
+              |entry
+                |para xlink.rnc 
+              |entry
+                |para An XLink extended link 
+            |row
+              |entry
+                |para fieldsynopsis 
+              |entry
+                |para db.fieldsynopsis 
+              |entry
+                |para db.synopsis.blocks 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para The name of a field in a class definition 
+            |row
+              |entry
+                |para filename 
+              |entry
+                |para db.filename 
+              |entry
+                |para db.os.inlines 
+              |entry
+                |para os.rnc 
+              |entry
+                |para The name of a file 
+            |row
+              |entry
+                |para funcdef 
+              |entry
+                |para db.funcdef 
+              |entry
+                |para db.funcprototype 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A function (subroutine) name and its return type 
+            |row
+              |entry
+                |para funcparams 
+              |entry
+                |para db.funcparams 
+              |entry
+                |para db.paramdef 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para Parameters for a function referenced through a function pointer in a synopsis 
+            |row
+              |entry
+                |para funcprototype 
+              |entry
+                |para db.funcprototype 
+              |entry
+                |para db.funcsynopsis 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para The prototype of a function 
+            |row
+              |entry
+                |para funcsynopsis 
+              |entry
+                |para db.funcsynopsis 
+              |entry
+                |para db.synopsis.blocks 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para The syntax summary for a function definition 
+            |row
+              |entry
+                |para funcsynopsisinfo 
+              |entry
+                |para db.funcsynopsisinfo 
+              |entry
+                |para db.funcsynopsis 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para function 
+              |entry
+                |para db.function 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para The name of a function or subroutine, as in a programming language 
+            |row
+              |entry
+                |para group 
+              |entry
+                |para db.group 
+              |entry
+                |para db.cmdsynopsis 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A group of elements in a CmdSynopsis 
+            |row
+              |entry
+                |para guibutton 
+              |entry
+                |para db.guibutton 
+              |entry
+                |para db.gui.inlines 
+              |entry
+                |para gui.rnc 
+              |entry
+                |para The text on a button in a GUI 
+            |row
+              |entry
+                |para guiicon 
+              |entry
+                |para db.guiicon 
+              |entry
+                |para db.gui.inlines 
+              |entry
+                |para gui.rnc 
+              |entry
+                |para Graphic and/or text appearing as a icon in a GUI 
+            |row
+              |entry
+                |para guilabel 
+              |entry
+                |para db.guilabel 
+              |entry
+                |para db.gui.inlines 
+              |entry
+                |para gui.rnc 
+              |entry
+                |para The text of a label in a GUI 
+            |row
+              |entry
+                |para guimenu 
+              |entry
+                |para db.guimenu 
+              |entry
+                |para db.gui.inlines 
+              |entry
+                |para gui.rnc 
+              |entry
+                |para The name of a menu in a GUI 
+            |row
+              |entry
+                |para guimenuitem 
+              |entry
+                |para db.guimenuitem 
+              |entry
+                |para db.gui.inlines 
+              |entry
+                |para gui.rnc 
+              |entry
+                |para The name of a terminal menu item in a GUI 
+            |row
+              |entry
+                |para guisubmenu 
+              |entry
+                |para db.guisubmenu 
+              |entry
+                |para db.gui.inlines 
+              |entry
+                |para gui.rnc 
+              |entry
+                |para The name of a submenu in a GUI 
+            |row
+              |entry
+                |para hardware 
+              |entry
+                |para db.hardware 
+              |entry
+                |para db.product.inlines 
+              |entry
+                |para product.rnc 
+              |entry
+                |para A physical part of a computer system 
+            |row
+              |entry
+                |para important 
+              |entry
+                |para db.important 
+              |entry
+                |para db.admonition.blocks 
+              |entry
+                |para admonitions.rnc 
+              |entry
+                |para An admonition set off from the text 
+            |row
+              |entry
+                |para indexdiv 
+              |entry
+                |para db.indexdiv 
+              |entry
+                |para db.index 
+              |entry
+                |para index.rnc 
+              |entry
+                |para A division in an index 
+            |row
+              |entry
+                |para indexentry 
+              |entry
+                |para db.indexentry 
+              |entry
+                |para db.index 
+              |entry
+                |para index.rnc 
+              |entry
+                |para An entry in an index 
+            |row
+              |entry
+                |para informaltable 
+              |entry
+                |para db.html.informaltable 
+              |entry
+                |para db.informaltable.choice 
+              |entry
+                |para htmltbl.rnc 
+              |entry
+                |para An HTML table without a title 
+            |row
+              |entry
+                |para initializer 
+              |entry
+                |para db.initializer 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para The initializer for a FieldSynopsis 
+            |row
+              |entry
+                |para interfacename 
+              |entry
+                |para db.interfacename 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para The name of an interface 
+            |row
+              |entry
+                |para keycap 
+              |entry
+                |para db.keycap 
+              |entry
+                |para db.keyboard.inlines 
+              |entry
+                |para keyboard.rnc 
+              |entry
+                |para The text printed on a key on a keyboard 
+            |row
+              |entry
+                |para keycode 
+              |entry
+                |para db.keycode 
+              |entry
+                |para db.keyboard.inlines 
+              |entry
+                |para keyboard.rnc 
+              |entry
+                |para The internal, frequently numeric, identifier for a key on a keyboard 
+            |row
+              |entry
+                |para keycombo 
+              |entry
+                |para db.keycombo 
+              |entry
+                |para db.keyboard.inlines 
+              |entry
+                |para keyboard.rnc 
+              |entry
+                |para A combination of input actions 
+            |row
+              |entry
+                |para keysym 
+              |entry
+                |para db.keysym 
+              |entry
+                |para db.keyboard.inlines 
+              |entry
+                |para keyboard.rnc 
+              |entry
+                |para The symbolic name of a key on a keyboard 
+            |row
+              |entry
+                |para lhs 
+              |entry
+                |para db.lhs 
+              |entry
+                |para db.production 
+              |entry
+                |para ebnf.rnc 
+              |entry
+                |para The left-hand side of an EBNF production 
+            |row
+              |entry
+                |para locator 
+              |entry
+                |para db.locator 
+              |entry
+                |para db.extendedlink 
+              |entry
+                |para xlink.rnc 
+              |entry
+                |para An XLink locator in an extendedlink 
+            |row
+              |entry
+                |para manvolnum 
+              |entry
+                |para db.manvolnum 
+              |entry
+                |para db.citerefentry 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para A reference volume number 
+            |row
+              |entry
+                |para markup 
+              |entry
+                |para db.markup 
+              |entry
+                |para db.markup.inlines 
+              |entry
+                |para markup.rnc 
+              |entry
+                |para A string of formatting markup in text that is to be represented literally 
+            |row
+              |entry
+                |para lineannotation 
+              |entry
+                |para db.lineannotation 
+              |entry
+                |para db.verbatim.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A comment on a line in a verbatim listing 
+            |row
+              |entry
+                |para menuchoice 
+              |entry
+                |para db.menuchoice 
+              |entry
+                |para db.gui.inlines 
+              |entry
+                |para gui.rnc 
+              |entry
+                |para A selection or series of selections from a menu 
+            |row
+              |entry
+                |para methodname 
+              |entry
+                |para db.methodname 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para The name of a method 
+            |row
+              |entry
+                |para methodparam 
+              |entry
+                |para db.methodparam 
+              |entry
+                |para db.constructorsynopsis 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para Parameters to a method 
+            |row
+              |entry
+                |para methodsynopsis 
+              |entry
+                |para db.methodsynopsis 
+              |entry
+                |para db.synopsis.blocks 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A syntax summary for a method 
+            |row
+              |entry
+                |para modifier 
+              |entry
+                |para db.modifier 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para Modifiers in a synopsis 
+            |row
+              |entry
+                |para mousebutton 
+              |entry
+                |para db.mousebutton 
+              |entry
+                |para db.gui.inlines 
+              |entry
+                |para gui.rnc 
+              |entry
+                |para The conventional name of a mouse button 
+            |row
+              |entry
+                |para msg 
+              |entry
+                |para db.msg 
+              |entry
+                |para db.msgentry 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para A message in a message set 
+            |row
+              |entry
+                |para msgaud 
+              |entry
+                |para db.msgaud 
+              |entry
+                |para db.msginfo 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para msgentry 
+              |entry
+                |para db.msgentry 
+              |entry
+                |para db.msgset 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para A wrapper for an entry in a message set 
+            |row
+              |entry
+                |para msgexplan 
+              |entry
+                |para db.msgexplan 
+              |entry
+                |para db.msgentry 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para msginfo 
+              |entry
+                |para db.msginfo 
+              |entry
+                |para db.msgentry 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para Information about a message in a message set 
+            |row
+              |entry
+                |para msglevel 
+              |entry
+                |para db.msglevel 
+              |entry
+                |para db.msginfo 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para The level of importance or severity of a message in a message set 
+            |row
+              |entry
+                |para msgmain 
+              |entry
+                |para db.msgmain 
+              |entry
+                |para db.msg 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para The primary component of a message in a message set 
+            |row
+              |entry
+                |para msgorig 
+              |entry
+                |para db.msgorig 
+              |entry
+                |para db.msginfo 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para The origin of a message in a message set 
+            |row
+              |entry
+                |para msgrel 
+              |entry
+                |para db.msgrel 
+              |entry
+                |para db.msg 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para A related component of a message in a message set 
+            |row
+              |entry
+                |para msgset 
+              |entry
+                |para db.msgset 
+              |entry
+                |para db.technical.blocks 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para A detailed set of messages, usually error messages 
+            |row
+              |entry
+                |para msgsub 
+              |entry
+                |para db.msgsub 
+              |entry
+                |para db.msg 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para A subcomponent of a message in a message set 
+            |row
+              |entry
+                |para msgtext 
+              |entry
+                |para db.msgtext 
+              |entry
+                |para db.simplemsgentry 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para nonterminal 
+              |entry
+                |para db.nonterminal 
+              |entry
+                |para db.technical.inlines 
+              |entry
+                |para ebnf.rnc 
+              |entry
+                |para A non-terminal in an EBNF production 
+            |row
+              |entry
+                |para ooclass 
+              |entry
+                |para db.ooclass 
+              |entry
+                |para db.oo.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A class in an object-oriented programming language 
+            |row
+              |entry
+                |para ooexception 
+              |entry
+                |para db.ooexception 
+              |entry
+                |para db.oo.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para oointerface 
+              |entry
+                |para db.oointerface 
+              |entry
+                |para db.oo.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para option 
+              |entry
+                |para db.option 
+              |entry
+                |para db.technical.inlines 
+              |entry
+                |para technical.rnc 
+              |entry
+                |para An option for a software command 
+            |row
+              |entry
+                |para package 
+              |entry
+                |para db.package 
+              |entry
+                |para db.technical.inlines 
+              |entry
+                |para technical.rnc 
+              |entry
+                |para A software or application package 
+            |row
+              |entry
+                |para paramdef 
+              |entry
+                |para db.paramdef 
+              |entry
+                |para db.funcprototype 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para Information about a function parameter in a programming language 
+            |row
+              |entry
+                |para parameter 
+              |entry
+                |para db.parameter 
+              |entry
+                |para db.technical.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A value or a symbolic reference to a value 
+            |row
+              |entry
+                |para primaryie 
+              |entry
+                |para db.primaryie 
+              |entry
+                |para db.indexentry 
+              |entry
+                |para index.rnc 
+              |entry
+                |para A primary term in an index entry, not in the text 
+            |row
+              |entry
+                |para production 
+              |entry
+                |para db.production 
+              |entry
+                |para db.productionset 
+              |entry
+                |para ebnf.rnc 
+              |entry
+                |para A production in a set of EBNF productions 
+            |row
+              |entry
+                |para productionrecap 
+              |entry
+                |para db.productionrecap 
+              |entry
+                |para db.productionset 
+              |entry
+                |para ebnf.rnc 
+              |entry
+                |para A cross-reference to an EBNF production 
+            |row
+              |entry
+                |para productionset 
+              |entry
+                |para db.productionset 
+              |entry
+                |para db.technical.blocks 
+              |entry
+                |para ebnf.rnc 
+              |entry
+                |para A set of EBNF productions 
+            |row
+              |entry
+                |para programlisting 
+              |entry
+                |para db.programlisting 
+              |entry
+                |para db.verbatim.blocks 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A literal listing of all or part of a program 
+            |row
+              |entry
+                |para programlistingco 
+              |entry
+                |para db.programlistingco 
+              |entry
+                |para db.verbatim.blocks 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para prompt 
+              |entry
+                |para db.prompt 
+              |entry
+                |para db.os.inlines 
+              |entry
+                |para os.rnc 
+              |entry
+                |para A character or string indicating the start of an input field in a computer display 
+            |row
+              |entry
+                |para property 
+              |entry
+                |para db.property 
+              |entry
+                |para db.technical.inlines 
+              |entry
+                |para technical.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para refclass 
+              |entry
+                |para db.refclass 
+              |entry
+                |para db.refnamediv 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para The scope or other indication of applicability of a reference entry 
+            |row
+              |entry
+                |para refdescriptor 
+              |entry
+                |para db.refdescriptor 
+              |entry
+                |para db.refnamediv 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para A description of the topic of a reference page 
+            |row
+              |entry
+                |para refentry 
+              |entry
+                |para db.refentry 
+              |entry
+                |para db.toplevel.sections 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para refentrytitle 
+              |entry
+                |para db.refentrytitle 
+              |entry
+                |para db.citerefentry 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para The title of a reference page 
+            |row
+              |entry
+                |para reference 
+              |entry
+                |para db.reference 
+              |entry
+                |para db.divisions 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para A collection of reference entries 
+            |row
+              |entry
+                |para refmeta 
+              |entry
+                |para db.refmeta 
+              |entry
+                |para db.refentry 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para Meta-information for a reference entry 
+            |row
+              |entry
+                |para refmiscinfo 
+              |entry
+                |para db.refmiscinfo 
+              |entry
+                |para db.refmeta 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para Meta-information for a reference entry other than the title and volume number 
+            |row
+              |entry
+                |para refname 
+              |entry
+                |para db.refname 
+              |entry
+                |para db.refnamediv 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para refnamediv 
+              |entry
+                |para db.refnamediv 
+              |entry
+                |para db.refentry 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para refpurpose 
+              |entry
+                |para db.refpurpose 
+              |entry
+                |para db.refnamediv 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para A short (one sentence) synopsis of the topic of a reference page 
+            |row
+              |entry
+                |para refsect1 
+              |entry
+                |para db.refsect1 
+              |entry
+                |para db.toplevel.sections 
+              |entry
+                |para refsect1.rnc 
+              |entry
+                |para A major subsection of a reference entry 
+            |row
+              |entry
+                |para refsect2 
+              |entry
+                |para db.refsect2 
+              |entry
+                |para db.secondlevel.refsection 
+              |entry
+                |para refsect1.rnc 
+              |entry
+                |para A subsection of a refsect1 
+            |row
+              |entry
+                |para refsect3 
+              |entry
+                |para db.refsect3 
+              |entry
+                |para db.refsect2.sections 
+              |entry
+                |para refsect1.rnc 
+              |entry
+                |para A subsection of a refsect2 
+            |row
+              |entry
+                |para refsection 
+              |entry
+                |para db.refsection 
+              |entry
+                |para db.toplevel.refsection 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para A recursive section in a refentry 
+            |row
+              |entry
+                |para refsynopsisdiv 
+              |entry
+                |para db.refsynopsisdiv 
+              |entry
+                |para db.refentry 
+              |entry
+                |para refentry.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para replaceable 
+              |entry
+                |para replaceable 
+              |entry
+                |para db.technical.inlines 
+              |entry
+                |para technical.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para returnvalue 
+              |entry
+                |para db.returnvalue 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para rhs 
+              |entry
+                |para db.rhs 
+              |entry
+                |para db.production 
+              |entry
+                |para ebnf.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para sbr 
+              |entry
+                |para  db.sbr 
+              |entry
+                |para
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para screen 
+              |entry
+                |para  db.screen 
+              |entry
+                |para
+              |entry
+                |para technical.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para screenco 
+              |entry
+                |para  db.screenco 
+              |entry
+                |para db.verbatim.blocks 
+              |entry
+                |para callouts.rnc 
+              |entry
+                |para A screen with associated areas used in callouts 
+            |row
+              |entry
+                |para screenshot 
+              |entry
+                |para  db.screenshot 
+              |entry
+                |para
+              |entry
+                |para technical.rnc 
+              |entry
+                |para A representation of what the user sees or might see on a computer screen 
+            |row
+              |entry
+                |para sect1 
+              |entry
+                |para db.sect1 
+              |entry
+                |para db.toplevel.sections 
+              |entry
+                |para sect1.rnc 
+              |entry
+                |para A top-level section of the document 
+            |row
+              |entry
+                |para sect2 
+              |entry
+                |para db.sect2 
+              |entry
+                |para db.sect1.sections 
+              |entry
+                |para sect1.rnc 
+              |entry
+                |para A subsection within a Sect1 
+            |row
+              |entry
+                |para sect3 
+              |entry
+                |para db.sect3 
+              |entry
+                |para db.sect2.sections 
+              |entry
+                |para sect1.rnc 
+              |entry
+                |para A subsection within a Sect2 
+            |row
+              |entry
+                |para sect4 
+              |entry
+                |para db.sect4 
+              |entry
+                |para db.sect3.sections 
+              |entry
+                |para sect1.rnc 
+              |entry
+                |para A subsection within a Sect3 
+            |row
+              |entry
+                |para sect5 
+              |entry
+                |para db.sect5 
+              |entry
+                |para db.sect4.sections 
+              |entry
+                |para sect1.rnc 
+              |entry
+                |para A subsection within a Sect4 
+            |row
+              |entry
+                |para seealsoie 
+              |entry
+                |para seealsoie 
+              |entry
+                |para
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para seeie 
+              |entry
+                |para seeie 
+              |entry
+                |para
+              |entry
+                |para index.rnc 
+              |entry
+                |para A "See" entry in an index, rather than in the text 
+            |row
+              |entry
+                |para seg 
+              |entry
+                |para db.seg 
+              |entry
+                |para
+              |entry
+                |para markup.rnc 
+              |entry
+                |para An element of a list item in a segmented list 
+            |row
+              |entry
+                |para seglistitem 
+              |entry
+                |para db.seglistitem 
+              |entry
+                |para
+              |entry
+                |para markup.rnc 
+              |entry
+                |para A list item in a segmented list 
+            |row
+              |entry
+                |para segmentedlist 
+              |entry
+                |para db.segmentedlist 
+              |entry
+                |para
+              |entry
+                |para markup.rnc 
+              |entry
+                |para A segmented list, a list of sets of elements 
+            |row
+              |entry
+                |para segtitle 
+              |entry
+                |para db.segtitle 
+              |entry
+                |para
+              |entry
+                |para markup.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para shortcut 
+              |entry
+                |para db.shortcut 
+              |entry
+                |para
+              |entry
+                |para keyboard.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para simplemsgentry 
+              |entry
+                |para db.simplemsgentry 
+              |entry
+                |para db.msgset 
+              |entry
+                |para msgset.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para symbol 
+              |entry
+                |para symbol 
+              |entry
+                |para db.markup.inlines 
+              |entry
+                |para markup.rnc 
+              |entry
+                |para A name that is replaced by a value before processing 
+            |row
+              |entry
+                |para synopfragment 
+              |entry
+                |para  db.synopfragment 
+              |entry
+                |para
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para synopfragmentref 
+              |entry
+                |para  db.synopfragmentref 
+              |entry
+                |para
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para synopsis 
+              |entry
+                |para  db.synopsis 
+              |entry
+                |para
+              |entry
+                |para programming.rnc 
+              |entry
+                |para A general-purpose element for representing the syntax of commands or functions 
+            |row
+              |entry
+                |para systemitem 
+              |entry
+                |para  db.systemitem 
+              |entry
+                |para db.technical.inlines 
+              |entry
+                |para technical.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para tag 
+              |entry
+                |para db.tag 
+              |entry
+                |para db.markup.inlines 
+              |entry
+                |para markup.rnc 
+              |entry
+                |para A component of XML (or SGML) markup 
+            |row
+              |entry
+                |para td 
+              |entry
+                |para db.html.informaltable 
+              |entry
+                |para
+              |entry
+                |para htmltbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para tertiaryie 
+              |entry
+                |para tertiaryie 
+              |entry
+                |para
+              |entry
+                |para index.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para th 
+              |entry
+                |para db.html.informaltable 
+              |entry
+                |para
+              |entry
+                |para htmltbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para tip 
+              |entry
+                |para tip 
+              |entry
+                |para
+              |entry
+                |para admonitions.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para tocdiv 
+              |entry
+                |para
+              |entry
+                |para
+              |entry
+                |para toc.rnc 
+              |entry
+                |para A division in a table of contents 
+            |row
+              |entry
+                |para tocentry 
+              |entry
+                |para
+              |entry
+                |para
+              |entry
+                |para toc.rnc 
+              |entry
+                |para A component title in a table of contents 
+            |row
+              |entry
+                |para token 
+              |entry
+                |para db.token 
+              |entry
+                |para db.markup.inlines 
+              |entry
+                |para markup.rnc 
+              |entry
+                |para A unit of information 
+            |row
+              |entry
+                |para tr 
+              |entry
+                |para db.html.informaltable 
+              |entry
+                |para
+              |entry
+                |para htmltbl.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para type 
+              |entry
+                |para db.type 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para userinput 
+              |entry
+                |para  db.userinput 
+              |entry
+                |para db.os.inlines 
+              |entry
+                |para os.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para varargs 
+              |entry
+                |para varargs 
+              |entry
+                |para
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row
+              |entry
+                |para varname 
+              |entry
+                |para varname 
+              |entry
+                |para db.programming.inlines 
+              |entry
+                |para programming.rnc 
+              |entry
+                |para
+            |row |entry |para void 
+                 |entry |para db.void 
+                 |entry |para
+                 |entry |para programming.rnc 
+                 |entry |para
+            |row |entry |para warning 
+                 |entry |para db.warning 
+                 |entry |para
+                 |entry |para admonitions.rnc 
+                 |entry |para
+  |appendix[changes]
+    |title Revision History
+    |para Initial Draft. 11 June 2008.
+    |para Revised Draft. 6 October 2008. Usage examples, additional clarifications added.
+    |para Revised Draft. 5 January 2009. New appendices added, clarifications based on review feedback.
+    |para Revised Draft. 13 January 2009. Updated to include 2008-01-14 version of Dublin Core (removed dc namespace, added dc elements to dcterms; better formatted examples, summary of elements added/removed in Introduction.
+    |para Revised Draft. 15 January 2009. Removed spurious "remap" attributes from examples. Added table mapping Dublin Core to DocBook equivalents per request from Jirka Kosek.
+    |para Revised Draft. 7 May 2009. Added conformance statement.

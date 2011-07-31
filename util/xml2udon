@@ -13,16 +13,86 @@ class UdonElement < UdonChild
     @child_type = :element
     @name =       args.delete(:name)
     @id =         args.delete(:id)
-    @unaries =    args.delete(:unaries)
-    @attributes = args.delete(:attributes)
-    @children =   args.delete(:children)
+    @unaries =    args.delete(:unaries) || []
+    @attributes = args.delete(:attributes) || {}
+    @children =   args.delete(:children) || []
+  end
+
+
+#-------------------- Pretty printing --------------------------
+  # TODO:
+  #  - Attributes in extra-embed-list-style when enough of them / too long
+  #  - Bonus if attribute values line up in eels
+  #  - Remove quotes from value if in eels
+  #  - Even single children start on next line if blk + attributes take up too
+  #    much space.
+  #  - Optional online pre-children-pipe
+  #  - Make sure sax parser combines sequential characters so we don't
+  #    introduce bad whitespace.
+  #  - Text blocks (including inlined tags
+  #    * 
+  def id_str
+    @id.nil? ? '' : "[#{@id.gsub(/(\[|\])/){|s|"\\#{s}"}}]"
+  end
+
+  def unary_str
+    @unaries.count < 1 ? '' : ".#{@unaries.map{|u|u.gsub('.','\.')}.join('.')}"
+  end
+
+  def embedstyle
+    out = "<{#{@name}#{id_str}#{unary_str}"
+    if @attributes.count > 0
+      out += " " + @attributes.map{|k,v| inline_attr(k,v)}.join(' ')
+    end
+    if @children.count > 0
+      out += ' '
+      @children.each{|c| out += c.is_a?(String) ? c : c.embedstyle}
+    end
+    return out + "}>"
+  end
+
+  def inline_attr(k,v)
+    k = '"'+k.gsub('"','\"')+'"' if k =~ /\s/
+    v = '"'+v.gsub('"','\"')+'"' if v =~ /\s/
+    ":#{k} #{v}"
+  end
+
+  def canonical(depth=0)
+    ind = '' + ('  '*depth)
+    out = ind + "|#{@name}#{id_str}#{unary_str}"
+    if @attributes.count > 0
+      out += " " + @attributes.map{|k,v| inline_attr(k,v)}.join(' ')
+    end
+    if @children.count == 1 && @children[0].is_a?(String)
+      out += " #{@children[0]}\n"
+    elsif @children.count > 1 && mixed(@children)
+      out += "\n" + ind + '  '
+      @children.each{|c| out += c.is_a?(String) ?  c : c.embedstyle}
+      out += "\n"
+    else
+      out += "\n"
+      @children.each do |c|
+        if c.is_a? String
+          out += ind + '  ' + c.strip + "\n"
+        else
+          out += c.canonical(depth+1)
+        end
+      end
+    end
+    return out
+  end
+
+  def mixed(list)
+    found_str = false
+    found_node = false
+    list.each do |l|
+      if l.is_a?(String) then found_str = true
+      else found_node = true end
+    end
+    return (found_str && found_node)
   end
 end
 
-# Node starts
-#   (for now, skip if not normal)
-#   increment depth
-#   
 include LibXML
 
 class UdonConstructor
@@ -32,74 +102,78 @@ class UdonConstructor
     @cstack = []
   end
 
-  # Called for a CDATA block event.
+  def canonical
+    out = ''
+    @children.each do |c|
+      if c.is_a? String
+        out += c + "\n"
+      else
+        out += c.canonical
+      end
+    end
+    return out
+  end
+
+  def on_start_element_ns(name, attributes, prefix, uri, namespaces)
+    fullname = (prefix.nil? ? '' : prefix + ':') + name
+    if (namespaces || Hash.new).count > 0
+      namespaces.each do |k,v|
+        if k.nil? then attributes['xmlns'] = v
+        else attributes['xmlns:'+k] = v end
+      end
+    end
+    id = attributes.delete('id')
+    unaries = attributes.delete('class')
+    unaries = unaries.split /\s+/ if unaries
+    attributes.each{|k,v| attributes[k] = v.gsub("&#38;","&")}
+    @cstack << UdonElement.new(:name=>fullname,
+                               :attributes=>attributes,
+                               :id=>id,
+                               :unaries=>unaries)
+  end
+
+  def on_characters(chars)
+    return if chars =~ /^\s*$/
+    if @cstack.count > 0
+      @cstack[-1].children << chars.gsub(/\s+/,' ')
+    else
+      @children << chars.gsub(/\s+/,' ')
+    end
+  end
+
+  def on_end_element_ns(name, prefix, uri)
+    if @cstack.count > 0
+      finished = @cstack.pop
+      if @cstack.count > 0
+        @cstack[-1].children << finished
+      else
+        @children << finished
+      end
+    else
+      raise 'huh??'
+    end
+  end
+
+  def on_end_document
+    if @cstack.count > 0
+      @children << @cstack
+    end
+  end
+
+
+  #---------- Not yet implemented
   def on_cdata_block(cdata)
     STDOUT << "on_cdata_block" << "\n" <<
               "  cdata " << cdata << "\n"
     STDOUT.flush
   end
 
-  # Called for a characters event.
-  def on_characters(chars)
-    STDOUT << "on_characters" << "\n" <<
-              "  chars " << chars << "\n" 
-    STDOUT.flush
-  end
-
-  # Called for a comment event.
   def on_comment(comment)
     STDOUT << "on_comment" << "\n" <<
               "  comment: " << comment << "\n"
     STDOUT.flush
   end
 
-  # Called for a end document event.
-  def on_end_document
-    STDOUT << "on_end_document\n"
-    STDOUT.flush
-  end
-
-  # Called for a end element event.
-  def on_end_element_ns(name, prefix, uri)
-    STDOUT << "on_end_element_ns" << "\n" <<
-              "  name: " << name << "\n" <<
-              "  prefix: " << prefix << "\n" <<
-              "  uri: " << uri << "\n"
-    STDOUT.flush
-  end
-
-  # Called for parser errors.
-  def on_error(error)
-    STDOUT << "on_error" << "\n"
-              "  error " << error << "\n"
-    STDOUT.flush
-  end
-
-  # Called for an external subset event.
-  def on_external_subset(name, external_id, system_id) end
-
-  # Called for an external subset notification event.
-  def on_has_external_subset
-    STDOUT << "on_has_internal_subset\n"
-    STDOUT.flush
-  end
-
-  # Called for an internal subset notification event.
-  def on_has_internal_subset
-    STDOUT << "on_has_internal_subset\n"
-    STDOUT.flush
-  end
-
-  # Called for an internal subset event.
-  def on_internal_subset(name, external_id, system_id) end
-
-  # Called for 'is standalone' event.
-  def on_is_standalone
-    STDOUT << "on_is_standalone\n"
-    STDOUT.flush
-  end
-
-  # Called for an processing instruction event.
   def on_processing_instruction(target, data)
     STDOUT << "on_characters" << "\n"
               "  target: " << target << "\n" <<
@@ -107,37 +181,21 @@ class UdonConstructor
     STDOUT.flush
   end
 
-  # Called for a reference event.
   def on_reference(name)
     STDOUT << "on_reference:" << "\n" <<
               "  name:" << name << "\n"
     STDOUT.flush
   end
 
-  # Called for a start document event.
-  def on_start_document
-    STDOUT << "on_start_document\n"
-    STDOUT.flush
-  end
 
-  # Called for a start element event.
-  def on_start_element_ns(name, attributes, prefix, uri, namespaces)
-    fullname = (prefix=='' ? '' : prefix+':')+name
-    if (namespaces || Hash.new).count > 0
-      namespaces.each do |k,v|
-        if k.nil? then attributes['xmlns'] = v
-        else attributes['xmlns:'+k] = v end
-      end
-    end
-    @cstack << UdonElement.new(:name=>fullname,:attributes=>attributes)
-    STDOUT << "on_start_element_ns" << "\n" <<
-              "  name: " << name << "\n" <<
-              "  attr: " << (attributes || Hash.new).inspect << "\n" <<
-              "  prefix: " << prefix << "\n" <<
-              "  uri: " << uri << "\n" <<
-              "  ns_defs: " << (namespaces || Hash.new).inspect << "\n"
-    STDOUT.flush
-  end
+  #---------- Unused at the moment
+  def on_start_document() end
+  def on_error(error) end
+  def on_external_subset(name, external_id, system_id) end
+  def on_has_external_subset() end
+  def on_has_internal_subset() end
+  def on_internal_subset(name, external_id, system_id) end
+  def on_is_standalone() end
 end
 
 class Xml2Udon
@@ -199,8 +257,15 @@ class Xml2Udon
 
   def saxio(stream)
     xml = XML::SaxParser.io(stream)
-    xml.callbacks = UdonConstructor.new
-    xml.parse
+    udon = UdonConstructor.new
+    xml.callbacks = udon
+    begin
+      xml.parse
+    #rescue
+    end
+    #require 'pp'
+    #pp udon.children
+    puts udon.canonical
   end
 end
 
