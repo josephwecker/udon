@@ -251,4 +251,4 @@ controllers - possibly explicitly.
 Adopt xpath-datamodel-30 - single item and sequence with one item are
 equivalent / interchangeable ?
 
-
+http://seanerussell.blogspot.com/2011/06/never-satisfied.html
