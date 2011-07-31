@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article[
-<!ENTITY standard "Committee Draft">
-<!ENTITY tracker "http://sourceforge.net/tracker">
-<!ENTITY RFE "&tracker;/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;">
-<!ENTITY root "http://docs.oasis-open.org/docbook/">
 ]>
 <article status="Committee Draft" version="5.0" xml:lang="en" xmlns="http://docbook.org/ns/docbook"
     xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ns5="http://www.w3.org/2000/svg"
@@ -23,7 +19,7 @@
         <biblioid class="pubsnumber">01</biblioid>
         <!-- language           en; see /article/@xml:lang -->
         <!-- form               xml -->
-        <releaseinfo role="location">&root;specs</releaseinfo>
+        <releaseinfo role="location">http://docs.oasis-open.org/docbook/specs</releaseinfo>
         <title>The DocBook Publishers Schema</title>
         <org>
             <orgname>OASIS</orgname>
@@ -92,12 +88,12 @@
                 normative RelaxNG Schema format.</para>
         </abstract><legalnotice role="status">
             
-<para>This &standard; was
+<para>This Committee Draft was
     <link xlink:href="http://lists.oasis-open.org/archives/docbook-tc/200901/msg00014.html">approved</link>
 for publication by the OASIS DocBook Technical Committee. It represents the consensus of the committee.
 </para>
 
-<!--            <para>This is a &standard;. It was approved by the OASIS DocBook Publishers
+<!--            <para>This is a Committee Draft. It was approved by the OASIS DocBook Publishers
                 subcommittee, but it does not necessarily represent the consensus of the OASIS
                 DocBook Technical Committee.</para>-->
             <para>Please send comments on this specification to the
@@ -199,7 +195,7 @@ for publication by the OASIS DocBook Technical Committee. It represents the cons
                     <glossterm>required</glossterm>, <glossterm>shall</glossterm>, <glossterm>shall
                     not</glossterm>, <glossterm>should</glossterm>, <glossterm>should
                 not</glossterm>, <glossterm>recommended</glossterm>, <glossterm>may</glossterm>, and
-                    <glossterm>optional</glossterm> in this &standard; are to be interpreted as
+                    <glossterm>optional</glossterm> in this Committee Draft are to be interpreted as
                 described in <xref linkend="rfc2119"/>. Note that for reasons of style, these words
                 are not capitalized in this document.</para>
         </section>
@@ -8212,7 +8208,7 @@ for publication by the OASIS DocBook Technical Committee. It represents the cons
         <para>Revised Draft. 7 May 2009. Added conformance statement.</para>
         <!--
 <listitem xml:id="rfe.">
-<para>Fixed <link xlink:href="&RFE;aid=">RFE </link>:
+<para>Fixed <link xlink:href="tracker/index?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=">RFE </link>:
 
 </para>
 </listitem>
