@@ -7,6 +7,17 @@
 " udon mode for (g)vim, more or less from scratch.
 "
 " 
+" TODO:
+"  - numbers etc. way less zealous (?)
+"  - highlight for unaries
+"  - highlight for parenthasized parameters
+"  - attributes w/ values on next line
+"  - hyperlink/url/uri scalar, within and outside of attributes
+"  - pre-children-inline-pipe as delimiter
+"  - date scalars
+"  - don't highlight id-like stuff that's not in the identity part
+"
+"  - for heaven's sake - an extended colorscheme/groups for subtle differences
 
 if version < 600
 	syntax clear
