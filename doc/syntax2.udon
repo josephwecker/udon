@@ -1,20 +1,216 @@
 
 |===== Line / Block designators (Primary expression types)
-# ___ represents the text that fills in the block/line
 
-___              # _Scalar_        (text or basic types but indent-sensitive)
-|'___'| or |{___}'___'| # _Gated_  (scalar text - indent-insensitive)
+#---------- Strings -------------
 
-|___ or |{___}   # _Element_       (ordered, can have duplicates)
-:___ or :{___}   # _Attribute_     (unordered, no dups. last one takes precedence)
+# data ~= string == text == cdata ...
+# fence == filter == encoders/decoders ~= heredoc ~= processing-instruction
 
--/___ or -/{___}   # _Interpolation_ (Variables/tree/path possibly as loop)
-!___ or !{___}   # _Expression_    (directive or interpolated)
+wwww                    # DATA (first class strings / text / document / cdata / whatever)
+<<                      # unparsed DATA following indent rules (doesn't pull in a newline as the
+                        #   first character- ignores it if it's there) (implied same as <<")
+<<'                     # DATA that has different metachar/escaping/interpolation rules
+<uuu<                   # FENCED data (like heredoc that declares processor)
+<uuu<'                  # or backtick or explicit double-quote to specify interpolation/metachar set
+<uuu<uuu<"              # chained fenced data (["] on the end is optional, and can also be ['`])
+<{"www"}>               # embedded indent-insensitive (also with other variants)
+<{uuu<"www"}>           # embedded FENCE (also with single+back-tick variants)
+<{uuu<uuu<"www"}>       # embedded chained FENCE
+
+|mmmm                   # ELEMENT (with optional ending pipe before children)
+:mmmm vvvv              # ATTRIBUTE + value
+!uuuu                   # EXPRESSION
+
+<{mmmm}>                # embedded ELEMENT
+<{!uuuu}>               # embedded EXPRESSION (can be embedded many more places than elements)
+<{/uuuu}>               # embedded INTERPOLATION (non-embedded is just an expression)
+
+
+<super-table<uudecode<" 
+  ...
+
+shortcut for
+<super-table<
+  <{uudecode<"
+  ...
+  "}>
+
+|<javascript<
+
+!super-table <<'
+  |col1|col2|col3|
+  |1   |2   |3   |
+  |asd |asdf|jfi |
+
+|p.red :onclick dostuff();|<raw<
+  hey <span>pardner!</span>
+
+
+|====:attribute values:
+  :a kjwei 
+
+
+blah blah <{url"something oh yeah!"}>
+
+<<So herein lies a bunch of text
+  why would I want it in this funny format? I don't know
+    But for one thing at least it guarantees that no matter how much indenting and dedenting I do
+    etc.
+            I'm going to be OK.
+          yes.
+    So I could pretty easily hold something like this:
+<<
+  |here's some stuff
+    <!-- product -->        <productname>docbook</productname>
+      <!-- productVersion --> <productnumber>5.0</productnumber>
+    <!-- artifactType       spec; what else? :-) -->
+    <!-- stage -->          <releaseinfo role="stage">cd</releaseinfo>
+    <!-- revision -->       <biblioid class="pubsnumber">04</biblioid>
+    <!-- language           en; see /article/@xml:lang -->
+    <!-- form               xml -->
+    <releaseinfo role="location">http://docs.oasis-open.org/docbook/specs</releaseinfo>
+
+
+start child
+  <u<
+
+
+|link :href http://example.com/hi?this=<{u|'awesome how are you???'}>
+|sample-code<{'
+
+
+<blah<
+
+(There is a difference between declaring that a document is in a certain encoding and instructions
+saying to be sure that the doc or string is encoded/decoded. TYPE vs. CONVERT-TO-TYPE...)
+
+Encoding/decoding generally can be applied multiple times - it's a string transformation/replacement
+language. In other words:
+ !urlencode !urlencode !urlencode a+b  # --> a%25252Bb
+ is not the same as
+ !urlencode a+b                        # --> a%2Bb
+
+|%|blah
+!%!blah
+
+:%:"bkj fej ifoewj//- hey!"
+
+freeform
+"
+'
+`
+'''
+{!% bkj fej ifewjfiewo//- hey!!}
+
+!%
+!&
+
+{!%'  '}
+{!&'  '}
+
+{%'  '%}
+{>-'  '-<}
+
+{!' '!}
+
+{-|  |-}
+
+<{ }>
+{!blah`    `}
+
+%' ' # for attributes
+&' ' # for attributes
+
+http://example.com/something?hi={%'hi this is a test'%}
+
+
+|table |thead |tr :height 17px
+                |th val1
+                |th val2
+                |th total
+  |tr
+    |td 1.0
+    |td 2.7
+    |td awesome
+
+{|something :blah hi dude|}
+
+So - lexically speaking:
+ * Text is indent-sensitive unless inside a freeform block
+ * Text that has one of ! or | after a newline+\s* needs to be escaped
+ * A node with a first child that starts with a colon needs to have the colon
+   escaped or the end of the attributes/identity block delimited with a pipe
+ * The following need to be escaped inside text to not be processed:
+     - {|
+     - {!
+     - {/
+     - |} (if within an embedded element)
+     - !} (if within an embedded expression)
+     - /} (if within an embedded interpolation)
+
+|====== Scalar forms / encoding / escaping
+ * Attribute Values
+ * Quoted attribute values
+ * First-class data/text/children
+ * Freeform single-quote
+ * Freeform double-quote
+ * Freeform back-tick
+ * Freeform (something else for base64)
+
+SOME COMBINATION WITH
+ * Allow embedded blocks
+ * Single-quote needs escaping
+ * Double-quote needs escaping
+ * Back-tick needs escaping
+ * Whitespace needs escaping
+ * Allows common metacharacter sequences (\n\r\t\v\f\b\d\e\s\ )
+ * Allows control-sequences (\^a...\^Z)
+ * Allows unicode/hex/octal metacharacter sequences (\X12 \x12 \x{12345} \u1234)
+ * Backslash needs escaping
+
+post processor
+ * percent encoding/decoding (url)
+ * character-entity encoding/decoding
+ * base64 encoding/decoding
+ * ascii85 encoding/decoding
+
+
+Metacharacters
+Encoding-instructions/sanitization
+Embedded-blocks
+Indent-sensitivity
+Pre-parse-children
+
+
+udon code vs. application processing instructions vs. filters-in-block vs. filters-freeform
+
+
+
+!table
+  |-------------+---+-----------------------------------------------------+-----------+
+  | context     | d | Emb | SQE | DQE | BTE | WSE | MCS | CTR | UNI | BSE | backslash |
+  |-------------+---+-----------------------------------------------------+-----------+
+  | attr values |   | YES | --- | --- | --- | YES | --- | --- | --- | *   | emit      |
+  | attr values | " | YES | --- | YES | --- | --- | YES | YES | YES | YES | error     |
+  | attr values | ' | YES | YES | --- | --- | --- | --- | --- | --- | *   | emit      |
+  | attr values | ` | --- | --- | --- | --- | --- | --- | --- | --- | --- | emit      |
+  | first-class |   | YES | --- | --- | --- | **  | --- | --- | --- | *   | emit      |
+  | freeform    | " | YES | --- | --- | --- | --- | YES | YES | YES | YES | error     |
+  | freeform    | ' | YES |
+  | freeform    | ` | --- |
+  |-------------+---+-----------------------------------------------------+
+  | * - Only before items that can be escaped
+  | 
+  |-----------------------------------------------------------------------+
+
+
+|something :attr value\ 
+
 
 
 # Blocks are for something like this:
-|{something |{something2 |{something3} |{something4}}}
-Which makes it easier to mix things |{emphasis in documents}
+{|something {|something2 {|something3|} {|something4|}|}|}
+Which makes it easier to mix things {|emphasis in documents|}
 
 |==== Indent delimiting for line-types
 |something

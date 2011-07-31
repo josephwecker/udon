@@ -1,0 +1,36 @@
+# Comment
+Normal first class text
+|normal-block :attr textval| Normal
+  More normal
+  this is :not an-attribute (but might be too hard for syntax highlighters)
+|"abnormal name for \nblock"
+|'and this one also\n'
+|`and this one also\n<{asdf}>`
+|attribute-test
+  :string All of this is a value
+  :string2 "Another \u3901 String <{highlight me}>"
+  :string3 'Another \no-highlight string <{highlight me}>'
+  :string4 `Another \nothing <{not-highlighted :no way}>`
+  :float 39902.9
+  :int 1290
+  :date 3/7/2011
+  :time 5:23:90
+  :datetime 3/7/11 4:33am
+  :color #3221f902
+  :float-with-kind 29.5px
+  :int-with-kind 990xl
+  :interval 5-hours
+
+!filter <<'
+  This stuff should not
+    |be highlighted
+      :at all
+    !if so...
+!filter <"
+  |neither :should this
+  But <{this :should be highlighted}>
+  As should these puppies:
+    \n\t\x9f
+!filter<`
+  |do :not highlight me!
+  <{me :neither nope}>
