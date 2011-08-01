@@ -42,8 +42,10 @@ shortcut for
   |1   |2   |3   |
   |asd |asdf|jfi |
 
-|p.red :onclick dostuff();|<raw<
-  hey <span>pardner!</span>
+|p.red
+  :onclick dostuff();
+  <raw<
+    hey <span>pardner!</span>
 
 
 |====:attribute values:
@@ -338,3 +340,15 @@ The following are equivalent:
                              |fourth    # Child of first-element
    |fifth # Also child of first-element
 
+
+
+* Indenting text blocks (and dedenting), is fine as long as the dedent doesn't
+  go past the initial level. (base-indent).
+
+
+BUT, what do we do about this:
+  |blah
+    Some text blah blah
+    blah blah
+      |another
+Trying to be a child of text-data... ?

@@ -1,5 +1,17 @@
-# Comment
 Normal first class text
+# Comment
+  Still a comment with a TODO:
+    Still a comment with a NOTE:
+Not a comment # But this is
+  Not a comment
+
+
+# TODO:
+# - Fix as per latest syntax
+# - Different quoting mechanisms and the different kinds of terms in each of
+#   them.
+# - All the different embeds
+
 |normal-block :attr textval| Normal
   More normal
   this is :not an-attribute (but might be too hard for syntax highlighters)

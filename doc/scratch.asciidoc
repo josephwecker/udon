@@ -252,3 +252,12 @@ Adopt xpath-datamodel-30 - single item and sequence with one item are
 equivalent / interchangeable ?
 
 http://seanerussell.blogspot.com/2011/06/never-satisfied.html
+
+
+
+Binary serialized transport (optimized for cpu or bandwidth)
+https://github.com/antirez/smaz with specialized dictionary
+declarative data components & numbers like erl terms & protocol buffers
+
+
+
