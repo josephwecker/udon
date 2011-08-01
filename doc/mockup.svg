@@ -44,7 +44,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="412.20715"
+     inkscape:cx="387.20715"
      inkscape:cy="1320"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -53,9 +53,10 @@
      inkscape:window-height="752"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      objecttolerance="4"
-     guidetolerance="5">
+     guidetolerance="5"
+     showborder="false">
     <inkscape:grid
        type="xygrid"
        id="grid2900"
@@ -135,7 +136,7 @@
        id="text2828"
        y="631.79053"
        x="54.280838"
-       style="font-size:12.18755913px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#c5c5c5;fill-opacity:1;stroke:none;font-family:Aaargh;-inkscape-font-specification:Aaargh"
+       style="font-size:12.18755913000000035px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#7d7d7d;fill-opacity:1;stroke:none;font-family:Aaargh;-inkscape-font-specification:Aaargh"
        xml:space="preserve"><tspan
          sodipodi:role="line"
          id="tspan3669"
