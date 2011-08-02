@@ -1,4 +1,5 @@
 require 'udon/version'
+require 'udon/udon_children'
 require 'strscan'
 module Udon
   class Parser < StringScanner
