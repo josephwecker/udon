@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = Udon::VERSION
   s.authors     = ["Joseph Wecker"]
   s.email       = ["joseph.wecker@gmail.com"]
-  s.homepage    = "udon.io"
+  s.homepage    = "http://udon.io"
   s.summary     = %q{Universal Document and Object Notation}
-  s.description = %q{TODO}
+  s.description = %q{Parse or generate UDON notation, as described at udon.io}
 
   s.rubyforge_project = "udon"
 
