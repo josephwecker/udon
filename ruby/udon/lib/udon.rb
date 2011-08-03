@@ -3,9 +3,10 @@ require 'udon/udon_children'
 require 'strscan'
 module Udon
   class Parser < StringScanner
-    L_SKIP        = /\s+$/u
-    L_COMMENT     = /(\s*)#(.*)$/u
-    L_FENCE       = /(\s*)(<(?:[^ <\t]*<)+)(['"`]?)/u
+    NOTHING       = /(?!)/
+    L_SKIP        = /\s+$/u                             # Blank lines
+    L_COMMENT     = /(\s*)#(.*)$/u                      # Hash to end of line + indented lines after
+    L_FENCE       = /(\s*)(<(?:[^ <\t]*<)+)(['"`]?)(.*)$/u   # >> , >f1>f2...>"
 
 
     def initialize(source, opts={})
@@ -63,7 +64,7 @@ module Udon
             pp self[i]
           end
           puts ""
-          fence = parse_fence(current_indent, self[3], self[2])
+          fence = parse_fence(current_indent, self[3], self[2], self[4])
         else
           raise "Huh?? #{peek(20).inspect}"
         end
@@ -74,23 +75,45 @@ module Udon
     private
 
     def parse_comment(indent, comment)
+      parse_raw_block(indent, comment)
+    end
+
+    def parse_raw_block(indent, res='')
       while true
         case
         when scan(L_SKIP)
-          comment += self[0]
-        when scan(/(?:^|\n|\r\n)( {#{indent+1},#{indent+900}}.*)$/)
-          comment += "\n"+self[1][indent+1..-1]
+          res += self[0]
+        when scan(/(?:^|\n|\r\n)( {#{indent+1}}.*)$/u)
+          res += "\n"+self[1][indent+1..-1]
         else
           break
         end
       end
-      return comment
+      return res
     end
 
-    def parse_fence(indent, type, identity)
-      
+    def parse_fence(indent, type, identity, text)
+      case type
+      when '"','',nil
+        parse_block_text(indent, text, EMB_ALL, ESC_ALL, MC_ALL)
+      when "'"
+        parse_block_text(indent, text, EMB_ALL, NOTHING, NOTHING)
+      when "`"
+        parse_block_text(indent, text, NOTHING, NOTHING, NOTHING)
+        #parse_raw_block(indent, text)
+      end
     end
 
+    def parse_block_text(indent, res, embeds, escapes, metachars)
+      linescan = /.*?#{find}/
+      while true
+        case
+        when scan(L_SKIP)
+          res += self[0]
+        #when scan(
+        end
+      end
+    end
   end
 
   module_function

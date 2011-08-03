@@ -12,7 +12,7 @@ to_parse = <<UDON
     #yup
   # A separate comment
 
-  <<'
+  <<'Starting
   <<"
   <hi<`
   <hi<there<"
