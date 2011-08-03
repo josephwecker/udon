@@ -1,20 +1,43 @@
 require 'udon/version'
 require 'udon/udon_children'
 require 'strscan'
+require 'pp'
 module Udon
   class Parser2 < StringScanner
     def init(source,opts={})
       opts ||= {}
       super ensure_encoding(source)
+      @children = []
     end
 
     def parse
       reset
-
+      @base_indent = 100
+      @parent_indent = -1
+      state_toplevel
       'nyi'
     end
 
     private
+
+
+    def state_toplevel
+      advance_to_start
+
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
     def ensure_encoding(source)
       if defined?(::Encoding)
         if source.encoding == ::Encoding::ASCII_8BIT

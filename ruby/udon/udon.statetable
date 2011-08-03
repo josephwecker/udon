@@ -1,0 +1,17 @@
+
+| toplevel          | ----    |        | ind=0                             | toplevel/nextline |
+| toplevel/nextline | [ \t]   | <<     | ind+=1                            | --repeat--        |
+| toplevel/nextline | [\n]    | <<     | ind=0                             | --repeat--        |
+| toplevel/nextline | [#]     | <<     |                                   | comment           |
+
+
+| comment           | ----    |        | p_ind=ind;ind=0;b_ind=p_ind+100   | comment/first/nos |
+| comment/first/nos | [ ]     | <<     |                                   | --repeat--        |
+| comment/first/nos | [\n]    | <<     |                                   | comment/nextline  |
+| comment/first/nos | .       | a<<    |                                   | comment/first     |
+| comment/first     | [\n]    | out<<a | ind=0                             | comment/nextline  |
+| comment/first     | .       | a<<    |                                   | --repeat--        |
+
+| comment/nextline  | [ \t]   | <<     | ind+=1                            | --repeat--        |
+| comment/nextline  | [\n]    |        | ind=0                             | --repeat--        |
+| comment/nextline  | .       |        | (ind
