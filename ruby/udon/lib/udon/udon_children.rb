@@ -1,10 +1,22 @@
 module Udon
   module Children
-    class UdonChild
+    class Child
       attr_accessor :child_type
     end
 
-    class UdonElement < UdonChild
+    class Comment < Child
+      attr_accessor :value
+      def initialize(val)
+        @child_type = :comment
+        @value = val
+      end
+      def inspect()
+        "(comment>>\n#{@value}<<)"
+      end
+      def to_s() @value end
+    end
+
+    class Element < Child
       attr_accessor :name, :id, :unaries, :attributes, :children
       def initialize(args={})
         @child_type = :element

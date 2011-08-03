@@ -35,7 +35,7 @@ class UdonConstructor
     unaries = attributes.delete('class')
     unaries = unaries.split /\s+/ if unaries
     attributes.each{|k,v| attributes[k] = v.gsub("&#38;","&")}
-    @cstack << Udon::Children::UdonElement.new(:name=>fullname,
+    @cstack << Udon::Children::Element.new(:name=>fullname,
                                :attributes=>attributes,
                                :id=>id,
                                :unaries=>unaries)

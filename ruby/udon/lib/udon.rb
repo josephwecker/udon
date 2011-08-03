@@ -3,10 +3,9 @@ require 'udon/udon_children'
 require 'strscan'
 module Udon
   class Parser < StringScanner
-    L_COMMENT                    = /^(\s*)#(.*)$/u
-    L_SKIP                       = /^\s*$/u
-
-    TEXT                         = /^(\s*)(.*)$/u
+    L_SKIP        = /\s+$/u
+    L_COMMENT     = /(\s*)#(.*)$/u
+    L_FENCE       = /(\s*)(<(?:[^ <\t]*<)+)(['"`]?)/u
 
 
     def initialize(source, opts={})
@@ -43,7 +42,7 @@ module Udon
     end
 
     def current_indent
-      self[1].size
+      self[1].count(" \t")
     end
 
     def parse
@@ -51,25 +50,45 @@ module Udon
       @res = []
       until eos?
         case
+        when skip(L_SKIP)
+          ;
         when scan(L_COMMENT)
           comment = parse_comment(current_indent, self[2])
-          puts "COMMENT! >>\n------\n#{comment}\n------"
-        when skip(L_SKIP)
-          puts "(skip)"
+          @res.push Udon::Children::Comment.new(comment)
+        when scan(L_FENCE)
+          require 'pp'
+          (0..10).each do |i|
+            break if self[i].nil?
+            print "#{i}: "
+            pp self[i]
+          end
+          puts ""
+          fence = parse_fence(current_indent, self[3], self[2])
         else
-          puts "huh?"
-          raise peek(20)
+          raise "Huh?? #{peek(20).inspect}"
         end
       end
+      @res
     end
 
     private
 
     def parse_comment(indent, comment)
-      while scan(/^(\s{#{indent+2},#{indent+900}}.*)$/)
-        comment += "\n"+self[1][indent+2..-1]
+      while true
+        case
+        when scan(L_SKIP)
+          comment += self[0]
+        when scan(/(?:^|\n|\r\n)( {#{indent+1},#{indent+900}}.*)$/)
+          comment += "\n"+self[1][indent+1..-1]
+        else
+          break
+        end
       end
       return comment
+    end
+
+    def parse_fence(indent, type, identity)
+      
     end
 
   end
