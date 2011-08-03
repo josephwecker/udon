@@ -1,0 +1,20 @@
+|First-class-scan
+  |Comments
+    - first-child
+    - skips
+    - base-dent + rest of line
+    - until full dedent
+
+  |First class text
+    - skips
+    - inline scan for metas, escapes, and embeds
+    - base-dent
+    - until full dedent
+
+  |Elements
+    - inline nested - possibly multiline w/ attributes
+    - first child applied to last inline element
+    - base-dent + first-class scan
+
+  |Attributes
+    - 
