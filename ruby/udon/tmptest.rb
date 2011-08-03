@@ -6,11 +6,14 @@ to_parse = <<UDON
   <<'
   # |This is a comment
     |and this continues it
-  
+      | in two
 
         |Oh yeah
     #yup
   # A separate comment
+      Same offset
+    Same offset
+   Same offset
 
   <<'Starting
   <<"

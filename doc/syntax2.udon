@@ -187,6 +187,33 @@ Pre-parse-children
 udon code vs. application processing instructions vs. filters-in-block vs. filters-freeform
 
 
+Not allowed with text blocks:
+
+|Example[1]
+  >>
+    Some text
+   partial dedent
+
+|Example[2]
+  Some text
+    |who's-my-mommy?
+
+
+=======================
+>>"first
+   same
+>> first
+   same
+>> first
+  same
+>>
+  first
+  same
+>>  first
+  same
+
+>>" first
+ same
 
 !table
   |-------------+---+-----------------------------------------------------+-----------+
@@ -352,3 +379,18 @@ BUT, what do we do about this:
     blah blah
       |another
 Trying to be a child of text-data... ?
+
+
+
+
+=================
+   1             2
+   v             V
+    block-form   online-child
+      3
+      v
+      child
+     back-dent-child
+
+
+

@@ -1,13 +1,15 @@
 require 'udon/version'
 require 'udon/udon_children'
+require 'udon2'
 require 'strscan'
 module Udon
   class Parser < StringScanner
+    NL            = '(?:\n|\r\n|\r|^)'
     NOTHING       = /(?!)/
-    L_SKIP        = /\s+$/u                             # Blank lines
-    L_COMMENT     = /(\s*)#(.*)$/u                      # Hash to end of line + indented lines after
-    L_FENCE       = /(\s*)(<(?:[^ <\t]*<)+)(['"`]?)(.*)$/u   # >> , >f1>f2...>"
 
+    L_SKIP        = /\s+$/u                             # Blank lines
+    L_COMMENT     = /(\s*)#\s*(.*)$/u                      # Hash to end of line + indented lines after
+    L_FENCE       = /(\s*)(<(?:[^ <\t]*<)+)(['"`]?)(.*)$/u   # >> , >f1>f2...>"
 
     def initialize(source, opts={})
       opts ||= {}
@@ -54,17 +56,16 @@ module Udon
         when skip(L_SKIP)
           ;
         when scan(L_COMMENT)
-          comment = parse_comment(current_indent, self[2])
-          @res.push Udon::Children::Comment.new(comment)
+          @res.push parse_comment(current_indent, self[2])
         when scan(L_FENCE)
-          require 'pp'
-          (0..10).each do |i|
-            break if self[i].nil?
-            print "#{i}: "
-            pp self[i]
-          end
-          puts ""
-          fence = parse_fence(current_indent, self[3], self[2], self[4])
+          #require 'pp'
+          #(0..10).each do |i|
+          #  break if self[i].nil?
+          #  print "#{i}: "
+          #  pp self[i]
+          #end
+          #puts ""
+          #fence = parse_fence(current_indent, self[3], self[2], self[4])
         else
           raise "Huh?? #{peek(20).inspect}"
         end
@@ -74,8 +75,22 @@ module Udon
 
     private
 
-    def parse_comment(indent, comment)
-      parse_raw_block(indent, comment)
+    def parse_comment(parent_indent, first)
+      res = []
+      res.push(first) if !first.nil? && first != ''
+      base_indent = parent_indent + 100
+      while true
+        case
+        when scan(L_SKIP)
+          res.push self[0].gsub(/\n/,'')
+        when scan(/#{NL}( {#{parent_indent+1},#{base_indent}})(.*)$/)
+          base_indent = current_indent if current_indent < base_indent
+          res.push(self[2])
+        else
+          break
+        end
+      end
+      Udon::Children::Comment.new(res)
     end
 
     def parse_raw_block(indent, res='')
@@ -83,7 +98,7 @@ module Udon
         case
         when scan(L_SKIP)
           res += self[0]
-        when scan(/(?:^|\n|\r\n)( {#{indent+1}}.*)$/u)
+        when scan(/#{NL}( {#{indent+1}}.*)$/u)
           res += "\n"+self[1][indent+1..-1]
         else
           break
@@ -93,6 +108,7 @@ module Udon
     end
 
     def parse_fence(indent, type, identity, text)
+      text.lstrip!
       case type
       when '"','',nil
         parse_block_text(indent, text, EMB_ALL, ESC_ALL, MC_ALL)
@@ -105,11 +121,14 @@ module Udon
     end
 
     def parse_block_text(indent, res, embeds, escapes, metachars)
-      linescan = /.*?#{find}/
       while true
         case
         when scan(L_SKIP)
           res += self[0]
+        #when scan(/#{NL}( {#{indent+1}}
+        # Try to get to the end of the line
+        # Get all text up until something that blocked getting to the end of
+        # the line
         #when scan(
         end
       end
@@ -120,5 +139,9 @@ module Udon
 
   def parse(source, opts={})
     Parser.new(source,opts).parse
+  end
+
+  def parse2(source, opts={})
+    Parser2.new(source,opts).parse
   end
 end

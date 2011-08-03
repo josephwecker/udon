@@ -1,23 +1,35 @@
 module Udon
   module Children
     class Child
-      attr_accessor :child_type
+      attr_accessor :child_type, :children
+
+      def [](key) @children[key] end
+
+      def ident
+        child_type
+      end
+
+      def inspect(lvl=0)
+        dnt = ' ' * lvl * 2
+        begin
+          "#{dnt}<{-#{ident}-[\n#{@children.map{|c|c.inspect(lvl+1)}.join(",\n")}\n#{dnt}]"
+        rescue
+          "#{dnt}<{-#{ident}-[\n#{@children.map{|c|c.inspect}.join(",\n")}\n#{dnt}]"
+        end
+      end
     end
 
     class Comment < Child
       attr_accessor :value
-      def initialize(val)
+      def initialize(children)
         @child_type = :comment
-        @value = val
+        @children = children
       end
-      def inspect()
-        "(comment>>\n#{@value}<<)"
-      end
-      def to_s() @value end
+      def value() @children.join("\n") end
     end
 
     class Element < Child
-      attr_accessor :name, :id, :unaries, :attributes, :children
+      attr_accessor :name, :id, :unaries, :attributes
       def initialize(args={})
         @child_type = :element
         @name =       args.delete(:name)
