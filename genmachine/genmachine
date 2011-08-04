@@ -40,17 +40,12 @@ class GenMachine
         if det == '|' or (det == ':' && @last_state)
           cols = line.split(det,-1)[1..-1].map{|c| c.strip}
           row = {
-            :input => cols[1],
+            :input => parse_input(cols[1]),
             :acc   => cols[2],
             :exprs => (cols[3]||'').split(';'),
             :next  => '__'+cols[4].underscore}
           if det == '|'
-            if cols[0].start_with? '>'
-              state = '__'+cols[0][1..-1].strip.underscore
-              @first_state = state
-            else
-              state = '__'+cols[0].underscore
-            end
+            state = parse_statename(cols[0])
             @table[state] ||= []
             @table[state] << row
             @last_state = state
@@ -81,9 +76,39 @@ class GenMachine
 
   private
 
-  def parse_statename
+  def parse_statename(val)
+    if val.start_with? '>'
+      state = '__'+val[1..-1].strip.underscore
+      @first_state ||= state
+    else
+      state = '__'+val.underscore
+    end
+    return state
+  end
 
+  def parse_input(val, current=nil)
+    current ||= {:conditionals=>[], :ranges=>[], :notranges=>[]}
+    iters = 0
+    while val.strip.length > 0 && iters < 100
+      if val =~ /\s*\{([^\}])\}\s*/u
+        ret[:conditional] << $2
+        val.sub!($1, '')
+      end
+      if val =~ /\s*\[\^([^\]]+)\]\s*/u
+        ret[:notranges] = parse_combine_ranges($2, ret[:notranges])
+        val.sub!($1, '')
+      end
+      if val =~ /\s*\[([^\]]+)\]\s*/u
+        ret[:ranges] = parse_combine_ranges($2, ret[:ranges])
+        val.sub!($1, '')
+      end
+      iters += 1
+    end
+  end
 
+  # [any | [\dlow,\dhigh] | \d]
+  # parse control characters / metacharacters first
+  def parse_combine_ranges(raw, processed)
   end
 end
 
