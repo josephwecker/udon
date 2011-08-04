@@ -394,3 +394,12 @@ Trying to be a child of text-data... ?
 
 
 
+For line-oriented parsing, you can flush the output simply by appending every
+top level object with a top-level comment, such as:
+
+|flush me
+#--- (looks familiar, eh?) - now flush-me can be processed even if the next one
+#    is delayed
+|another one
+  :some stuff
+#---
