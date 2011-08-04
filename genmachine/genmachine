@@ -6,6 +6,16 @@ require 'optparse'
 LANGUAGES = [:ruby]
 BANNER = "Usage: genmachine [options] STATE_TABLE_FILES"
 
+class String
+  def underscore
+    self.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+    gsub(/([a-z\d])([A-Z])/,'\1_\2').
+    tr("-", "_").
+    downcase
+  end
+end
+
 options = {}
 opts = OptionParser.new do |opts|
   opts.version = '0.0.1'
@@ -36,8 +46,14 @@ if files.size < 1
   exit 1
 end
 
-name_base = files[0].chomp(File.extname(files[0]))
-
+file_base = files[0].chomp(File.extname(files[0]))
+name_base = File.basename(file_base)
+options[:executable] ||= true
+options[:language]   ||= LANGUAGES.first
+options[:classname]  ||= name_base.capitalize + 'Parser'
+options[:test_file]  ||= files[0] + '.gmtest'
+class_fname = options[:classname].underscore + '.rb'
+exe_fname = name_base.underscore
 
 table = []
 files.each do |fname|
@@ -60,15 +76,29 @@ files.each do |fname|
     end
   end
 end
-pp table
 
-templates = {}
-templates[:ruby_library] = ERB.new <<-TEMPLATE
-  module 
-  TEMPLATE
+libraries = {}
+libraries[:ruby] = ERB.new <<-TEMPLATE
+module #{options[:classname]}
 
-templates[:ruby_executable] = ERB.new <<-TEMPLATE
-  #!/usr/bin/env ruby
-  # continuation based (if required) or full-file parsing
-  
-  TEMPLATE
+end
+TEMPLATE
+
+executables = {}
+executables[:ruby] = ERB.new <<-TEMPLATE
+#!/usr/bin/env ruby
+# continuation based (if required) or full-file parsing
+require '#{File.basename(class_fname).chomp(File.extname(class_fname))}'
+puts 'hi'
+TEMPLATE
+
+
+f = File.new(class_fname, 'w+')
+f.write(libraries[options[:language]].result(binding))
+f.close
+if options[:executable]
+  f = File.new(exe_fname, 'w+')
+  f.write(executables[options[:language]].result(binding))
+  f.chmod(0755)
+  f.close
+end
