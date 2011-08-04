@@ -1,17 +1,43 @@
+#=============================================================================================
+| >initial          | ----              |     | @ind = 0                 | toplevel:nextline |
+:                   :                   :     : tlc = []                 :                   :
+#--------------------------------------------------------------------------------------------|
+| toplevel:nextline | [ \t]             | <<  | @ind += 1                | --repeat--        |
+| toplevel:nextline | [\n]              | <<  | @ind = 0                 | --repeat--        |
+| toplevel:nextline | .                 |     | @ctx -> tlc              | toplevel:parse    |
+#--------------------------------------------------------------------------------------------|
+| toplevel:parse    | [#]               | <<  |                          | comment           |
+#---------------------------------------------------------------------------------------------
 
-| toplevel          | ----    |        | ind=0                             | toplevel/nextline |
-| toplevel/nextline | [ \t]   | <<     | ind+=1                            | --repeat--        |
-| toplevel/nextline | [\n]    | <<     | ind=0                             | --repeat--        |
-| toplevel/nextline | [#]     | <<     |                                   | comment           |
+
+#=============================================================================================
+| comment           | ----              |     | ipar = @ind              | comment:first:nos |
+:                   :                   :     : @ind = 0                 :                   :
+:                   :                   :     : ibase = ipar + 100       :                   :
+:                   :                   :     : out = []                 :                   :
+:                   :                   :     : a = ''                   :                   :
+#--------------------------------------------------------------------------------------------|
+| comment:first:nos | [ ]               | <<  |                          | comment:first:nos |
+| comment:first:nos | [\n]              | <<  |                          | comment:nextline  |
+| comment:first:nos | .                 | a<< |                          | comment:first     |
+#--------------------------------------------------------------------------------------------|
+| comment:first     | [\n]              | <<  | out<<a; a=''; @ind=0     | comment:nextline  |
+| comment:first     | .                 | a<< |                          | comment:first     |
+#--------------------------------------------------------------------------------------------|
+| comment:nextline  | {@ind==ibase}     |     |                          | comment:child     |
+| comment:nextline  | [ \t]             | <<  | @ind += 1                | comment:nextline  |
+| comment:nextline  | [\n]              | <<  | @ind = 0                 | comment:nextline  |
+| comment:nextline  | . {ind <= ipar}   |     | @ctx << out              | toplevel:parse    | --> TODO
+| comment:nextline  | .                 | a<< | ibase = @ind             | comment:child     |
+#--------------------------------------------------------------------------------------------|
+| comment:child     | ^[\n]             | a<< |                          | comment:child     |
+| comment:child     | .                 | <<  | out<<a; a=''; @ind=0     | comment:nextline  |
+#--------------------------------------------------------------------------------------------|
 
 
-| comment           | ----    |        | p_ind=ind;ind=0;b_ind=p_ind+100   | comment/first/nos |
-| comment/first/nos | [ ]     | <<     |                                   | --repeat--        |
-| comment/first/nos | [\n]    | <<     |                                   | comment/nextline  |
-| comment/first/nos | .       | a<<    |                                   | comment/first     |
-| comment/first     | [\n]    | out<<a | ind=0                             | comment/nextline  |
-| comment/first     | .       | a<<    |                                   | --repeat--        |
-
-| comment/nextline  | [ \t]   | <<     | ind+=1                            | --repeat--        |
-| comment/nextline  | [\n]    |        | ind=0                             | --repeat--        |
-| comment/nextline  | .       |        | (ind
+Current State
+Character/Conditional [trigger]
+Consume/Accumulate (advance position or not)
+Expressions/Assignments (global and local)
+Next State
+(Comments)

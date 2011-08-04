@@ -1,0 +1,74 @@
+#!/usr/bin/env ruby
+require 'pp'
+require 'erb'
+require 'optparse'
+
+LANGUAGES = [:ruby]
+BANNER = "Usage: genmachine [options] STATE_TABLE_FILES"
+
+options = {}
+opts = OptionParser.new do |opts|
+  opts.version = '0.0.1'
+  opts.banner = BANNER
+  opts.on('-c', '--classname NAME',
+          "Class/module/function name for generated library code "+
+          "(default STATE_TABLE_FILE)") do |v|
+    options[:classname] = v
+  end
+  opts.on('-l', '--language LANGUAGE',
+          "Language to generate code for- currently one of [#{LANGUAGES.join(',')}] " +
+          "(default #{LANGUAGES.first})") do |v|
+    options[:language] = v
+  end
+  opts.on('-t', '--test-with FILE',
+          "Try parsing the specified file after generating the parser "+
+          "(default STATE_TABLE_FILE.gmtest if it exists)") do |v|
+    options[:test_file] = v
+  end
+  opts.on('-e', '--[no-]executable',
+          "Generate an executable parser (nyi)") do |v|
+    options[:executable] = v
+  end
+end
+files = opts.parse(ARGV)
+if files.size < 1
+  $stderr.puts BANNER
+  exit 1
+end
+
+name_base = files[0].chomp(File.extname(files[0]))
+
+
+table = []
+files.each do |fname|
+  File.new(fname,'r').each_with_index do |line, line_no|
+    line = line.strip
+    det = line[0..0]
+    if det == '|' or (det == ':' && table.size>0)
+      cols = line.split(det,-1)[1..-1].map{|c| c.strip}
+      row = {
+        :state => cols[0],
+        :input => cols[1],
+        :acc   => cols[2],
+        :exprs => (cols[3]||'').split(';'),
+        :next  => cols[4]}
+      if det == '|'
+        table << row
+      elsif det == ':'
+        table.last.each{|k,v| table.last[k] = v.nil? ? row[k] : v + row[k]}
+      end
+    end
+  end
+end
+pp table
+
+templates = {}
+templates[:ruby_library] = ERB.new <<-TEMPLATE
+  module 
+  TEMPLATE
+
+templates[:ruby_executable] = ERB.new <<-TEMPLATE
+  #!/usr/bin/env ruby
+  # continuation based (if required) or full-file parsing
+  
+  TEMPLATE
