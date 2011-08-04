@@ -1,9 +1,10 @@
 #=============================================================================================
 | >initial          | ----              |     | @ind = 0                 | toplevel:nextline |
 :                   :                   :     : tlc = []                 :                   :
+:                   :                   :     : @line=0                  :                   :
 #--------------------------------------------------------------------------------------------|
 | toplevel:nextline | [ \t]             | <<  | @ind += 1                | --repeat--        |
-| toplevel:nextline | [\n]              | <<  | @ind = 0                 | --repeat--        |
+| toplevel:nextline | [\n]              | <<  | @ind = 0; @line+=1       | --repeat--        |
 | toplevel:nextline | .                 |     | @ctx -> tlc              | toplevel:parse    |
 #--------------------------------------------------------------------------------------------|
 | toplevel:parse    | [#]               | <<  |                          | comment           |
@@ -18,19 +19,22 @@
 :                   :                   :     : a = ''                   :                   :
 #--------------------------------------------------------------------------------------------|
 | comment:first:nos | [ ]               | <<  |                          | comment:first:nos |
-| comment:first:nos | [\n]              | <<  |                          | comment:nextline  |
+| comment:first:nos | [\n]              | <<  | @line+=1                 | comment:nextline  |
 | comment:first:nos | .                 | a<< |                          | comment:first     |
 #--------------------------------------------------------------------------------------------|
 | comment:first     | [\n]              | <<  | out<<a; a=''; @ind=0     | comment:nextline  |
+:                   :                   :     : @line+=1                 :                   :
 | comment:first     | .                 | a<< |                          | comment:first     |
 #--------------------------------------------------------------------------------------------|
 | comment:nextline  | {@ind==ibase}     |     |                          | comment:child     |
 | comment:nextline  | [ \t]             | <<  | @ind += 1                | comment:nextline  |
 | comment:nextline  | [\n]              | <<  | @ind = 0                 | comment:nextline  |
+:                   :                   :     : @line+=1                 :                   :
 | comment:nextline  | . {ind <= ipar}   |     | @ctx << out              | toplevel:parse    | --> TODO
 | comment:nextline  | .                 | a<< | ibase = @ind             | comment:child     |
 #--------------------------------------------------------------------------------------------|
 | comment:child     | ^[\n]             | a<< |                          | comment:child     |
+:                   :                   :     : @line+=1                 :                   :
 | comment:child     | .                 | <<  | out<<a; a=''; @ind=0     | comment:nextline  |
 #--------------------------------------------------------------------------------------------|
 
