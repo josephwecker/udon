@@ -16,6 +16,63 @@ class String
   end
 end
 
+class CharSet
+  def initialize(start_as = :empty) # Or :full
+    # Only combine these lazily so that exclusions can be put in before
+    # inclusions
+    @start_as = start_as
+    @include = []
+    @exclude = []
+  end
+
+  def to_conditional
+
+  end
+
+  def -(val)
+
+  end
+
+  def +(val)
+
+  end
+
+  def include_char
+
+  end
+
+  def include_range(from, to)
+    from = from[0] if from.is_a? String
+    to = to[0] if to.is_a? String
+    # isolated/island, merge one side, merge the other side
+    # ####      ####     - island
+    #      ^^^
+    # ####      ####     - merge left
+    #   ^^^^^^
+    # ####      ####     - merge right
+    #       ^^^^
+    # ####      ####     - merge left and right
+    #     ^^^^^^
+    # ####      ####     - also merge left and right
+    #^^^^^^^^^^^^^^^^^
+    #
+    merge_right = []
+    @include.each_with_index do |ab,i|
+      a,b = ab
+
+
+    end
+  end
+
+  def exclude_char(chr)
+
+  end
+
+  def exclude_range(from, to)
+
+  end
+end
+
 class GenMachine
   def initialize(files)
     @table = {}
@@ -39,6 +96,7 @@ class GenMachine
         det = line[0..0]
         if det == '|' or (det == ':' && @last_state)
           cols = line.split(det,-1)[1..-1].map{|c| c.strip}
+          pp parse_input(cols[1])
           row = {
             :input => parse_input(cols[1]),
             :acc   => cols[2],
@@ -51,7 +109,9 @@ class GenMachine
             @last_state = state
           elsif det == ':'
             @table[@last_state].last.each do |k,v|
-              @table[@last_state].last[k] = v.nil? ? row[k] : v + row[k]
+              unless v.is_a? Hash
+                @table[@last_state].last[k] = v.nil? ? row[k] : v + row[k]
+              end
             end
           end
         end
@@ -91,24 +151,41 @@ class GenMachine
     iters = 0
     while val.strip.length > 0 && iters < 100
       if val =~ /\s*\{([^\}])\}\s*/u
-        ret[:conditional] << $2
-        val.sub!($1, '')
+        current[:conditional] << $1
+        val.sub!($&, '')
       end
       if val =~ /\s*\[\^([^\]]+)\]\s*/u
-        ret[:notranges] = parse_combine_ranges($2, ret[:notranges])
-        val.sub!($1, '')
+        current[:notranges] = parse_combine_ranges($1, current[:notranges])
+        val.sub!($&, '')
       end
       if val =~ /\s*\[([^\]]+)\]\s*/u
-        ret[:ranges] = parse_combine_ranges($2, ret[:ranges])
-        val.sub!($1, '')
+        current[:ranges] = parse_combine_ranges($1, current[:ranges])
+        val.sub!($&, '')
+      end
+      if val =~ /^\s*./u
+        current[:ranges] = [:any]
+        val.sub!($&, '')
       end
       iters += 1
     end
+    return current
   end
 
+  ESCAPES = {'\t' => "\t", '\n' => "\n",
+             '\r' => "\r", '\f' => "\f",
+             '\b' => "\b", '\a' => "\a",
+             '\e' => "\e", '\s' => " "}
   # [any | [\dlow,\dhigh] | \d]
   # parse control characters / metacharacters first
   def parse_combine_ranges(raw, processed)
+    raw.gsub!(/\\[tnrfbaes]/){|m| ESCAPES[m]}
+    if raw =~ /((?:.-.)*)((?:.)*)/
+      ranges = $1
+      if ranges.length > 0
+        _, range, ranges = ranges.partition /.-./
+        pp range
+      end while ranges.length > 0
+    end
   end
 end
 
