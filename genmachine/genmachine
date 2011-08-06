@@ -14,62 +14,70 @@ class String
     gsub(/[^a-zA-Z_]/,'_').
     downcase
   end
+
+  def utf8_chars
+    self.unpack("U*")
+  end
 end
 
 class CharSet
-  def initialize(start_as = :empty) # Or :full
-    # Only combine these lazily so that exclusions can be put in before
-    # inclusions
-    @start_as = start_as
-    @include = []
-    @exclude = []
+  attr_accessor :kind
+  def initialize(kind = :include)
+    @kind = kind
+    @include_intervals = []
+    @include_any = false
   end
 
-  def to_conditional
-
+  def inspect
+    look_for.inspect
   end
 
-  def -(val)
-
-  end
-
-  def +(val)
-
-  end
-
-  def include_char
-
-  end
-
-  def include_range(from, to)
-    from = from[0] if from.is_a? String
-    to = to[0] if to.is_a? String
-    # isolated/island, merge one side, merge the other side
-    # ####      ####     - island
-    #      ^^^
-    # ####      ####     - merge left
-    #   ^^^^^^
-    # ####      ####     - merge right
-    #       ^^^^
-    # ####      ####     - merge left and right
-    #     ^^^^^^
-    # ####      ####     - also merge left and right
-    #^^^^^^^^^^^^^^^^^
-    #
-    merge_right = []
-    @include.each_with_index do |ab,i|
-      a,b = ab
-
-
+  def look_for
+    if @include_any
+      return @kind==:include ? :any : :none
+    elsif @include_intervals.length == 0
+      return @kind==:include ? :none : :any
+    else
+      ivals = @include_intervals.map do |a,b|
+        a == b ? a : [a,b]
+      end
+      return {:kind=>@kind, :ranges=>ivals}
     end
   end
 
-  def exclude_char(chr)
-
+  def +(val) self.send(:<<,val) end
+  def <<(val)
+    if val.is_a?(String) && val =~ /([^-])-([^-])/
+        include_range($1,$2)
+    elsif val.is_a?(Range)
+      include_range(val.first, val.last)
+    elsif val == :any
+      @include_any = true
+    else include_char(val) end
   end
 
-  def exclude_range(from, to)
+  def include_char(char) include_range(char,char) end
 
+  def include_range(from, to)
+    from = from.utf8_chars[0] if from.is_a?(String)
+    to = to.utf8_chars[0] if to.is_a?(String)
+    @include_intervals << [from,to].sort
+    if @include_intervals.length > 1
+      @include_intervals.sort!
+      merged = []
+      curr_a, curr_b = @include_intervals.shift
+      @include_intervals.each_with_index do |ab,i|
+        a,b = ab
+        if a <= (curr_b+1)
+          curr_b = [curr_b,b].max
+        else
+          merged << [curr_a, curr_b]
+          curr_a,curr_b = ab
+        end
+      end
+      merged << [curr_a, curr_b]
+      @include_intervals = merged
+    end
   end
 end
 
@@ -96,9 +104,10 @@ class GenMachine
         det = line[0..0]
         if det == '|' or (det == ':' && @last_state)
           cols = line.split(det,-1)[1..-1].map{|c| c.strip}
-          pp parse_input(cols[1])
+          conditionals, inputs = parse_input(cols[1])
           row = {
-            :input => parse_input(cols[1]),
+            :input => inputs,
+            :cond  => conditionals,
             :acc   => cols[2],
             :exprs => (cols[3]||'').split(';'),
             :next  => '__'+cols[4].underscore}
@@ -109,7 +118,7 @@ class GenMachine
             @last_state = state
           elsif det == ':'
             @table[@last_state].last.each do |k,v|
-              unless v.is_a? Hash
+              unless row[k].nil?
                 @table[@last_state].last[k] = v.nil? ? row[k] : v + row[k]
               end
             end
@@ -146,45 +155,49 @@ class GenMachine
     return state
   end
 
-  def parse_input(val, current=nil)
-    current ||= {:conditionals=>[], :ranges=>[], :notranges=>[]}
+  def parse_input(val)
     iters = 0
+    conds = []
+    inputs = nil
     while val.strip.length > 0 && iters < 100
-      if val =~ /\s*\{([^\}])\}\s*/u
-        current[:conditional] << $1
+      if val =~ /\s*\{([^\}]+)\}\s*/um
+        conds << $1
         val.sub!($&, '')
       end
-      if val =~ /\s*\[\^([^\]]+)\]\s*/u
-        current[:notranges] = parse_combine_ranges($1, current[:notranges])
+      if val =~ /\s*\[\^([^\]]+)\]\s*/um
+        inputs ||= CharSet.new(:exclude)
+        parse_combine_ranges($1, inputs)
         val.sub!($&, '')
       end
-      if val =~ /\s*\[([^\]]+)\]\s*/u
-        current[:ranges] = parse_combine_ranges($1, current[:ranges])
+      if val =~ /\s*\[([^\]]+)\]\s*/um
+        inputs ||= CharSet.new(:include)
+        parse_combine_ranges($1, inputs)
         val.sub!($&, '')
       end
-      if val =~ /^\s*./u
-        current[:ranges] = [:any]
+      if val =~ /^\s*\./um
+        inputs ||= CharSet.new(:include)
+        inputs << :any
         val.sub!($&, '')
       end
       iters += 1
     end
-    return current
+    return conds, inputs
   end
 
   ESCAPES = {'\t' => "\t", '\n' => "\n",
              '\r' => "\r", '\f' => "\f",
              '\b' => "\b", '\a' => "\a",
              '\e' => "\e", '\s' => " "}
-  # [any | [\dlow,\dhigh] | \d]
-  # parse control characters / metacharacters first
-  def parse_combine_ranges(raw, processed)
+  def parse_combine_ranges(raw, input)
     raw.gsub!(/\\[tnrfbaes]/){|m| ESCAPES[m]}
-    if raw =~ /((?:.-.)*)((?:.)*)/
+    if raw =~ /((?:.-.)*)((?:.)*)/um
       ranges = $1
+      singles = $2
       if ranges.length > 0
-        _, range, ranges = ranges.partition /.-./
-        pp range
+        _, range, ranges = ranges.partition /.-./um
+        input << range
       end while ranges.length > 0
+      singles.scan(/./um).each{|s| input << s}
     end
   end
 end
