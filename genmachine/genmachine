@@ -160,21 +160,21 @@ class GenMachine
     conds = []
     inputs = nil
     while val.strip.length > 0 && iters < 100
-      if val =~ /\s*\{([^\}]+)\}\s*/um
+      case
+      when val =~ /--+/um
+        val.sub!($&,'')
+      when val =~ /\s*\{([^\}]+)\}\s*/um
         conds << $1
         val.sub!($&, '')
-      end
-      if val =~ /\s*\[\^([^\]]+)\]\s*/um
+      when val =~ /\s*\[\^([^\]]+)\]\s*/um
         inputs ||= CharSet.new(:exclude)
         parse_combine_ranges($1, inputs)
         val.sub!($&, '')
-      end
-      if val =~ /\s*\[([^\]]+)\]\s*/um
+      when val =~ /\s*\[([^\]]+)\]\s*/um
         inputs ||= CharSet.new(:include)
         parse_combine_ranges($1, inputs)
         val.sub!($&, '')
-      end
-      if val =~ /^\s*\./um
+      when val =~ /^\s*\./um
         inputs ||= CharSet.new(:include)
         inputs << :any
         val.sub!($&, '')

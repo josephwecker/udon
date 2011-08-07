@@ -1,5 +1,7 @@
+
+
 #=============================================================================================
-| >initial          | ----              |     | @ind = 0                 | toplevel:nextline |
+| >toplevel         | ----              |     | @ind = 0                 | toplevel:nextline |
 :                   :                   :     : tlc = []                 :                   :
 :                   :                   :     : @line=0                  :                   :
 #--------------------------------------------------------------------------------------------|
@@ -33,11 +35,10 @@
 | comment:nextline  | . {ind <= ipar}   |     | @ctx << out              | toplevel:parse    | --> TODO
 | comment:nextline  | .                 | a<< | ibase = @ind             | comment:child     |
 #--------------------------------------------------------------------------------------------|
-| comment:child     | ^[\n]             | a<< |                          | comment:child     |
+| comment:child     | [\n]              | <<  | out<<a; a=''; @ind=0     | comment:nextline  |
 :                   :                   :     : @line+=1                 :                   :
-| comment:child     | .                 | <<  | out<<a; a=''; @ind=0     | comment:nextline  |
+| comment:child     | .                 | a<< |                          | comment:child     |
 #--------------------------------------------------------------------------------------------|
-
 
 Current State
 Character/Conditional [trigger]

@@ -1,4 +1,10 @@
 module Udon
+  module LiteChildren
+    class Child :child_type
+      attr_accessor :child_type, :children, :attributes
+    end
+  end
+
   module Children
     class Child
       attr_accessor :child_type, :children

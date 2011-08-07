@@ -1,5 +1,8 @@
 require 'strscan'
 require 'pp'
+require 'udon'
+
+$KCODE="U"
 
 module <%= classname %>
   def self.parse(str)
@@ -9,6 +12,8 @@ module <%= classname %>
   def self.parse_file(fname)
     Parser.new(IO.read(fname)).parse
   end
+
+  include Udon::Children
 
   class Parser < StringScanner
     def init(source, opts={})
@@ -50,6 +55,7 @@ module <%= classname %>
     def <%= state %>
 
       puts "<%= state %>"
+
     end
     <% end %>
   end
