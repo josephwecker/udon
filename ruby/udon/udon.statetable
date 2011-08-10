@@ -1,48 +1,89 @@
 
 
-#=============================================================================================
-| >toplevel         | ----              |     | @ind = 0                 | toplevel:nextline |
-:                   :                   :     : tlc = []                 :                   :
-:                   :                   :     : @line=0                  :                   :
-#--------------------------------------------------------------------------------------------|
-| toplevel:nextline | [ \t]             | <<  | @ind += 1                | --repeat--        |
-| toplevel:nextline | [\n]              | <<  | @ind = 0; @line+=1       | --repeat--        |
-| toplevel:nextline | .                 |     | @ctx -> tlc              | toplevel:parse    |
-#--------------------------------------------------------------------------------------------|
-| toplevel:parse    | [#]               | <<  |                          | comment           |
-#---------------------------------------------------------------------------------------------
 
 
-#=============================================================================================
-| comment           | ----              |     | ipar = @ind              | comment:first:nos |
-:                   :                   :     : @ind = 0                 :                   :
-:                   :                   :     : ibase = ipar + 100       :                   :
-:                   :                   :     : out = []                 :                   :
-:                   :                   :     : a = ''                   :                   :
-#--------------------------------------------------------------------------------------------|
-| comment:first:nos | [ ]               | <<  |                          | comment:first:nos |
-| comment:first:nos | [\n]              | <<  | @line+=1                 | comment:nextline  |
-| comment:first:nos | .                 | a<< |                          | comment:first     |
-#--------------------------------------------------------------------------------------------|
-| comment:first     | [\n]              | <<  | out<<a; a=''; @ind=0     | comment:nextline  |
-:                   :                   :     : @line+=1                 :                   :
-| comment:first     | .                 | a<< |                          | comment:first     |
-#--------------------------------------------------------------------------------------------|
-| comment:nextline  | {@ind==ibase}     |     |                          | comment:child     |
-| comment:nextline  | [ \t]             | <<  | @ind += 1                | comment:nextline  |
-| comment:nextline  | [\n]              | <<  | @ind = 0                 | comment:nextline  |
-:                   :                   :     : @line+=1                 :                   :
-| comment:nextline  | . {ind <= ipar}   |     | @ctx << out              | toplevel:parse    | --> TODO
-| comment:nextline  | .                 | a<< | ibase = @ind             | comment:child     |
-#--------------------------------------------------------------------------------------------|
-| comment:child     | [\n]              | <<  | out<<a; a=''; @ind=0     | comment:nextline  |
-:                   :                   :     : @line+=1                 :                   :
-| comment:child     | .                 | a<< |                          | comment:child     |
-#--------------------------------------------------------------------------------------------|
+#-----------------------------+-------------------+-----+--------------------------+-------------------------------------+
+# STATE                       | INPUT/CONDITION   | ACC | PRE-TRANSITION           | TRANSITION-TO                       |
+#-----------------------------+-------------------+-----+--------------------------+-------------------------------------+
+| document()                  |                   |     |                          | :ws                                 |
+| :ws                         | [\s\t\n]          | <<  |                          | :ws                                 |
+| :ws                         | {eof}             | <<  |                          | <finished>                          |
+| :ws                         |                   |     |                          | :child                              | # no possibility for error
+| :child                      | [#]               | <<  |                          | comment(:ws)                        |
+| :child                      | [|]               | <<  |                          | node(:ws)                           |
+| :child                      |                   | <<  | error('Not yet implemented.') | to_nextline(:ws)               | # all error possibilities caught
+# TODO: lots more children
 
-Current State
-Character/Conditional [trigger]
-Consume/Accumulate (advance position or not)
-Expressions/Assignments (global and local)
-Next State
-(Comments)
+| to_nextline(next)           |                   |     |                          | :scan                               |
+| :scan                       | [\n]              |     |                          | <next>                              |
+| :scan                       | {eof}             |     |                          | <next>                              |
+| :scan                       | .                 | <<  |                          | :scan                               | # need eos/eof error check
+
+  
+| comment(next)               |                   |     | ipar=$indent             | :1st:ws                             |
+:                             :                   :     : ibase=ipar+100           :                                     :
+| :1st:ws                     | [ \t]             | <<  |                          | :1st:ws                             |
+| :1st:ws                     | [\n]              | <<  |                          | :nl                                 |
+| :1st:ws                     | .                 | a<< |                          | :1st                                |
+| :1st                        | [\n]              | <<  | s<<<a                    | :nl                                 |
+| :1st                        | .                 | a<< |                          | :1st                                |
+| :nl                         | {$indent==ibase}  |     |                          | :child                              |
+| :nl                         | [ \t\n]           | <<  |                          | :nl                                 |
+| :nl                         | {$indent<=ipar}   |     | p<<s                     | <next>                              |
+| :nl                         | .                 | a<< | ibase = $indent          | :child                              |
+| :child                      | [\n]              | <<  | s<<<a                    | :nl                                 |
+| :child                      | .                 | a<< |                          | :child                              |
+| {eof}                       |                   |     | s<<a; p<<s               | <next>
+
+
+toplevel-states are functions.  {repeat} stays in it w/ current scope, whereas recursive call creates actual new child.
+
+$variable ---> global
+variable --->  object scope
+
+object(..)  ---> creates a new node
+object(..) (in  transition-to col) --> calls object    object<blah>(...) calls object but gives it a different name
+- automatically treat [\n] as ([\n] | [\r][\n] | [\r])
+- automatic line increments and start/end-line attributes
+- automatically initialize and clear string accumulators? (clear on <<<acc)
+
+
+#-----------------------------+-------------------+-----+--------------------------+-------------------------------------+
+#| label(next)                 | [ \t]             | <<  |                          | {repeat}                            |
+#| label                       
+
+
+# node
+#   adds a normal node to children of the caller
+#-----------------------------+-------------------+-----+--------------------------+-------------------------------------+
+#| node(next)                  |                   |     | ipar=$indent             | node.identity.name                  |
+#:                             :                   :     : $indent=0                :                                     :
+#| node.identity.name          | [^ \t.\[|<:\n]    |     |                          | label(node.identity.specials)       |
+#| node.identity.specials      |
+#
+#
+#| node:ident                  | [ \t]             | <<  |                          | node:ident:a:1st                    |
+#| node:ident                  | [.]               | <<  |                          | unary                               |
+#| node:ident                  | [\[]              | <<  |                          | id                                  |
+#| node:ident                  | [|]               | <<  |                          | liner-children                      |
+#| node:ident                  | [<]               | <<  |                          | tblock                              |
+#| node:ident                  | [:]               | <<  |                          | liner-attr                          |
+#| node:ident                  | .                 |     |                          | name                                |
+##-----------------------------+-------------------+-----+--------------------------+-------------------------------------+
+#| name                        |
+                                                                                   | node:ident                          |
+
+
+#| name                        | [ \t]             | <<  |                          | node:attrs:1st                      |
+#| name                        | [.]               | <<  |                          | node:id:unary                       |
+#| name                        | [\[]              | <<  |                          | node:id:id                          |
+#| name                        | [\n]              | <<  |                          | node:attrs:child                    |
+#| name                        | [|]               | <<  |                          | node:1st                            |
+#| name                        | [<]               | <<  |                          | tblock                              |
+#| name                        | ["]               | <<  |                          | node:id:dqs                         |
+#| name                        | [']               | <<  |                          | node:id:sqs                         |
+#| name                        | [`]               | <<  |                          | node:id:bts                         |
+#| name                        | .                 | a<< |                          |                                     |
+#| 
+
+

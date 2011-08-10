@@ -1,8 +1,20 @@
 #----------------------------------------------- GIVEN
 Here is my document
-|crazy
+# comment
+  more comment
+|"crazy node\"".something[wowzers]|
 
 
 
 #----------------------------------------------- AST
-|toplevel
+|document  :l 1
+  |data    :l 1
+    Here is my document
+  |comment :l 2
+    comment
+    more comment
+  |node    :l 4
+    |name  :l 4 crazy node"
+    |unary :l 4 something
+    |id    :l 4 wowzers
+      
