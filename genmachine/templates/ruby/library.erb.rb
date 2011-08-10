@@ -1,16 +1,9 @@
 require 'strscan'
-require 'pp'
-
 $KCODE="U"
 
 module <%= classname %>
-  def self.parse(str)
-    Parser.new(str).parse
-  end
-
-  def self.parse_file(fname)
-    Parser.new(IO.read(fname)).parse
-  end
+  def self.parse(str) Parser.new(str).parse end
+  def self.parse_file(fname) Parser.new(IO.read(fname)).parse end
 
   class Node
     attr_accessor :name, :children, :start_line, :start_pos, :end_line, :end_pos
@@ -19,6 +12,8 @@ module <%= classname %>
       @children = []
       @start_line = line
       @start_pos = pos
+      @end_line = :unknown
+      @end_pos = :unknown
     end
     def <<(val) @children<<val end
   end
@@ -36,10 +31,14 @@ module <%= classname %>
           b = source[0, 4].bytes.to_a
           source =
             case
-            when b.size>=4 && b[0]==0 && b[1]==0 && b[2]==0; source.dup.force_encoding(::Encoding::UTF_32BE).encode!(::Encoding::UTF_8)
-            when b.size>=4 && b[0]==0 && b[2]==0; source.dup.force_encoding(::Encoding::UTF_16BE).encode!(::Encoding::UTF_8)
-            when b.size>=4 && b[1]==0 && b[2]==0 && b[3]==0; source.dup.force_encoding(::Encoding::UTF_32LE).encode!(::Encoding::UTF_8)
-            when b.size>=4 && b[1]==0 && b[3]==0; source.dup.force_encoding(::Encoding::UTF_16LE).encode!(::Encoding::UTF_8)
+            when b.size>=4 && b[0]==0 && b[1]==0 && b[2]==0
+              source.dup.force_encoding(::Encoding::UTF_32BE).encode!(::Encoding::UTF_8)
+            when b.size>=4 && b[0]==0 && b[2]==0
+              source.dup.force_encoding(::Encoding::UTF_16BE).encode!(::Encoding::UTF_8)
+            when b.size>=4 && b[1]==0 && b[2]==0 && b[3]==0
+              source.dup.force_encoding(::Encoding::UTF_32LE).encode!(::Encoding::UTF_8)
+            when b.size>=4 && b[1]==0 && b[3]==0
+              source.dup.force_encoding(::Encoding::UTF_16LE).encode!(::Encoding::UTF_8)
             else source.dup end
         else source = source.encode(::Encoding::UTF_8) end
         source.force_encoding(::Encoding::ASCII_8BIT)
@@ -62,8 +61,8 @@ module <%= classname %>
       @pos = 1
       @leading = true
       @indent = 0
-      @ast = <%= @first_state %>
-      pp @ast  # tmp for debugging
+      @ast = <%= @table[0][0] %>
+      return @ast
     end
 
     private
@@ -114,97 +113,63 @@ module <%= classname %>
       end
     end
 
-<% @table.each do |name, args, cmds, first_state, states| %>
-  <% args << "name='#{name}'" %>
-  <% args << "from=nil" %>
+    def eof?() return @last_c == :eof end
+
+<%- @table.each do |name, args, cmds, first_state, states| -%>
+  <%- args << "p=nil" -%>
+  <%- args << "name='#{name}'" -%>
     def <%= name %>(<%= args.join(',') %>)
-      <% cmds.each do |c| %><%= c.gsub(/\$/,'@') %>
-      <% end %>state='<%= first_state %>'
-      <% if states.size > 1 or aggregates?(states) or makes_calls?(states) %>
-      this = Node.new(name,@line,@pos)<% end %>
+      <%- cmds.each do |c| -%>
+      <%= rb_vars(c) %>
+      <%- end -%>
+      state='<%= first_state %>'
+      <%- if states.size > 1 or accumulates?(states) or makes_calls?(states) -%>
+      s = Node.new(name,@line,@pos)
+      <%- end -%>
+      <%- accumulators(states).each do |_acc| -%>
+      <%= _acc %> ||= ''
+      <%- end -%>
       loop do
         c = nextchar
-        break
-      end
-    end
-<% end %>
-
-=begin
-    def document(from=nil,name='document')
-      this = Node.new(name, @line, @pos)
-      state = :ws
-      loop do
-        c = nextchar
+        <%- has_fallthru = false -%>
+        <%- if eof_state?(states) -%>
+        state = '{eof}' if c==:eof
+        <%- end -%>
         case state
-        when :ws
-          case
-          when space?,nl?,c==9; next
-          when c == :eof; return this
-          else @fwd=true; state=:child end
-        when :child
-          case
-          when c==35; comment(this); state=:ws
-          else
-            error('Not yet implemented.')
-            to_nextline(this,'to_nextline')
-            state = :ws
-          end
+        <%- states.each do |st_name, clauses| -%>
+        when '<%= st_name %>'
+          <%- if clauses.size > 1 -%>
+            case
+            <%- clauses.each_with_index do |clause,i| -%>
+              <%- cond = rb_conditional(clause,states,clauses) -%>
+                <%- if cond == 'true' -%>
+            else <%= rb_commands(clause,st_name) %>
+                  <%- break -%>
+                <%- else -%>
+            when <%= cond %>; <%= rb_commands(clause,st_name) %>
+                <%- has_fallthru = true if i == clauses.size-1 -%>
+                <%- end -%>
+            <%- end -%>
+            end
+          <%- else -%>
+            <%- cond = rb_conditional(clauses[0],states,clauses) -%>
+            <%- if cond == 'true' -%>
+            <%= rb_commands(clauses[0],st_name) %>
+            <%- else -%>
+            if <%= cond %>
+              <%= rb_commands(clauses[0],st_name) %>
+            end
+            <%- end -%>
+          <%- end -%>
+        <%- end -%>
         end
-      end
-    end
-
-    def to_nextline(from=nil,name='to-nextline')
-      # Doesn't aggregate and doesn't call another- don't create a node
-      # for it at all.
-      # state = :scan - only one inner state so no need to specify
-      loop do
-        c = nextchar
-        # only one inner-state so no state case statement
-        case
-        when nl?; @fwd = true; return
-        when c == :eof; @fwd = true; return
-        else next end
-      end
-    end
-
-    def comment(from=nil,name='comment')
-      this = Node.new(name, @line, @pos)
-      ___ipar = @indent
-      ___ibase = ___ipar + 100
-      ___a = '' # Detected from later clause
-      state = :'1st:ws'
-      loop do
-        c = nextchar
-        state = :eof if c == :eof  # General action described
-        case state
-        when :'1st:ws'
-          case
-          when space?, c==9; next
-          when nl?; state=:nl; next
-          # instead of c != :eof because general eof handled
-          else ___a<<c; state=:'1st'; next end
-        when :'1st'
-          case
-          # implied by <<< in source
-          when nl?; this<<___a; ___a=''; state=:nl; next
-          else ___a<<c; next end
-        when :nl
-          case
-          when @indent==___ibase; @fwd=true; state=:child; next
-          when nl?,space?,c==9; next
-          when @indent<=___ipar; @fwd=true; from<<this; return
-          else ___a<<c; ___ibase=@indent; state=:child; next end
-        when :child
-          case
-          when nl?; this<<___a; ___a=''; state=:nl; next
-          else ___a<<c; next end
-        when :eof; this<<___a; from<<this; return end
-        # fallthrough to here means generic error
+        <%- if has_fallthru -%>
         error("Unexpected #{c}")
         @fwd = true
         return
+        <%- end -%>
       end
     end
-=end
+<%- end -%>
   end
 end
