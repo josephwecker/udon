@@ -14,13 +14,13 @@
 | :child                      |                   | <<  | error('Not yet implemented.') | to_nextline(:ws)               | # all error possibilities caught
 # TODO: lots more children
 
-| to_nextline(next)           |                   |     |                          | :scan                               |
-| :scan                       | [\n]              |     |                          | <next>                              |
-| :scan                       | {eof}             |     |                          | <next>                              |
+| to_nextline(next_state)     |                   |     |                          | :scan                               |
+| :scan                       | [\n]              |     |                          | <next_state>                        |
+| :scan                       | {eof}             |     |                          | <next_state>                        |
 | :scan                       | .                 | <<  |                          | :scan                               | # need eos/eof error check
 
   
-| comment(next)               |                   |     | ipar=$indent             | :1st:ws                             |
+| comment(next_state)         |                   |     | ipar=$indent             | :1st:ws                             |
 :                             :                   :     : ibase=ipar+100           :                                     :
 | :1st:ws                     | [ \t]             | <<  |                          | :1st:ws                             |
 | :1st:ws                     | [\n]              | <<  |                          | :nl                                 |
@@ -29,11 +29,11 @@
 | :1st                        | .                 | a<< |                          | :1st                                |
 | :nl                         | {$indent==ibase}  |     |                          | :child                              |
 | :nl                         | [ \t\n]           | <<  |                          | :nl                                 |
-| :nl                         | {$indent<=ipar}   |     | p<<s                     | <next>                              |
+| :nl                         | {$indent<=ipar}   |     | p<<s                     | <next_state>                        |
 | :nl                         | .                 | a<< | ibase = $indent          | :child                              |
 | :child                      | [\n]              | <<  | s<<<a                    | :nl                                 |
 | :child                      | .                 | a<< |                          | :child                              |
-| {eof}                       |                   |     | s<<a; p<<s               | <next>
+| {eof}                       |                   |     | s<<a; p<<s               | <next_state>                        |
 
 
 toplevel-states are functions.  {repeat} stays in it w/ current scope, whereas recursive call creates actual new child.
