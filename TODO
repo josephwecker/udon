@@ -1,0 +1,27 @@
+ - General
+   - Readme
+   - Examples
+   - Parser implementation notes / tutorial
+   - Utilities / translation standalone tools
+   - Editor utilities (highlight files etc.)
+ - Website
+   - Main
+   - Comparisons
+   - Examples / tutorial
+   - Equivalent to readme - full description
+   - Syntax table
+ - Per Parser+Generator Integration
+   - Packaging
+   - Parser
+   - Generator
+   - Test suite
+   - Benchmarks
+   - Documentation
+   - Addons
+ - Priority Integrations:
+   - Ruby gem
+   - C library
+   - Javascript (coffeescript) npm
+   - Python Package on PyPI for easy_install/pip
+   - Erlang
+   - (? Deb (Basic transformations + templating) ?)
