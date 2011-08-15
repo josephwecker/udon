@@ -1,0 +1,189 @@
+# This is an UDON sample
+  And the comment keeps on going...
+
+|simple-element
+  With it's children
+
+[ ] - indentation
+[ ] - comments
+[ ] - raw data / text
+  [ ] - Can raw data have raw data children?
+[ ] - elements
+  [ ] - namespaces
+  [ ] - embedded directives
+[ ] - id
+[ ] - unary attributes
+[ ] - attributes
+  [ ] - inline
+  [ ] - single-line
+  [ ] - namespaces
+  [ ] - types
+  [ ] - embedded directives
+  ( ) - (sure that the transition to children is completely clear and quickly parsable?)
+   ---- as long as I can figure out some simple nondeterminism in genmachine
+  (d) - (sure that the   `blah/blah: http://blah.com:80/blah` example works as expected)
+   ---- Colons not allowed in key except as first character unless key is quoted
+  (d) - (whitespace in key solved?)
+[ ] - expressions
+[ ] - expression special-clause
+[ ] - embedded form
+[ ] - language-independent scalar types
+  [ ] - URLs
+  [ ] - null/nil
+  [ ] - int - decimal, hex, octal, binary
+  [ ] - float
+  [ ] - infinity/neg-infinity/NaN (?)
+  [ ] - boolean (true,t,y,Yes,on,FALSE,...)
+  [ ] - date (w and w/o timezone)
+  [ ] - time (w and w/o timezone)
+  [ ] - datetime (w and w/o timezone)
+  [ ] - datetime-interval
+[ ] - inline nesting
+[ ] - paths / references
+[ ] - language-independent templating
+  [ ] - built-in traversals
+  [ ] - transformation directives
+  [ ] - Logic-less (from slim)
+[ ] - built-in transformation expressions
+  [ ] - Low-level
+    [ ] - base-64
+    [ ] - urlencode/decode
+    [ ] - html/xml entity encode/decode
+  [ ] - (Temple/Tilt) filters
+  [ ] - html-builders
+    [ ] - (even more) auto-id/class
+
+misc notes:
+* ID as curlies instead of squares - less likely that names will need them vs.
+  squares, plus aligns better with expressions?
+* no-insert expressions starting with a dash because:
+  - you can define them only with a dash meaning it is never meant to be inserted
+  - you can add one in front of any expression that normally returns something
+    to turn it into a control version
+
+* The ` | text` form for text allows you to create lists like: 
+  ` |list
+      | one
+      | two
+      | three`
+  _and_ like this: `|list | one | two | three`  automatic awesome looking lists!
+  |div
+    class: one | two | three
+
+
+|==Line-oriented
+                           #      | embedded | child lines | metachars | embeds | prsv.ws | comments |
+  datadata...              # Data | --       | Yes         | --        | Yes    | a-indent| Yes      |
+  | datadata...            # Data | --       | --          | Yes       | Yes    | a-indent| Yes      |
+  |"datadata...            # Data | --       | --          | Yes       | Yes    | a-indent| --       |
+  |'datadata...            # Data | --       | --          | --        | Yes    | a-indent| --       |
+  |`datadata...            # Data | --       | --          | --        | --     | a-indent| --       |
+
+  |ns/element ...          # Element with indent sensitivity
+  :expression{...} ...     # Expression with indent sensitivity, equiv to return val
+  :-expression{...} ...    # Expression with indent sensitivity, discard return val
+  |# datadata              # Block comment - (children lines are parsed / udon markup ?)
+  # datadata               # Also block comment if beginning text of the line
+  ...  # datadata          # Comment to EOL (only available in identity section, single space after required
+  namespace/key: value     # Full line attribute
+
+|==Embedded
+                           #      | embedded | child lines | metachars | embeds | prsv.ws | comments |
+  <| datadata... |>        # Data | Yes      | --          | Yes       | Yes    | a-first | --       |
+  <|"datadata..."|>        # Data | Yes      | --          | Yes       | Yes    | Yes     | --       | NBM!!
+  <|'datadata...'|>        # Data | Yes      | --          | --        | Yes    | Yes     | --       | NBM!!
+  <|`datadata...`|>        # Data | Yes      | --          | --        | --     | Yes     | --       | NBM!!
+
+  <|ns/element ...|>       # Embedded element (has children lines if desired)
+  <:expression{...} ...:>  # Embedded expression (allowed in identity sections as well) (has children lines if desired)
+  <:-expression{...} ...:> # Embedded expression (allowed in identity sections as well) (discard return value) (has children lines if desired)
+  <|# datadata #|>         # Embedded comment (allowed in identity sections as well) not <#..#> because <#{blah} is (surprisingly) common in ruby
+
+
+
+:- html5
+
+
+|a html/href: http://example.com:4000/index
+
+
+:for{/asdf/{blah}/.doink} as asdf
+
+
+
+|post-data :urlencode :xmlentities |
+  blah blah blah
+
+|post-data
+  :urlencode
+    :xmlentities
+      | blah blah blah
+
+|post-data
+ :urlencode
+  :xmlentities
+   blah blah blah
+
+|post-data :urlencode :xmlentities | blah
+ blah blah
+
+
+|h1 class:<:$itsclass:> <:$attr:>: val2<:$i:>_b <:blah:>
+<h1 class="<:$itsclass:>" <:$attr:>="val2<:$i:>_b"><:blah:></h1>
+
+|e k1:<:$v1:> <:$k2:>: v2<:$v2b:>b <:$d1:>
+
+|html<|head|title Awesomeness
+           |script thescript.js|>
+  |body|header<|h1 Awesome examples are
+    |a href: http://example.com GREAT|>
+
+|table |tr |td hello |td you
+       |tr |td crazy |td world  # Each line starts over as child of table
+  |tr |td still |td good
+
+|html|body|.main|{head}
+                 |p I want this to be in the div...  # Each line is a continuating child of |{head}
+
+|html|body|div.main Some text
+           and some more
+
+No indentation in embedded. all treated as 1-line (nl treated as space)
+Indentation w/ embedded child anon blocks... 
+Problem still with text data:
+|html|body|div.message<| asdf
+                         |a href:http://www.example.com|>
+
+Indentation w/ child anon blocks...
+
+<:x:u:$asfd:>
+<:x:u| asfd:>    `:>`,`<:`,`|>`, and `|>` must be escaped unless backtick quotes
+
+<:x:u <|blah :>|>:>
+            ^ error? or maybe we're only looking for | at this point?
+(IN XML):
+ <?.?> processing instruction (same inner syntax as tag)
+ <!.> directive (no inner structure)
+ <!--.--> comment
+ <![CDATA[.]]> unparsed char. data
+ <.> tag
+
+(IN UDON):
+ |.
+ <|.|>
+ :
+ <:.:>
+
+# ul.cpl a:active {
+    border : 2px inset #27470e;
+    background-color : #27470e; /* the darker colors help create the effect */
+    color : #999;
+    padding : 2px 11px 4px 9px; /* these new padding values are the mainstay or the effect to create natural movement */
+  }
+
+|{ul.cpl a:active}
+  border:           2px inset #27470e
+  background-color: #27470e            #| the darker colors help create the effect
+  color:            #999
+  padding:          2px 11px 4px 9px   #| these new padding values are the mainstay or the effect to create natural movement
+

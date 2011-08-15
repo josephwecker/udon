@@ -1,0 +1,28 @@
+
+
+
+
+
+
+
+|===[Components of an element]
+  - Element-name
+    - Namespace
+    - Localname
+  - ID        (typed)
+  - Unary attributes
+    - Keys    (typed)
+  - Attribute pairs
+    - Keys    (typed)
+    - Values  (typed)
+  - Children
+
+
+
+|===[Scalars]
+ |-- Types relevent for:
+  - attribute keys
+  - attribute values
+  - id values
+  - unary keys
+  - simple content values (?)

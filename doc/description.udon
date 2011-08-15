@@ -1,0 +1,10 @@
+
+
+
+|Decision: Begin special block delimiters (| etc.)
+  So that the vast majority of documents are acceptable udon documents
+  (passthru). Unlike slim and to some degree yaml.
+
+
+
+
