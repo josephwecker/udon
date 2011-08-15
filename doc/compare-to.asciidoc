@@ -1,0 +1,37 @@
+
+| udon  |
+
+
+
+| protocol buffers |
+| apache thrift    |
+| messagepack      |
+| ASN.1            |
+| xml   |
+| sgml  |
+| html  |
+| xhtml |
+| bson  |
+| json  |
+| haml  |
+| sass  |
+| scss  |
+| laTex |
+| zml   |
+| yaml  |
+| sdl   |
+| curl  |
+| slim  | http://slim-lang.com/
+
+
+
+
+comparison:
+* Example documents
+* History / decisions
+
+* Benchmarks (for implementations)
+  * Size (lines / bytes)
+  * Parse speed
+  * Generate speed
+
