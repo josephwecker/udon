@@ -45,7 +45,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1"
      inkscape:cx="402.20715"
-     inkscape:cy="1320"
+     inkscape:cy="1080"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -53,7 +53,7 @@
      inkscape:window-height="752"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      objecttolerance="4"
      guidetolerance="5"
      showborder="false">
@@ -121,7 +121,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -137,7 +137,10 @@
        y="631.79053"
        x="54.280838"
        style="font-size:12.18755913000000035px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#7d7d7d;fill-opacity:1;stroke:none;font-family:Aaargh;-inkscape-font-specification:Aaargh"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/jwecker/gtd/projects/udon/doc/udon-coming-soon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3669"
          x="54.280838"
@@ -276,7 +279,10 @@
        y="602.67041"
        x="219.59479"
        style="font-size:33.36103058px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#e7e7e7;fill-opacity:1;stroke:none;font-family:Hei;-inkscape-font-specification:Hei"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/jwecker/gtd/projects/udon/doc/udon-coming-soon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3641"
          x="219.59479"
@@ -289,7 +295,10 @@
        y="605.27081"
        id="text3663"
        sodipodi:linespacing="100%"
-       transform="scale(0.99632238,1.0036912)"><tspan
+       transform="scale(0.99632238,1.0036912)"
+       inkscape:export-filename="/Users/jwecker/gtd/projects/udon/doc/udon-coming-soon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3665"
          x="13.946838"
@@ -314,5 +323,18 @@
          x="512"
          y="729.68439"
          id="tspan3711">Equiv. Examples</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.18755915px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr;text-anchor:start;fill:#7d7d7d;fill-opacity:1;stroke:none;font-family:Aaargh;-inkscape-font-specification:Aaargh"
+       x="54.280838"
+       y="660.74738"
+       id="text3029"
+       sodipodi:linespacing="100%"
+       transform="scale(0.99252391,1.0075324)"
+       inkscape:export-filename="/Users/jwecker/gtd/projects/udon/doc/udon-coming-soon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan3033">(Coming soon)</tspan></text>
   </g>
 </svg>
