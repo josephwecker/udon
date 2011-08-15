@@ -2,6 +2,7 @@
    - Readme
    - Examples
    - Parser implementation notes / tutorial
+   - Reference parser
    - Utilities / translation standalone tools
    - Editor utilities (highlight files etc.)
  - Website
@@ -10,6 +11,7 @@
    - Examples / tutorial
    - Equivalent to readme - full description
    - Syntax table
+   - Online reference parser
  - Per Parser+Generator Integration
    - Packaging
    - Parser
