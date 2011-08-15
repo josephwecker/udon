@@ -1,0 +1,6 @@
+In the middle of getting middleman to work as the static generator here:
+ - Get middleman working (including haml/sass (slim?), compression, etc.)
+ - Get it to only show generated files on web
+ - Build placeholder main page
+ - Switch domain over
+
