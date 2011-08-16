@@ -1,39 +1,40 @@
-
-
-
-
-#-----------------------------+-------------------+-----+--------------------------+-------------------------------------+
-# STATE                       | INPUT/CONDITION   | ACC | PRE-TRANSITION           | TRANSITION-TO                       |
-#-----------------------------+-------------------+-----+--------------------------+-------------------------------------+
-| document()      |                   |     |                          | :ws             |
-| :ws             | {eof?}            | <<  |                          | <done>          |
-| :ws             | [\s\t\n]          | <<  |                          | :ws             |
-| :ws             |                   |     |                          | :child          | # no possibility for error
-| :child          | [#]               | <<  |                          | comment(:ws)    |
-| :child          | [|]               | <<  |                          | node(:ws)       |
-#| :child         |                   | <<  | error('Not yet implemented.') | to_nextline(:ws)| # all error possibilities caught
++-----------------+-----------------+-----+-----------------+--------------+
++ STATE           | INPUT/CONDITION | ACC | PRE-TRANSITION  | TRANSITION-TO|
++-----------------+-----------------+-----+-----------------+--------------+
+| document()      |                 |     |                 | :ws          |
+| :ws             | {eof?}          | <<  |                 | <done>       |
+| :ws             | [\s\t\n]        | <<  |                 | :ws          |
+| :ws             |                 |     |                 | :child       | # no possibility for error
+| :child          | [#]             | <<  |                 | comment(:ws) |
+| :child          | [|]             | <<  |                 | node(:ws)    |
+#| :child         |                 | <<  | error('Not yet implemented.') | to_nextline(:ws)| # all error possibilities caught
++-----------------+-----------------+-----+-----------------+--------------+
 # TODO: lots more children
 
-| to_nextline(ns) |                   |     |                          | :scan           |
-| :scan           | {eof?}            |     |                          | <ns>            |
-| :scan           | [\n]              |     |                          | <ns>            |
-| :scan           | .                 | <<  |                          | :scan           | # need eos/eof error check
++-----------------+-----------------+-----+-----------------+--------------+
+| to_nextline(ns) |                 |     |                 | :scan        |
+| :scan           | {eof?}          |     |                 | <ns>         |
+| :scan           | [\n]            |     |                 | <ns>         |
+| :scan           | .               | <<  |                 | :scan        | # need eos/eof error check
++-----------------+-----------------+-----+-----------------+--------------+
 
   
-| comment(ns)     |                   |     | ipar=$indent             | :1st:ws         |
-:                 :                   :     : ibase=ipar+100           :                 :
-| :1st:ws         | [ \t]             | <<  |                          | :1st:ws         |
-| :1st:ws         | [\n]              | <<  |                          | :nl             |
-| :1st:ws         | .                 | a<< |                          | :1st            |
-| :1st            | [\n]              | <<  | s<<<a                    | :nl             |
-| :1st            | .                 | a<< |                          | :1st            |
-| :nl             | {$indent>ibase}   |     |                          | :child          |
-| :nl             | [ \t\n]           | <<  |                          | :nl             |
-| :nl             | {$indent<=ipar}   |     | p<<s                     | <ns>            |
-| :nl             | .                 | a<< | ibase = $indent          | :child          |
-| :child          | [\n]              | <<  | s<<<a                    | :nl             |
-| :child          | .                 | a<< |                          | :child          |
-| {eof}           |                   |     | s<<<a; p<<s              | <ns>            |
++-----------------+-----------------+-----+-----------------+--------------+
+| comment(ns)     |                 |     | ipar=$indent    | :1st:ws      |
+:                 :                 :     : ibase=ipar+100  :              :
+| :1st:ws         | [ \t]           | <<  |                 | :1st:ws      |
+| :1st:ws         | [\n]            | <<  |                 | :nl          |
+| :1st:ws         | .               | a<< |                 | :1st         |
+| :1st            | [\n]            | <<  | s<<<a           | :nl          |
+| :1st            | .               | a<< |                 | :1st         |
+| :nl             | {$indent>ibase} |     |                 | :child       |
+| :nl             | [ \t\n]         | <<  |                 | :nl          |
+| :nl             | {$indent<=ipar} |     | p<<s            | <ns>         |
+| :nl             | .               | a<< | ibase = $indent | :child       |
+| :child          | [\n]            | <<  | s<<<a           | :nl          |
+| :child          | .               | a<< |                 | :child       |
+| {eof}           |                 |     | s<<<a; p<<s     | <ns>         |
++-----------------+-----------------+-----+-----------------+--------------+
 
 
 toplevel-states are functions.  {repeat} stays in it w/ current scope, whereas recursive call creates actual new child.
