@@ -4,10 +4,11 @@
 |simple-element
   With it's children
 
-[ ] - indentation
-[ ] - comments
-[ ] - raw data / text
-  [ ] - Can raw data have raw data children?
+[r] - indentation
+[r] - comments
+[r] - raw data / text
+  [r] - Can raw data have raw data children?
+
 [ ] - elements
   [ ] - namespaces
   [ ] - embedded directives
