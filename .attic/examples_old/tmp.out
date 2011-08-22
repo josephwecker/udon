@@ -1,15 +1,19 @@
-|article :xmlns:xlink http://www.w3.org/1999/xlink :version 5.0 :lang en :status "Committee Draft" :xmlns http://docbook.org/ns/docbook
+|article :xmlns:xlink http://www.w3.org/1999/xlink
+         :version     5.0
+         :lang        en
+         :status      Committee Draft
+         :xmlns       http://docbook.org/ns/docbook
   |info
     |releaseinfo :role cvs
     |productname docbook
     |productnumber 5.0
-    |releaseinfo :role stage cd
+    |releaseinfo :role stage| cd
     |biblioid.pubsnumber 04
-    |releaseinfo :role location http://docs.oasis-open.org/docbook/specs
+    |releaseinfo :role location| http://docs.oasis-open.org/docbook/specs
     |title The DocBook Schema
     |org
       |orgname OASIS
-      |orgdiv :href http://www.oasis-open.org/committees/workgroup.php?wg_abbrev=docbook OASIS DocBook Technical Committee
+      |orgdiv :href http://www.oasis-open.org/committees/workgroup.php?wg_abbrev=docbook| OASIS DocBook Technical Committee
     |othercredit.other :otherclass chair
       |personname
         |firstname Norman
@@ -30,7 +34,7 @@
           |address
             |email Norman.Walsh@Sun.COM
     |pubdate 2008-04-09
-    |bibliomisc :role namespace http://docbook.org/ns/docbook
+    |bibliomisc :role namespace > http://docbook.org/ns/docbook
     |bibliorelation :href http://docbook.org/specs/docbook-5.0-spec-cd-03.html :condition online :type replaces
     |bibliorelation :href http://docbook.org/specs/docbook-5.0CR7-spec-wd-01.html :condition online :type replaces
     |bibliorelation :href http://docbook.org/specs/docbook-5.0-spec-cd-03.html :condition print :type replaces
@@ -233,7 +237,7 @@
       |para
         The |{tag ulink} element has been removed from DocBook as URI-based links can now be achieved directly from the appropriate inline (such as |{tag productname} or |{tag command}). For instances where no specific semantic inline is needed, |{tag link} is still available. Where |{tag link} used to be limited to ID/IDREF linking, it now sports an |{tag.attribute xlink:href} attribute as well.
       |para
-        Support for |{link :href http://www.w3.org/TR/xlink11/#extended-link extended links}|{tag extendedlink}, |{tag arc}, and |{tag locator} elements.
+        Support for |{link :href http://www.w3.org/TR/xlink11/#extended-link | extended links}|{tag extendedlink}, |{tag arc}, and |{tag locator} elements.
     |section[s.annot]
       |title Improved Accessibility
       |para
@@ -642,11 +646,8 @@
         |listitem[attribute.defaults]
           |para
             Restored default values to the |{tag.attribute type} attribute on |{tag simplelist}|{tag.attribute choice} and |{tag.attribute rep} attributes on |{tag methodparam}, |{tag arg}, and |{tag group}. Fixed a bug in |{tag paramdef} where |{tag.attvalue plain} was accidentally allowed as a |{tag.attribute choice}. These defaults are reflected in the generated XML DTD as well.
-        |listitem[blockquote]
-          |para
-            Reduced the content model of |{tag blockquote} which seemed way too broad.
-        |listitem[docs.b3]
-          |para Improved reference documentation for attributes on many elements. 
+        |listitem[blockquote] |para Reduced the content model of |{tag blockquote} which seemed way too broad.
+        |listitem[docs.b3] |para Improved reference documentation for attributes on many elements. 
     |section[s.50b2]
       |title Changes in DocBook V5.0b2
       |para This release addresses several bugs identified in V5.0b1.

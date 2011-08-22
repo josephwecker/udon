@@ -90,16 +90,23 @@ misc notes:
 
 |==Embedded
                            #      | embedded | child lines | metachars | embeds | prsv.ws | comments |
-  <| datadata... |>        # Data | Yes      | --          | Yes       | Yes    | a-first | --       |
-  <|"datadata..."|>        # Data | Yes      | --          | Yes       | Yes    | Yes     | --       | NBM!!
-  <|'datadata...'|>        # Data | Yes      | --          | --        | Yes    | Yes     | --       | NBM!!
-  <|`datadata...`|>        # Data | Yes      | --          | --        | --     | Yes     | --       | NBM!!
+  <( datadata... )>        # Data | Yes      | --          | Yes       | Yes    | a-first | --       |
+  <("datadata...")>        # Data | Yes      | --          | Yes       | Yes    | Yes     | --       | NBM!!
+  <('datadata...')>        # Data | Yes      | --          | --        | Yes    | Yes     | --       | NBM!!
+  <(`datadata...`)>        # Data | Yes      | --          | --        | --     | Yes     | --       | NBM!!
 
-  <|ns/element ...|>       # Embedded element (has children lines if desired)
-  <:expression{...} ...:>  # Embedded expression (allowed in identity sections as well) (has children lines if desired)
-  <:-expression{...} ...:> # Embedded expression (allowed in identity sections as well) (discard return value) (has children lines if desired)
-  <|# datadata #|>         # Embedded comment (allowed in identity sections as well) not <#..#> because <#{blah} is (surprisingly) common in ruby
+  <(ns/element ...)>       # Embedded element (has children lines if desired)
+  <{expression{...} ...}>  # Embedded expression (allowed in identity sections as well) (has children lines if desired)
+  <{-expression{...} ...}> # Embedded expression (allowed in identity sections as well) (discard return value) (has children lines if desired)
+  <(# datadata #)>         # Embedded comment (allowed in identity sections as well) not <#..#> because <#{blah} is (surprisingly) common in ruby
 
+
+|html :background-color: blue
+  |body
+    |table
+      :borderwidth: 0
+      |tr <(td First stuff)> <(td Second stuff)>
+      |tr |td First stuff <|td Second stuff <<|td Third stuff
 
 
 :- html5
@@ -134,9 +141,9 @@ misc notes:
 
 |e k1:<:$v1:> <:$k2:>: v2<:$v2b:>b <:$d1:>
 
-|html<|head|title Awesomeness
-           |script thescript.js|>
-  |body|header<|h1 Awesome examples are
+|html<(head|title Awesomeness
+           |script thescript.js)>
+  |body|header<(h1 Awesome examples are
     |a href: http://example.com GREAT|>
 
 |table |tr |td hello |td you
@@ -152,7 +159,7 @@ misc notes:
 No indentation in embedded. all treated as 1-line (nl treated as space)
 Indentation w/ embedded child anon blocks... 
 Problem still with text data:
-|html|body|div.message<| asdf
+|html|body|div.message<( asdf
                          |a href:http://www.example.com|>
 
 Indentation w/ child anon blocks...
@@ -160,7 +167,7 @@ Indentation w/ child anon blocks...
 <:x:u:$asfd:>
 <:x:u| asfd:>    `:>`,`<:`,`|>`, and `|>` must be escaped unless backtick quotes
 
-<:x:u <|blah :>|>:>
+<:x:u <(blah :>|>:>
             ^ error? or maybe we're only looking for | at this point?
 (IN XML):
  <?.?> processing instruction (same inner syntax as tag)
@@ -171,7 +178,7 @@ Indentation w/ child anon blocks...
 
 (IN UDON):
  |.
- <|.|>
+ <(.|>
  :
  <:.:>
 
