@@ -51,18 +51,21 @@ syn match   udonMVType      /[^-[:digit:].[:blank:][:cntrl:]]\+\d\@!/ contained
 syn cluster udonValueTypes  contains=udonColor,udonFloat,udonMiscVal,udonInt
 
 
+syn region  udonAttrLabel   start=/\(\s\+\|^\)\zs:\s\+/ skip=/\\:/ end=/:/ keepend contains=udonDelimiter
 
 
-syn cluster udonBlockParts  contains=udonType,udonID,@udonValueTypes,udonAttrPair,udonComment,udonMLComment
-syn region  udonBoundBlock  start="{" end="}" contains=@udonBlockParts,@udonBlock,udonDelimeter
-syn region  udonStructBlock start="^\z(\s*\)[|!]" end="^\%(\z1 \| *$\)\@!" contains=@udonBlockParts,@udonBlock
-syn cluster udonBlock       contains=udonBoundBlock,udonStructBlock
+syn cluster udonBlockParts  contains=udonType,udonID,@udonValueTypes,udonAttrPair,udonComment,udonMLComment,udonLocation
+syn region  udonBoundBlock  start="{" end="}" contains=@udonBlockParts,@udonBlock,udonDelimeter,udonLocation
+syn region  udonStructBlock start="^\z(\s*\)[|!]" end="^\%(\z1 \| *$\)\@!" contains=@udonBlockParts,@udonBlock,udonLocation
+syn cluster udonBlock       contains=udonBoundBlock,udonStructBlock,udonLocation
 
 
 "syn match   udonMLElement   /^\s*|"\([^"\\]\|\\.\)*"/ contains=udonDelimiter
 
 syn match   udonDelimiter   /[:\[\]|{}]/ contained
 syn match   udonPreProc     /!/ contained
+syn match   udonLocation    /@\S\+/ contains=udonDelimiter
+
 
 hi def link udonConditionals Conditional
 hi def link udonIterator    Repeat
@@ -83,5 +86,6 @@ hi def link udonComment     Comment
 hi def link udonAttrLabel   Label
 hi def link udonAttrPair    Constant
 hi def link udonDelimiter   Delimiter
+hi def link udonLocation    Macro
 
 let b:current_syntax = "udon"
