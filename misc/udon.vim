@@ -51,7 +51,7 @@ syn match   udonMVType      /[^-[:digit:].[:blank:][:cntrl:]]\+\d\@!/ contained
 syn cluster udonValueTypes  contains=udonColor,udonFloat,udonMiscVal,udonInt
 
 
-syn region  udonAttrLabel   start=/\(\s\+\|^\)\zs:\s\+/ skip=/\\:/ end=/:/ keepend contains=udonDelimiter
+syn region  udonAttrLabel   start=/\(\s\+\|^\)\zs:\s\+/ skip=/\\\(:\||\)/ end=/:\||/me=e-1 keepend contains=udonDelimiter
 
 
 syn cluster udonBlockParts  contains=udonType,udonID,@udonValueTypes,udonAttrPair,udonComment,udonMLComment,udonLocation
@@ -62,9 +62,9 @@ syn cluster udonBlock       contains=udonBoundBlock,udonStructBlock,udonLocation
 
 "syn match   udonMLElement   /^\s*|"\([^"\\]\|\\.\)*"/ contains=udonDelimiter
 
-syn match   udonDelimiter   /[:\[\]|{}]/ contained
+syn match   udonDelimiter   /[:\[\]|{}\\\/]/ contained
 syn match   udonPreProc     /!/ contained
-syn match   udonLocation    /@\S\+/ contains=udonDelimiter
+syn match   udonLocation    /@[^ \r\n()]\+/ contains=udonDelimiter
 
 
 hi def link udonConditionals Conditional
@@ -83,7 +83,7 @@ hi def link udonFloat       Float
 hi def link udonInt         Number
 hi def link udonMLComment   Comment
 hi def link udonComment     Comment
-hi def link udonAttrLabel   Label
+hi def link udonAttrLabel   StorageClass
 hi def link udonAttrPair    Constant
 hi def link udonDelimiter   Delimiter
 hi def link udonLocation    Macro
