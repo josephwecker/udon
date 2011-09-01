@@ -1,0 +1,32 @@
+
+# indent/dedent ambivalent
+# 
+
+
+- line 1
+- # comment
+>   # comment
+>     # comment
+<   line 2
+
+line 1          -
+# comment       -
+  # comment     -
+    # comment   -
+  line 2        >
+
+line 1          -
+# comment       -
+  # comment     >>
+    # comment   >>
+  line 2        <<
+
+
+-  line 1
+-  'string
+>    that keeps
+>      going
+?     and going'
+<< line 2
+
+

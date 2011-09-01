@@ -1,0 +1,238 @@
+
+
+
+.Unify
+  - haml
+  - zml
+  - yaml
+  - sdl
+  - json
+
+.Features
+  - templating (control constructs)
+  - 
+
+
+
+#entity[some-name-or-id]
+  an-attribute:  blah
+  class: doof in schmertz ->
+    #another-entity auto-value color:orange -> heya
+
+type#id-or-name
+  .mono-attribute
+  .another-mono-attribute
+  attribute=value
+
+
+|type:nstuff[id-or-name].mono.attributes
+  anon-value-or-values # actually another mono mapping to mono[blank]
+  attrib:value
+  attrib2 : another value ->
+    child1 is just text, oh yeah.
+    |child2 some values here
+    |'fkej wjfeiwo'|
+    |{ruby}' fkjewl kfje w
+fejiw fjewoij fe fejiwoijfew'|
+
+* Type
+* Type qualifiers / shortcuts ?  ( %type != >type != $type ...?)
+* Super-short-attributes (same-word, #id.class) - allow dashes!
+* Inline-attributes (xml attributes)
+* Children (who are often attributes themselves)
+
+
+type "id"
+
+
+
+namespace:name value-list attribute-list →
+  children
+
+or
+
+namespace:name value-list attribute-list { children }
+
+
+* comments comment all indented children
+
+
+Name[TagSpecialQualifiers] value-list attribute-list →child
+  more children
+
+
+When mapping to, say, xml:
+  - Name →?
+  - Various special qualifiers → ?
+  - Value-list → ?
+  Where ? =
+  - Tag
+  - Namespace
+  - Values of a specific attribute
+  - Specific children values (no attributes)
+
+
+hot.dog frank 28
+-- could become --
+<hot:dog name="frank">28</hot:dog>
+-- or --
+<dog type="hot" 
+
+
+                                                 value-assign
+                                                      |
+                                                      v
+                                                     ---
+blah:blaffer.doink.dork.dash 'wowsers' 123 blah=henry -> children/value
+-----------  -----.----.----  -------  --- ----------
+    ^               ^           ^       ^      ^
+    |               |           |       |     attribs
+   tag           classes      id/name  other
+                                       misc. values
+
+.Tag
+  defined shortcuts:
+  symbol followed by value + definition (tag-name + attribute-for-value)
+
+  shorttag 'implied-div-with-class'
+    token =              .
+    tag-name =           div
+    attribute-for-value= class
+
+
+
+.Value Assign
+  ->  children
+  =>  (templates only) code-generated value
+*** built-in interpolation that is language agnostic?
+  :>  text (do xml encoding)
+  :filter> run it through a filter
+
+
+blah=> one
+  => two
+  :> three
+  four
+
+
+.Children
+
+text: quote, single-quote, triple-single, triple-quote, backtick delimited
+
+
+->
+
+-raw>
+
+
+ * filters
+ * control constructs
+ * tags
+ * passthrough/text children
+
+
+.Literals
+
+
+|=================================================
+| backticks | `smp` | none                  | no
+| quotes    | "hi"  | escapes, unicode, hex | yes
+| single-q  | 'hi'  | escapes, unicode, hex | no
+|=================================================
+
+
+
+|=============================================================
+| escape only delim                  ''
+| all escape codes, unicode, etc.    ""
+| all escape codes, unicode, etc.    ``      html/xml-encoded
+|
+| escape nothing                     >''<
+| all escape codes, unicode, etc.    <"">
+| all escape codes, unicode, etc.    <``>    html/xml-encoded
+|
+| base64-encoded                     <[]>
+
+
+
+
+h1->> hello
+h1=> $hello
+h1->
+  > if blah
+
+
+:blah>>''<
+
+
+children are mixed (indent-sensitive)
+children of one type (indent-sensitive)
+child of one type with delimiters (non-indent-sensitive)
+
+
+->       mixed children
+-->      text filter
+-name>   filter
+=>       callback for children
+==>
+
+ tag              child that is a tag definition if not in a filter
+ -<'...'>-        text filter not indent-sensitive
+ -name<'...'>-    named filter not indent-sensitive
+ "..."            text child
+ 'c' or '\u1234'  character
+
+
+h1->
+ blah blah
+ efjio -> 
+
+
+first 'jerry'
+      doink = hooza
+      void = dorfy ->
+  how's it going?
+  and is this
+  another 'dude' wow=zowzers -> hey there
+
+
+:blah |first=blah
+      |second=another
+      |third=jke
+  and here are some children
+
+
+
+:div hello-there
+
+
+*require html
+
+
+yaml v xml/sdl etc. - yaml doesn't have anonymous "children"
+
+process [good-effort]
+  name: something
+
+
+
+
+<' fjekwo jfekwfew
+fejwi fojk
+fejf
+ewio '>
+
+ - `backtick`   non
+ - 'normal'  (except "'" is escapable)
+ - escape-characters
+ - xml/html-encoding
+   - "normal"
+ - ''' tripled '''
+ - """ tripled """
+
+
+
+
+mytag one:two one:two:three
+
+

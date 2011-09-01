@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+
+# We give the ability to see a string with proper indent/dedents in case it's
+# useful to the grammar.
+class String
+  def with_dents(indent="\u200C", dedent="\u200D", partial_dedent="\u200B", strict=false, dents=[0])
+    r = ''
+    each_line do |line|
+      line =~ /^([ \t]*)/
+      lvl = $1.length
+      if lvl > dents.last
+        dents.push lvl
+        #r += indent
+        r += "[#{dents.count}>"
+      end
+      while lvl < dents.last
+        dents.pop
+        if lvl > dents.last
+          raise "Bad indentation level: #{line}" if strict
+          #r += partial_dedent
+          r += "<?]"
+          dents.push lvl
+        #else r += dedent end
+        else r += "<#{dents.count}]" end
+      end
+      r += line
+    end
+    return r
+  end
+end
+
+
+a = '
+first
+  legit indent
+    another legit
+      "some string
+          that keeps going"
+              and going
+and back"
+  second
+'
+print a.with_dents
+
+#require 'rubygems'
+#require 'treetop'
+
+
+#Treetop.load 'declang_grammar.tt'
+#parser = DeclangParser.new
+#result = parser.parse ARGF.read
+
+#if result
+  #require 'pp'
+#  puts result.inspect
+#else
+#  $stderr.puts parser.failure_reason
+#  $stderr.puts parser.failure_line
+#  $stderr.puts parser.failure_column
+#end  

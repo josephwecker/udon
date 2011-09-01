@@ -1,0 +1,20 @@
+
+haml-esque:   (type)(name/id)(classes)(attributes)
+  IDENTITY
+    type    - required - declared or implied (default)
+    name    - optional - (id) (not enforced unique)
+    classes - optional - shared identity
+  ATTRIBUTES
+    structure attributes vs separate (swappable) style attributes
+    attribute-family: structure/hierarchy, style
+
+== declang ==
+
+required:
+    name/id AND/OR class/type
+  
+  #name  (default type)
+  type#name
+
+  name
+  name:type
