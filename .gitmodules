@@ -1,0 +1,6 @@
+[submodule "submodules/udon-ruby"]
+	path = submodules/udon-ruby
+	url = git@github.com:josephwecker/udon-ruby.git
+[submodule "submodules/website"]
+	path = submodules/website
+	url = git@github.com:josephwecker/udon.git
