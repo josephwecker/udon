@@ -1,0 +1,40 @@
+{/* Initializer */
+  var dents = [0];
+  var currlevel = 0;
+}
+
+
+
+grammar     = entries:entry* eof? {return entries;}
+entry       = key:atom [:] values:children {var d={}; d[key] = values; return d;}
+children    = ch:child* ch2:(indent c:child* dedent {return c;}) (nl / eof) {return ch.concat(ch2);}
+child       = s? ch:atom {return ch;}
+atom        = txt:[a-z-]+ {return txt.join('');}
+s           = [ \t]+
+eof         = !.
+nl          = s? newline+ blank_line*
+//#nl          = s? newline+ blank_line* dent_level
+blank_line  = s* newline
+newline     = [\n\r\u000b\u000c\u2028\u2029]
+
+dent_level  = spaces:s? {currlevel = spaces.length; console.log(currlevel); return '';}
+
+
+//indent      = ind nl
+indent         = &(s? newline+ blank_line* spaces:s? {
+                var lvl = spaces.length;
+                if(lvl > currlevel) {
+                  dents.push(lvl);
+                  currlevel = lvl;
+                  return '';
+                } else return null;
+              })
+
+dedent      = &(s? (newline* / eof) blank_line* spaces:s? {
+                var lvl = spaces.length;
+                if(lvl < currlevel) {
+                  if(dents[dents.length-1] > lvl) {
+                    currlevel = dents.pop();
+                  } else return null;
+                } else return null;
+              })

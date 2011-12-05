@@ -1,0 +1,56 @@
+
+
+
+
+
+
+.Text child
+-------------------------
+Just some normal text
+-------------------------
+
+-------------------------
+<document>
+Just some normal text
+</document>
+-------------------------
+
+.Simple tag
+-------------------------
+|something
+  And some text
+-------------------------
+
+-------------------------
+<document>
+  <tag>And some text</tag>
+</document>
+-------------------------
+
+.Directives
+-------------------------
+!require html
+|header
+  Hello
+-------------------------
+
+-------------------------
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <header>Hello</header>
+  </body>
+</html>
+-------------------------
+
+.Comments
+-------------------------
+# Single line comment
+|# Multi-line comments
+  are so very great
+  oh yeah #|
+
+-------------------------
+

@@ -1,0 +1,145 @@
+
+
+
+|tag-with:namespace
+  [id-or-name]
+  random values
+  blah ->
+    |more-children
+
+|---  nop / comment
+|===  nop / comment
+:directive { children }  # Implying structural output
+!directive # Implying no direct structural output (also parsed differently? one-line-text-only?)
+[an-implied-tag]   # tag is set to 'tag'
+|' multi-line string '|
+|` multi-line string with no interpolation `|
+
+|tag ids monos attributes -> children
+|"kja fjioew  jfeiwojf" [id] "Some stuff oh yeah" blah\ blah:red    # Quotes as a way to have whitespaces in tokens
+
+|{fenced/filter}
+  # This one is indent-sensitive
+|{fenced/filter}' multi-line string '|
+
+:special # inner contents continue to be parsed, before or after special
+:special|' multi-line special content '| # raw inner contents
+
+|= interpolated from code (shorthand for `|{native}` )
+Normal text
+\| also normal text
+\[ also normal text
+|[an-implied-tag]
+|                  # also implied tag, but with no id/name
+|# multi-line comment, indent-insensitive #|
+
+TODO: binary
+
+ * Multiple id's - essentially an id alias, or think of as name and id, etc.
+ * Solo-attributes always before attribute-value-pairs
+ * Explicit line continuations when line ends in a backslash
+ * Optional pipe on: [.
+ * Needs escape to start and be in a line of text: ' " . [ | # : !
+
+
+|process [Be awesome]
+         .private
+         |awesomeness: true blankness
+         |effortness:  truly amazing
+         |blah:        dude
+  |task-templates
+    |' Some crazy, crazy string, oh yeah '|   # solo-attribute or child??
+    dirt: well yes, a little
+    \this-is: just plain old text
+    [awesomeness]
+
+
+|process[Be awesome].private awesomeness:true blankness effortness:truly amazing blah:dude
+
+|============================================
+|process [Be awesome]
+  .private
+  |awesomeness : true blankness
+  |effortness  : truly amazing
+  |blah        : dude
+  |-----------------------------------------------------------------------
+  |task-templates
+    |' Some crazy, crazy string, oh yeah '|   # solo-attribute or child??
+    dirt: well yes, a little
+    \this-is: just plain old text
+    [awesomeness]
+    |- [1..20].each do |i|
+
+  |more-stuff
+|============================================
+      
+
+
+
+|========================
+|process [1]
+    .private
+    |color : red
+    |----------------------
+  |task [read]
+  |task [write]
+  |'This should be ok'|
+|========================
+
+
+|process[1].private color:red
+  |task[read]
+  |task[write]
+  This should be ok
+
+|process{[1].private|color:red|task[read]|task[write]|'This should be ok'|}
+
+|process[1].private{|color:red|task[read]|task[write]|'This should be ok'|}
+
+-----------------
+
+== Templating
+
+|process [1]
+    .private
+    |color : red
+  :with[$.tasks|t] when: t.awesome > 7
+    |task [$t.name}] $t.best_attrib: $t[3]
+  |'This should be ok'|
+  
+|process [2]
+  |color: $process[1].color
+  :if[color > 0x232323]
+    |background-color: blue
+  :else
+    |background-color: white
+  |'Actually no tasks here. muahaha'|
+
+ * $. (blank name) is the namespace for data passed into the template
+ * $something.child is equivalent to ${something.child}
+ * For now control constructs & directives are simply implemented as specials
+ * Exposed interpolation (no curly braces) has a limited syntax (more so than rest of code?)
+
+
+
+|h1 Hi there how are you?
+  |.awesome
+    |span [msg] visible:false How are you doing?
+
+[awesome-stuff] "body > div.special, blah, .blah .blah2"
+  |color:   blue
+  |width:   190%
+
+
+  
+
+
+
+== Specials
+
+.Actions available
+ - Modify any specialized state variables it wants to keep track of
+ - Call declang parsing on its own chunk of stuff (eval)
+ - Modify its own object
+ - See where its siblings / parents are - modify them.
+ - Modify anything in the entire AST

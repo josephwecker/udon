@@ -1,0 +1,10 @@
+#!/usr/bin/env coffee
+spawn = require('child_process').spawn
+regen = spawn 'pegjs', ['declang.peg', 'declang_parser.js']
+
+regen.on 'exit', (code)->
+  p = require('./declang_parser.js')
+  test = '`heya`'
+
+  res = p.parse test
+  console.log(JSON.stringify res)

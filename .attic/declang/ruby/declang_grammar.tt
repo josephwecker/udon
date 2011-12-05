@@ -1,0 +1,26 @@
+grammar Declang
+  rule declang
+    #children*
+    declare_children* newline?
+  end
+
+  rule declare_children
+    raw_children / normal_children / interpolation_children
+  end
+
+  rule normal_children
+    '->'
+  end
+
+  rule interpolation_children
+    '=>'
+  end
+
+  rule raw_children
+    '-->'
+  end
+
+  rule newline
+    "\r\n" / "\n" / "\r"
+  end
+end

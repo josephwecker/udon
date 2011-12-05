@@ -1,0 +1,7 @@
+
+
+== To Build
+
+* Requires node.js
+* $ sudo npm install -g pegjs
+

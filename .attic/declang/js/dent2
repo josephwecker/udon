@@ -1,0 +1,12 @@
+#!/usr/bin/env coffee
+spawn = require('child_process').spawn
+regen = spawn 'pegjs', ['dent2.peg', 'dent2_parser.js']
+
+regen.on 'exit', (code)->
+  p = require('./dent2_parser.js')
+  test = "a: a the\n   b b\nb: hi"
+    #people: in the
+    #  neighborhood: eh"
+
+  res = p.parse test
+  console.log(JSON.stringify res)

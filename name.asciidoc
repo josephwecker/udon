@@ -1,0 +1,74 @@
+
+
+1. usable name / short + catchy / acronym
+2. domain (ideally .io)
+3. gems
+4. github (no ruby, javascript, or generic related projects)
+5. wikipedia
+6. google
+
+
+oml
+ 1. pass
+ 2. pass
+ 3. pass
+ 4. barely pass (1 project, foreign)
+ 5. maybe pass  (1 project - Outline Markup Language)
+ 6. pass
+
+sml
+ 1. pass (structured ...)
+ 2. fail
+
+dml
+ 1. pass
+ 2. pass dml.io
+ 3. pass
+ 4. fail (document markup language - xml)
+
+zml
+ fails
+
+uml
+ fails
+
+gml
+ 1. pass
+ 2. pass
+ 3. pass
+ 4. pass
+ 5. fail - history, geographic ml (w3c)
+
+
+aml
+ 1. barely pass (abstract/acute/attribute/ambidextrous/ambivalent)
+ 2. pass
+ 3. barely pass (similar to haml)
+ 4. pass
+ 5. barely pass
+ 6. pass
+
+fml
+ 1. barely pass (functional?)
+ 2. pass
+ 3. fail (floorplan gem??)
+ 4. fail (floorplans again? seriously?)
+ 5. pass (face modeling lang.)
+ 6. pass
+
+
+goml
+
+
+udon
+ 1. pass
+ 2. pass
+ 3. pass
+ 4. fail (javascript library)
+ 5. pass
+ 6. pass
+
+
+xson
+
+

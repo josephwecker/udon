@@ -1,0 +1,207 @@
+
+
+
+
+NOTE::
+  All of the below kind of got away from me. More like a brain-storm for the
+  old framework ideas as well as some new stuff and is probably more
+  appropriate for the successor to ZERL/ZML. In fact, maybe declang isn't a
+  real thing at all... maybe it's more appropriate as
+  parantheses-minimal-s-expressions and not much more... nah, needs
+  constraints so it doesn't turn into lisp/scheme power-hell. Some things that
+  maybe haven't been considered yet (for declang, not most of what's below)
+   - easy dependent-properties
+   - easy/standard inheritance/multi-inheritance
+   - easy/standard constraints/expert-system-like-rules/contracts
+   - static typing (bleh, but need to investigate)
+   - better thoughts about well-structured vs. semi-structured
+     (mixed/inline-html-like)
+   - pre-generated vs. runtime-generated
+   - ...
+
+
+
+Expert system (decisions based on knowledge) where possible instead of
+decisions based on techniques / procedures. (much more declarative)
+
+(Wow, what if it automatically ran its own experiments when uncertain? And then
+ran them again with new browsers, builds, etc.)
+
+Widget Inheritance (including multi)
+
+Semantic vs. styling for widgets
+
+html
+flash
+xul
+  hbox
+  vbox
+  bbox
+  spacer
+
+
+Semantic structure | Layout | Interaction | Presentation
+
+
+Content          <->                         Presentation                                      <->  Behavior
+Semantic Content <-> Display Directives / Positioning/Layout / Fundamental Widgets <-> Styling <-   Scripting
+
+
+(------------- Function ---------------) (--------------- Form --------------)
+Interaction-Model   | Content    | Display-Model  | Presentation | Behavior (should be part of function?)
+------------------------------------------------------------------------------
+ - No HCI (SAAS...) | - Semantic |  - Generic     |              |
+ - Low HCI          |            |  - Mobile      |
+ - High HCI         |            |  - Rich
+ - Funnel (?)       |            |  - Progressive
+ - Static vs webapp |            |  ...
+ ...                |            |
+
+== Objectives / Philosophy
+
+* As declarative as possible (obviously), including most interactions,
+  chaining, dependent attributes, etc.
+* Very fast to download
+  * Essentially use an expert system to decide how to serve everything up
+  * Optimizations from every level down to TCP and even DNS lookup (use IPs in
+    certain cases?)
+* Very fast to render
+* Progressively downloaded
+* Progressively rendered
+* Progressively enhanced with scripting, animations, and transitions
+* Accessible
+* Browser adaptive/agnostic
+* Medium/Device/Resolution/Media-types adaptive (including changes post-render)
+* Device+Browser idiom-appropriate unless overridden (e.g., back-button
+  behavior, URL structures, etc.)
+* Connection-constraints adaptive
+* Connection fault tollerant
+* Easily enhanced
+* Easily styled
+* Easy to use unicode characters etc. (esp. in the place of icons)
+* Easily themed/personalized (similar to addons)
+* Easily iterated in realtime
+  * Alignment grid
+  * Auto update
+* Easily maintained
+* Easily deployed
+* Easily analyzed (correctness/validity, unintented effects, immediate
+  browser-support grid [with variable degrees], standardized/normalized
+  speed-testing)
+* Easily experimented (? possibly really only belongs to the backend)
+* Timelessly Beautiful defaults
+  * Not trendy, but allows easy layering of trendy things, which are easily swapped out.
+* Semantically correct, Generally valid
+* Localized, Internationalized
+* Content optimized for discovery / search engines
+* Very easy experimentation
+* Backend, dynamic (or static) adaptive/agnostic
+* Trusted to be very, very stable. No surprises.
+* Trusted to be cutting edge early on.
+
+Cost + Service optimization based on the following end-user variables
+Geographic Area | ISP | Route | Latency | Bandwidth up | Bandwidth down |
+Proxying present | Inter-machine caching | Browser | Addons/History | Request
+headers | Local caching | Resolution | Local browser adjustments (resize, lack
+of javascript, etc.) | Interaction | Content visible | ...
+
+(So, for example, it would figure out which CDNs to load things up to, etc.
+etc. Estimate until real numbers are known. Another example, certain
+latency/caching combinations may make inlined css/js more palatable than files
+cached seperately... May not know whether something is locally cached or not,
+in which case it should try to make an educated guess(?))
+
+Fundamental Simplified Profile::
+  | Request | Type | Browser+Version | Media | Bandwidth-class | Latency-class |
+  (type is a summary of some of the others. Many of the others are, in turn,
+  summaries of, for example, the request header. It could be "mobile" or
+  "developer" or "first-time IE"...
+  Lots you can figure out simply by being aware of the timing/order that things
+  are requested on a stay-alive connection. muahaha... if a single, say, Erlang
+  worker was aware of even parallel stay-alive connections to the exact (it
+  reasonably supposes via cookie etc.) same client, it could immediately figure
+  out tons of stuff, such as:
+   * Latency
+   * Bandwidth
+   * Caching
+   * Actual parallelizing success/failure
+   * Infered responsiveness of page
+   * User-agent potential forgery
+   * Failed / partially failed loads - even designate some as "critical"
+     failures etc. if the user will really hate them
+   * Real js/no-js capabilities
+   * Even addons, like adblock etc. (assuming you're serving the ad...)
+   * Audit trail for 5xx and 4xx errors etc. for easily duplication
+   * Playback!
+   * Pseudo-usage-monitoring (watching the playback as it happens...)
+   * Could even do a lot of the things that Google Analytics does, using
+     possibly very similar techniques.
+  Doesn't need to be definitive- use JS for that so that if it's entirely
+  cached it still works as intended- just useful for knowing what and how to
+  serve stuff up.
+
+I guess it would be nice to simply have the variables available in the
+expert-system and constraints etc.
+
+
+A nice example: System serves up a response as quickly as possible, realizes
+they have lots of speed and goes ahead with the progressive enhancements. Then
+the connection seems to be interrupted- marks as a potential delivery problem
+(blocked!) which it can later compare with other requests to see if it was an
+anomaly or actually related to what we're serving up to it. Realizes that due
+to changing circumstances it shouldn't take the time to try to fire off all of
+the stats beacons and so skips them completely...
+So, client-side (via js) and server-side both have their own idea of how well
+things are going, and communicate to each other when appropriate and make
+decisions accordingly. JS knows that connections are slow, so skips
+non-essentials, etc...
+
+
+Example of difficult decision that an expert system in this case would try to
+optimize:
+  1. browser+version does not support the html5 tag used by this content/widget. 
+  2. workaround available as a javascript plugin
+  3. user has high latency or low bandwidth
+  4. widget has fallback, but the "cost" is high (designer said please avoid)
+  5. perhaps there is even a different fallback with different costs
+What does it do?
+
+
+Widget::
+ fallbacks::
+   | what/how | cost | constraints (browsers/versions, etc.) |
+   possibly inheritance for fallback structures (like- general js fallback for
+   IE, but additional small css enhancement for ie 7.4...)
+
+Snippets of javascript fallbacks could be per-Fundamental-Simplified-Profile
+compiled.
+
+More notes (basic idea would be to _easily_ and systematically assimilate
+any/all of these while giving a simplified programming interface ala openlaszlo):
+
+* http://perishablepress.com/press/2010/06/01/wrapping-content/
+* http://stackoverflow.com/questions/2253110/how-to-manage-css-explosion
+* http://catharsis.tumblr.com/post/501657271/ipad-orientation-css-revised
+* http://www.standardista.com/css3/css-values-lengths-times-frequenc-angles
+* http://stuffandnonsense.co.uk/projects/320andup/
+* http://griddle.it/
+* http://cssgrid.net/
+* http://paulirish.com/2009/fighting-the-font-face-fout/#update2011
+* http://css3buttons.michaelhenriksen.dk/
+* http://markdotto.com/bootstrap/
+* http://cssprefixer.appspot.com/
+* http://type-a-file.com/
+* http://html5boilerplate.com/mobile/
+* https://github.com/scottjehl/Respond
+* http://adapt.960.gs/
+* http://na.isobar.com/standards/
+* http://www.html5rocks.com/tutorials/flexbox/quick/
+* http://www.alistapart.com/articles/responsive-web-design/
+* http://www.merttol.com/articles/web/code/introduction-to-css-escape-sequences.html
+* http://www.netmagazine.com/features/how-avoid-common-css3-mistakes
+* http://designfestival.com/when-and-how-to-visually-hide-content/
+* http://net.tutsplus.com/tutorials/html-css-techniques/quick-tip-nonintrusive-css-text-gradients/
+* http://www.456bereastreet.com/archive/201103/flexible_height_vertical_centering_with_css_beyond_ie7/
+* http://nicolasgallagher.com/css-drop-shadows-without-images/demo/
+* http://leaverou.me/2010/12/checkered-stripes-other-background-patterns-with-css3-gradients/
+* 

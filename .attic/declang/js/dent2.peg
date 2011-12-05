@@ -1,0 +1,28 @@
+{
+  var dents = [0];
+}
+
+
+
+
+sblock1     = _ nl indent __
+eblock1     = dedent
+
+sblock2     = __ [{] __
+eblock2     = __ [}] __
+
+indent = &(sp:_ {
+  var lev = sp.length;
+  if(lev > dents[dents.length-1]) {
+    dents.push(lev);
+    return true;
+  } else return null;
+})
+
+dedent = &(
+
+
+_  = s*
+__ = (s / nl)*
+nl = [\n\r\u000b\u000c\u2028\u2029]+
+s  = [ \t]

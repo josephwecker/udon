@@ -1,0 +1,13 @@
+
+
+
+
+ - public post on declarative languages (specifically markups)
+
+
+== Desirable
+
+ - sytax highlighting for all main editors
+ - coherent xslt-like transformations
+ - coherent xpath/jsonpath/css-selector like query language
+
