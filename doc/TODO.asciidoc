@@ -13,3 +13,5 @@
 |  | udon2xml + xml2udon
 |  | udon2json + json2udon
 |===========================================================================
+http://www.slideshare.net/douglascrockford/jsonsag
+http://json.org/example.html  <<--- use these examples
