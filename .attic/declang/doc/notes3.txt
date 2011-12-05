@@ -1,5 +1,6 @@
 
-
+# NOTE: keeping merge conflict notes! diverged and it's just a scratch file so
+# I don't care (:
 
 |tag-with:namespace
   [id-or-name]
@@ -7,6 +8,7 @@
   blah ->
     |more-children
 
+<<<<<<< HEAD
 |---  nop / comment
 |===  nop / comment
 :directive { children }  # Implying structural output
@@ -25,21 +27,43 @@
 :special # inner contents continue to be parsed, before or after special
 :special|' multi-line special content '| # raw inner contents
 
+=======
+|tag ids monos attributes -> children
+|- directive { children }
+:directive { children }
+|---  nop / comment
+|===  nop / comment
+|' multi-line string '|
+|{fenced/filter}
+  # This one is indent-sensitive
+|{fenced/filter}' multi-line string '|
+>>>>>>> a3f750a6ae8b7e999f50a4857cf37241d59b5a56
 |= interpolated from code (shorthand for `|{native}` )
 Normal text
 \| also normal text
 \[ also normal text
 |[an-implied-tag]
+<<<<<<< HEAD
 |                  # also implied tag, but with no id/name
 |# multi-line comment, indent-insensitive #|
 
 TODO: binary
 
+=======
+[an-implied-tag]   # tag is set to 'tag'
+|                  # also implied tag, but with no id/name
+|# multi-line comment, indent-insensitive #|
+
+>>>>>>> a3f750a6ae8b7e999f50a4857cf37241d59b5a56
  * Multiple id's - essentially an id alias, or think of as name and id, etc.
  * Solo-attributes always before attribute-value-pairs
  * Explicit line continuations when line ends in a backslash
  * Optional pipe on: [.
+<<<<<<< HEAD
  * Needs escape to start and be in a line of text: ' " . [ | # : !
+=======
+ * Needs escape to start and be in a line of text: ' " . [ | # :
+>>>>>>> a3f750a6ae8b7e999f50a4857cf37241d59b5a56
 
 
 |process [Be awesome]
@@ -103,6 +127,7 @@ TODO: binary
 |process [1]
     .private
     |color : red
+<<<<<<< HEAD
   :with[$.tasks|t] when: t.awesome > 7
     |task [$t.name}] $t.best_attrib: $t[3]
   |'This should be ok'|
@@ -143,3 +168,13 @@ TODO: binary
  - Modify its own object
  - See where its siblings / parents are - modify them.
  - Modify anything in the entire AST
+=======
+  : // YOU ARE HERE
+  :[ t | t in tasks]
+  :with[tasks|t]
+    |task [
+    |task [read]
+    |task [write]
+  |'This should be ok'|
+
+>>>>>>> a3f750a6ae8b7e999f50a4857cf37241d59b5a56

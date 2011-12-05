@@ -7,6 +7,7 @@ export RUBY_HEAP_SLOTS_INCREMENT=200000
 
 ruby_string="ruby-1.9.2"
 gemset_name="declang-gemset"
+gemset_name="daemonk-gemset"
 
 if rvm list strings | grep -q "${ruby_string}" ; then
 
