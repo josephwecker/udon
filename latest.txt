@@ -1,0 +1,7 @@
+2011-Aug-22
+examples/overview.udon -> <( <{ stuff
+.attic/examples_old/tmp.out ->  various delimiters between tag and child text inline
+
+2011-Aug-24
+submodules/udon-ruby/test/test_udon.rb -> especially all comments at the bottom
+
