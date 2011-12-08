@@ -4,3 +4,6 @@
 [submodule "submodules/website"]
 	path = submodules/website
 	url = git@github.com:josephwecker/udon.git
+[submodule "submodules/udon-c"]
+	path = submodules/udon-c
+	url = git@github.com:justintv/udon-c.git
